@@ -1,23 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react'
+import matchService from './services/matchs'
+import Match from './components/Match'
 
 function App() {
+  const [matchs, setMatchs] = useState([])
+
+  useState(async () => {
+    await matchService.getAll().then(res => setMatchs(res))
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" >
+      {matchs.map(match => <Match key={match.id} match={match} />)}
     </div>
   );
 }
