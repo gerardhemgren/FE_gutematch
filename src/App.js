@@ -5,14 +5,28 @@ import Match from './components/Match'
 
 function App() {
   const [matchs, setMatchs] = useState([])
+  const [myOpenMatchs, setMyOpenMatchs] = useState([])
+  const [trigger, setTrigger] = useState([])
 
-  useState(async () => {
+  const user = { id: 3 }
+
+  const showAllMatchs = async () => {
     await matchService.getAll().then(res => setMatchs(res))
-  })
+    setTrigger(matchs)
+  }
+
+  const showMyOpenMatchs = async () => {
+    await matchService.getMyOpenMatchs(user.id).then(res => setMyOpenMatchs(res))
+    setTrigger(myOpenMatchs)
+  }
 
   return (
-    <div className="App" >
-      {matchs.map(match => <Match key={match.id} match={match} />)}
+    <div /* className="App" */ >
+      <button onClick={() => showAllMatchs()}>Show All</button>
+      <button onClick={() => showMyOpenMatchs()}>Show Mines</button>
+      <div>
+        { trigger.map((match, index) => <Match key={index} match={match} />) }
+      </div>
     </div>
   );
 }

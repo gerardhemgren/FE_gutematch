@@ -6,6 +6,12 @@ const getAll = () => {
     .then(response => response.data)
 }
 
-const exportObj = { getAll }
+const getMyOpenMatchs = (id) => {
+    const request = axios.get(`http://localhost:5000/myopengames/${id}`)
+    return request
+    .then(response => response.data)
+}
+
+const exportObj = { getAll, getMyOpenMatchs }
 
 export default exportObj
