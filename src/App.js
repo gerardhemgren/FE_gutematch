@@ -4,28 +4,57 @@ import matchService from './services/matchs'
 import Match from './components/Match'
 
 function App() {
-  const [matchs, setMatchs] = useState([])
-  const [myOpenMatchs, setMyOpenMatchs] = useState([])
-  const [trigger, setTrigger] = useState([])
+  const [appMatchs, setAppMatchs] = useState([])
+  const [getRequest, setGetRequest] = useState('')
 
-  const user = { id: 3 }
+  const userLS = localStorage.getItem('userId')
+  const user = { id: Number(userLS) }
 
   const showAllMatchs = async () => {
-    await matchService.getAll().then(res => setMatchs(res))
-    setTrigger(matchs)
+    await matchService
+      .getAllMatchs()
+      .then(res => {
+        setAppMatchs(res)
+        setGetRequest('showAllMatchs')
+      })
   }
 
-  const showMyOpenMatchs = async () => {
-    await matchService.getMyOpenMatchs(user.id).then(res => setMyOpenMatchs(res))
-    setTrigger(myOpenMatchs)
+  const showOpenMatchs = async () => {
+    await matchService
+      .getOpenMatchs(user.id)
+      .then(res => {
+        setGetRequest('showOpenMatchs')
+        setAppMatchs(res)
+      })
   }
 
+  const showMyMatchs = async () => {
+    await matchService
+      .getMyMatchs(user.id)
+      .then(res => {
+        setGetRequest('showMyMatchs')
+        setAppMatchs(res)
+      })
+  }
+
+  const joinMatch = async (matchId) => {
+    matchService
+      .postMatch(matchId, user.id);
+    await showOpenMatchs()
+  }
   return (
-    <div /* className="App" */ >
-      <button onClick={() => showAllMatchs()}>Show All</button>
-      <button onClick={() => showMyOpenMatchs()}>Show Mines</button>
+    <div>
+      <button onClick={() => showAllMatchs()}>Show All Matchs</button>
+      <button onClick={() => showOpenMatchs()}>Show Open Matchs</button>
+      <button onClick={() => showMyMatchs()}>Show My Matchs</button>
       <div>
-        { trigger.map((match, index) => <Match key={index} match={match} />) }
+        {appMatchs.map((match, index) =>
+          <Match
+            key={index}
+            match={match}
+            source={getRequest}
+            action={() => joinMatch(match.id_match)}
+          />)}
       </div>
     </div>
   );
