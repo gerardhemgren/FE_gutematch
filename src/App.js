@@ -14,8 +14,8 @@ function App() {
     await matchService
       .getAllMatchs()
       .then(res => {
+        setGetRequest(undefined)
         setAppMatchs(res)
-        setGetRequest('showAllMatchs')
       })
   }
 
