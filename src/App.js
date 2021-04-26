@@ -10,6 +10,7 @@ function App() {
   const userLS = localStorage.getItem('userId')
   const user = { id: Number(userLS) }
 
+
   const showAllMatchs = async () => {
     await matchService
       .getAllMatchs()
@@ -23,8 +24,8 @@ function App() {
     await matchService
       .getOpenMatchs(user.id)
       .then(res => {
-        setGetRequest('showOpenMatchs')
         setAppMatchs(res)
+        setGetRequest('showOpenMatchs')
       })
   }
 
@@ -32,16 +33,23 @@ function App() {
     await matchService
       .getMyMatchs(user.id)
       .then(res => {
-        setGetRequest('showMyMatchs')
         setAppMatchs(res)
+        setGetRequest('showMyMatchs')
       })
   }
 
-  const joinMatch = async (matchId) => {
-    matchService
-      .postMatch(matchId, user.id);
-    await showOpenMatchs()
+  const join = async (matchId) => {
+    await matchService
+      .joinMatch(matchId, user.id)
+      showOpenMatchs()
   }
+
+  const left = async (matchId) => {
+    await matchService
+      .leftMatch(matchId, user.id)
+      showOpenMatchs()
+  }
+
   return (
     <div>
       <button onClick={() => showAllMatchs()}>Show All Matchs</button>
@@ -53,7 +61,8 @@ function App() {
             key={index}
             match={match}
             source={getRequest}
-            action={() => joinMatch(match.id_match)}
+            join={() => join(match.id_match)}
+            left={() => left(match.id_match)}
           />)}
       </div>
     </div>

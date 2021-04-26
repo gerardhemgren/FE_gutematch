@@ -18,13 +18,20 @@ const getMyMatchs = (id) => {
     .then(response => response.data)
 }
 
-const postMatch = (matchId, userId) => {
+const joinMatch = (matchId, userId) => {
     const match = { id_match: matchId } 
     const request = axios.post(`http://localhost:5000/open_matchs/${userId}`, match)
     return request
     .then(response => response.data)
 }
 
-const exportObj = { getAllMatchs, getOpenMatchs, getMyMatchs, postMatch }
+const leftMatch = (matchId, userId) => {
+    const match = { id_match: matchId } 
+    const request = axios.delete(`http://localhost:5000/my_matchs/${userId}`, {data: match})
+    return request
+    .then(response => response.data)
+}
+
+const exportObj = { getAllMatchs, getOpenMatchs, getMyMatchs, joinMatch, leftMatch }
 
 export default exportObj

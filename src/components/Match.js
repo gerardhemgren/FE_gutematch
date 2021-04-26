@@ -1,15 +1,16 @@
 import React from 'react'
 
-const Match = ({ match, source, action }) => {
+const Match = ({ match, source, join, left }) => {
   const { id_match, date, location, is_full } = match
-  let actionButton;
   
+  let actionButton;
   if (source === 'showOpenMatchs') {
-    actionButton = <button onClick={action}>Join</button>
+    actionButton = <button onClick={join}>Join</button>
   } else if (source === 'showMyMatchs') {
-    actionButton = <button onClick={action}>Left</button>
+    actionButton = <button onClick={left}>Left</button>
+  } else {
+    actionButton = ''
   }
-  else { actionButton = '' }
 
   return (
     <div>
