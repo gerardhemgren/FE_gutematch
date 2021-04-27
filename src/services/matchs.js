@@ -6,14 +6,20 @@ const getAllMatchs = () => {
     .then(response => response.data)
 }
 
-const getOpenMatchs = (id) => {
-    const request = axios.get(`http://localhost:5000/open_matchs/${id}`)
+const getOpenMatchs = (userId) => {
+    const request = axios.get(`http://localhost:5000/open_matchs/${userId}`)
     return request
     .then(response => response.data)
 }
 
-const getMyMatchs = (id) => {
-    const request = axios.get(`http://localhost:5000/my_matchs/${id}`)
+const getMyMatchs = (userId) => {
+    const request = axios.get(`http://localhost:5000/my_matchs/${userId}`)
+    return request
+    .then(response => response.data)
+}
+
+const createMatch = (matchInfo, userId) => {
+    const request = axios.post(`http://localhost:5000/${userId}`, matchInfo)
     return request
     .then(response => response.data)
 }
@@ -32,6 +38,6 @@ const leftMatch = (matchId, userId) => {
     .then(response => response.data)
 }
 
-const exportObj = { getAllMatchs, getOpenMatchs, getMyMatchs, joinMatch, leftMatch }
+const exportObj = { getAllMatchs, getOpenMatchs, getMyMatchs, createMatch, joinMatch, leftMatch }
 
 export default exportObj

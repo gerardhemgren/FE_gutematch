@@ -38,6 +38,17 @@ function App() {
       })
   }
 
+  const create = async () => {
+    const matchInfo = {
+      date: '2021-04-27 03:03:00',
+      location: 'Casa',
+      players_field: 14
+    }
+    await matchService
+      .createMatch(matchInfo, user.id)
+      showMyMatchs()
+  }
+
   const join = async (matchId) => {
     await matchService
       .joinMatch(matchId, user.id)
@@ -55,6 +66,7 @@ function App() {
       <button onClick={() => showAllMatchs()}>Show All Matchs</button>
       <button onClick={() => showOpenMatchs()}>Show Open Matchs</button>
       <button onClick={() => showMyMatchs()}>Show My Matchs</button>
+      <button onClick={() => create()}>Create Match</button>
       <div>
         {appMatchs.map((match, index) =>
           <Match

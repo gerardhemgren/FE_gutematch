@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Match = ({ match, source, join, left }) => {
-  const { id_match, date, location, is_full } = match
+  const { id_match, date, location, is_full, players, players_field } = match
   
   let actionButton;
   if (source === 'showOpenMatchs') {
@@ -15,7 +15,7 @@ const Match = ({ match, source, join, left }) => {
   return (
     <div>
       <div>
-        {id_match} | {JSON.stringify(is_full)}
+        {id_match} | {JSON.stringify(is_full)} | {players} | {players_field}
       </div>
       <div>
         {date} | {location}
