@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Match = ({ match, source, join, left }) => {
-  const { id_match, date, location, is_full, players, players_field } = match
+const Match = ({ user, match, source, join, left, deleteMatch }) => {
+  const { id_match, date, location, is_full, players, players_field, id_admin } = match
   
   let actionButton;
   if (source === 'showOpenMatchs') {
@@ -12,6 +12,10 @@ const Match = ({ match, source, join, left }) => {
     actionButton = ''
   }
 
+  let deleteButton
+  if(id_admin === user) {
+    deleteButton = <button onClick={deleteMatch}>Delete Match</button>
+  }
   return (
     <div>
       <div>
@@ -21,7 +25,7 @@ const Match = ({ match, source, join, left }) => {
         {date} | {location}
       </div>
       <div>
-        {actionButton}
+        {actionButton} {deleteButton}
       </div>
     </div>
   )
