@@ -5,18 +5,20 @@ import Match from './components/Match'
 import Message from './components/Message';
 
 function App() {
+  const [inputMatch, setInputMatch] = useState({ date: undefined, location: undefined, players_field: undefined })
   const [appMatchs, setAppMatchs] = useState([])
-  const [getRequest, setGetRequest] = useState('')
+  const [getClientRequest, setGetClientRequest] = useState('')
   const [apiMessage, setApiMessage] = useState('')
 
   const userLS = localStorage.getItem('userId')
   const user = { id: Number(userLS) }
 
+  // NAVIGATION
   const showAllMatchs = async () => {
     await matchService
       .getAllMatchs()
       .then(res => {
-        setGetRequest(undefined)
+        setGetClientRequest(undefined)
         setAppMatchs(res)
       })
   }
@@ -25,10 +27,11 @@ function App() {
     await matchService
       .getOpenMatchs(user.id)
       .then(res => {
-        setGetRequest('showOpenMatchs')
+        setGetClientRequest('showOpenMatchs')
         if (typeof res === 'object') {
           setAppMatchs(res)
         } else {
+          setAppMatchs([])
           setApiMessage(res)
         }
       })
@@ -39,22 +42,29 @@ function App() {
       .getMyMatchs(user.id)
       .then(res => {
         setAppMatchs(res)
-        setGetRequest('showMyMatchs')
+        setGetClientRequest('showMyMatchs')
       })
   }
 
-  const create = async () => {
+  // ACTIONS
+  const handleInputCreateForm = (event) => {
+    setInputMatch({ ...inputMatch, [event.target.name]: event.target.value })
+  }
+
+  const create = async (event) => {
+    event.preventDefault()
     const matchInfo = {
-      date: '2021-09-29 03:03:00',
-      location: 'Casa',
-      players_field: 14
+      date: inputMatch.date,
+      location: inputMatch.location,
+      players_field: Number(inputMatch.players_field)
     }
+
     await matchService
       .createMatch(matchInfo, user.id)
       .then(async res => {
         setApiMessage(await res)
       })
-    showMyMatchs()
+    // showMyMatchs()
   }
 
   const deleteMatch = async (matchId) => {
@@ -81,35 +91,65 @@ function App() {
       .then(async res => {
         setApiMessage(await res)
       })
-    showOpenMatchs()
+    showMyMatchs()
   }
 
+  // MESSAGES
   const closeMessage = () => {
-    setTimeout(() => {
-      setApiMessage('')
-    }, 3000);
+    const res = apiMessage
+    if (res) {
+      console.log(res)
+      setTimeout(() => {
+        setApiMessage('')
+      }, 3000);
+    }
   }
 
   return (
     <div>
-      <Message msg={apiMessage} action={closeMessage()} />
+      <div className='message'>
+        <Message msg={apiMessage} action={closeMessage()} />
+      </div>
 
       <button onClick={() => showAllMatchs()}>Show All Matchs</button>
       <button onClick={() => showOpenMatchs()}>Show Open Matchs</button>
       <button onClick={() => showMyMatchs()}>Show My Matchs</button>
-      <button onClick={() => create()}>Create Match</button>
 
-      <div>
-        {appMatchs.map((match, index) =>
-          <Match
-            key={index}
-            match={match}
-            user={user.id}
-            source={getRequest}
-            join={() => join(match.id_match)}
-            left={() => left(match.id_match)}
-            deleteMatch={() => deleteMatch(match.id_match)}
-          />)}
+      <div className='main'>
+        <div>
+          <form onSubmit={create} className='form'>
+            <input
+              placeholder='date'
+              name='date'
+              onChange={handleInputCreateForm}
+            />
+            <input
+              placeholder='location'
+              name='location'
+              onChange={handleInputCreateForm}
+            />
+            <input
+              placeholder='field'
+              type='number'
+              name='players_field'
+              onChange={handleInputCreateForm}
+            />
+            <button type='submit'>Create Match</button>
+          </form>
+        </div>
+
+        <div>
+          {appMatchs.map((match, index) =>
+            <Match
+              key={index}
+              match={match}
+              user={user.id}
+              source={getClientRequest}
+              join={() => join(match.id_match)}
+              left={() => left(match.id_match)}
+              deleteMatch={() => deleteMatch(match.id_match)}
+            />)}
+        </div>
       </div>
 
     </div>

@@ -26,7 +26,7 @@ const createMatch = (matchInfo, userId) => {
 
 const deleteMatch = (matchId, userId) => {
     const match = { id_match: matchId }
-    const request = axios.delete(`http://localhost:5000/my_matchs/${userId}`, { data: match })
+    const request = axios.delete(`http://localhost:5000/my_matchs/owner/${userId}`, { data: match })
     return request
         .then(response => response.data)
 }

@@ -1,3 +1,13 @@
-.App {
+.main {
+  display: flex; 
+  gap: 40px;
+}
+
+.form {
   display: flex;
+  flex-direction: column;
+}
+
+.message {
+  height: 16px;
 }

@@ -9,7 +9,7 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
   } else if (source === 'showMyMatchs') {
     actionButton = <button onClick={left}>Left</button>
   } else {
-    actionButton = ''
+    actionButton = undefined
   }
 
   let deleteButton
