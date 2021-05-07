@@ -1,3 +1,13 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+}
+
 .main {
   display: flex; 
   gap: 40px;
