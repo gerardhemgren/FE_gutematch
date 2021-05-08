@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import matchService from './services/matchs'
 import Match from './components/Match'
 import Message from './components/Message';
+import logo from './gute_match.png'
 
 function App() {
   const [inputMatch, setInputMatch] = useState({ date: undefined, location: undefined, players_field: undefined })
@@ -10,18 +11,22 @@ function App() {
   const [clientRequest, setClientRequest] = useState('')
   const [apiMessage, setApiMessage] = useState('')
 
+  const [title, setTitle] = useState('')
+
   const userLS = localStorage.getItem('userId')
   const user = { id: Number(userLS) }
 
+  // const logo = <img src={logo} alt='logo'/>
+
   // NAVIGATION
-  const showAllMatchs = async () => {
+/*   const showAllMatchs = async () => {
     await matchService
       .getAllMatchs()
       .then(res => {
         setClientRequest(undefined)
         setAppMatchs(res)
       })
-  }
+  } */
 
   const showOpenMatchs = async () => {
     await matchService
@@ -33,6 +38,7 @@ function App() {
         } else {
           setAppMatchs([])
           setApiMessage(res)
+          setTitle('Open matchs')
         }
       })
   }
@@ -43,12 +49,14 @@ function App() {
       .then(res => {
         setAppMatchs(res)
         setClientRequest('showMyMatchs')
+        setTitle('My matchs')
       })
   }
 
   const createMatch = () => {
     setAppMatchs([])
     setClientRequest('createMatch')
+    setTitle('Create a match')
   }
 
   // ACTIONS
@@ -103,28 +111,28 @@ function App() {
   const closeMessage = () => {
     const res = apiMessage
     if (res) {
-      console.log(res)
       setTimeout(() => {
         setApiMessage('')
-      }, 3000);
+      }, 6000);
     }
   }
 
   return (
     <div className='body'>
-      <div className='message'>
-        <Message msg={apiMessage} action={closeMessage()} />
-      </div>
-
-      <div className='navbar'>
-        <button onClick={() => showAllMatchs()}>All Matchs</button>
-        <button onClick={() => showOpenMatchs()}>Open Matchs</button>
-        <button onClick={() => showMyMatchs()}>My Matchs</button>
-        <button onClick={() => createMatch()}>Add Match</button>
+      <div className='header'>
+        <div className='topvar'>
+          <img src={logo} alt='logo'></img>
+          <div>Config</div>
+        </div>
+        <div className='message'>
+          <Message msg={apiMessage} action={closeMessage()} />
+        </div>
+        <div className='title'>
+          {title}
+        </div>
       </div>
 
       <div className='main'>
-
         <div>
           {clientRequest === 'createMatch' ?
             <form onSubmit={add} className='form'>
@@ -149,10 +157,9 @@ function App() {
               />
               <button type='submit'>Create Match</button>
             </form>
-           : null
+            : null
           }
         </div>
-
         <div>
           {appMatchs.map((match, index) =>
             <Match
@@ -165,8 +172,15 @@ function App() {
               deleteMatch={() => deleteMatch(match.id_match)}
             />)}
         </div>
+        <div style={{height: '56px'}}></div>
       </div>
 
+      <div className='navbar'>
+        <button onClick={() => showOpenMatchs()}>Open Matchs</button>
+        {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
+        <button onClick={() => createMatch()}>Add Match</button>
+        <button onClick={() => showMyMatchs()}>My Matchs</button>
+      </div>
     </div>
   );
 }

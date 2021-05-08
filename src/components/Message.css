@@ -1,4 +1,5 @@
 .Message {
   color: yellow;
-  display: flex
+  display: flex;
+  font-size: 12px;
 }

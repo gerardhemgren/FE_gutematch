@@ -18,8 +18,8 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
   }
   return (
     <div>
-      <div>
-        {id_match} | {JSON.stringify(is_full)} | {players} | {players_field}
+      <div style={{display:'flex'}}>
+        {id_match} | {JSON.stringify(is_full)} | <div style={{color: '#00FF2B'}}>{players}</div> | {players_field / 2}
       </div>
       <div>
         {date} | {location}
