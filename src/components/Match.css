@@ -1,0 +1,73 @@
+.date {
+  font-size: 8px;
+  padding: 8px 0 24px 4px;
+  border-top: solid 1px rgba(255, 255, 255, .2);
+}
+
+.match {
+  display: flex;
+  font-size: 16px;
+  padding: 0px 0px 32px 16px;
+}
+
+.time {
+  height: 40px;
+  width: 88px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  font-size: 24px;
+}
+
+.players {
+  width: 88px;
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  column-gap: 8px;
+  font-size: 8px;
+}
+
+.players div:nth-child(n) {
+  width: 16px;
+  padding-bottom: 2px;
+}
+
+.field {
+  border-bottom: 1px solid transparent;
+}
+
+.joined {
+  border-bottom: 1px solid;
+  color: #00FF2B;
+}
+
+.missed {
+  border-bottom: 1px solid;
+  color: rgba(255, 255, 255, .5);
+}
+
+.info {
+  height: 48px;
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.name {
+  font-size: 12px;
+}
+
+.location {
+  font-size: 8px;
+  color: rgba(255, 255, 255, .5);
+}
+.action {
+  width: 50px;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

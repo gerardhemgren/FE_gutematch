@@ -5,7 +5,7 @@ const Message = ({ msg }) => {
   if (msg) {
     let message = msg
     return (
-      <div className='Message'>
+      <div className='message'>
         <div>
           {message}
         </div>

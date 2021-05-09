@@ -6,22 +6,15 @@ import Message from './components/Message';
 import logo from './gute_match.png'
 
 function App() {
-  const [inputMatch, setInputMatch] = useState({ date: undefined, location: undefined, players_field: undefined })
-
-  const [appMatchs, setAppMatchs] = useState([])
-
   const [clientRequest, setClientRequest] = useState('')
-  const [apiMessage, setApiMessage] = useState('')
-  // const [buttonFocus, setButtonFocus] = useState(clientRequest)
-
-
-
   const [title, setTitle] = useState('')
+  const [appMatchs, setAppMatchs] = useState([])
+  const [apiMessage, setApiMessage] = useState('')
+
+  const [inputMatch, setInputMatch] = useState({ date: undefined, location: undefined, players_field: undefined, name: undefined })
 
   const userLS = localStorage.getItem('userId')
   const user = { id: Number(userLS) }
-
-  // const logo = <img src={logo} alt='logo'/>
 
   // NAVIGATION
   /*   const showAllMatchs = async () => {
@@ -38,9 +31,9 @@ function App() {
       .getOpenMatchs(user.id)
       .then(res => {
         setClientRequest('showOpenMatchs')
+        setTitle('Open matchs')
         if (typeof res === 'object') {
           setAppMatchs(res)
-          setTitle('Open matchs')
         } else {
           setAppMatchs([])
           setApiMessage(res)
@@ -52,9 +45,14 @@ function App() {
     await matchService
       .getMyMatchs(user.id)
       .then(res => {
-        setAppMatchs(res)
         setClientRequest('showMyMatchs')
-        setTitle('My matchs')
+        if (typeof res === 'object') {
+          setAppMatchs(res)
+          setTitle('My matchs')
+        } else {
+          setAppMatchs([])
+          setApiMessage(res)
+        }
       })
   }
 
@@ -69,12 +67,13 @@ function App() {
     setInputMatch({ ...inputMatch, [event.target.name]: event.target.value })
   }
 
-  const add = async (event) => {
+  const addMatch = async (event) => {
     event.preventDefault()
     const matchInfo = {
       date: inputMatch.date,
       location: inputMatch.location,
-      players_field: Number(inputMatch.players_field)
+      players_field: Number(inputMatch.players_field),
+      name: inputMatch.name
     }
 
     await matchService
@@ -127,9 +126,9 @@ function App() {
       <div className='header'>
         <div className='topvar'>
           <img src={logo} alt='logo'></img>
-          <div>Config</div>
+          <div className='config'>Config</div>
         </div>
-        <div className='message'>
+        <div className='message-layout'>
           <Message msg={apiMessage} action={closeMessage()} />
         </div>
         <div className='title'>
@@ -140,7 +139,7 @@ function App() {
       <div className='main'>
         <div>
           {clientRequest === 'createMatch' ?
-            <form onSubmit={add} className='form'>
+            <form onSubmit={addMatch} className='form'>
               <input
                 placeholder='date'
                 name='date'
@@ -160,6 +159,12 @@ function App() {
                 value={inputMatch.players_field}
                 onChange={handleInputCreateForm}
               />
+               <input
+                placeholder='name'
+                name='name'
+                value={inputMatch.name}
+                onChange={handleInputCreateForm}
+              />
               <button type='submit'>Create Match</button>
             </form>
             : null
@@ -177,7 +182,7 @@ function App() {
               deleteMatch={() => deleteMatch(match.id_match)}
             />)}
         </div>
-        <div style={{ height: '56px' }}></div>
+        <div className='bottom-space'></div>
       </div>
 
       <div className='navbar'>

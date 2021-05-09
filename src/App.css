@@ -1,15 +1,17 @@
 .body {
-  margin: 20px 16.5px 16px 16.5px;
+  margin: 20px 0px 16px;
   font-family: 'Segoe UI';
   color: white;
+  background-color: #01252E;
 }
 
 .header {
   position: fixed;
-  top: 20px;
-  width: 327px;
+  top: 0px;
+  padding: 20px 16px 0px 16px;
+  width: 328px;
   height: 192px;
-  background-color: #1C1C1C;
+  background-color: #01252E;
 }
 
 .topvar {
@@ -18,7 +20,11 @@
   font-size: 12px;
 }
 
-.message {
+.config {
+  color: rgba(255, 255, 255, .5);
+}
+
+.message-layout {
   position: fixed;
   top: 60px;
   width: 327px;
@@ -32,10 +38,11 @@
 }
 
 .main {
-  width: 327px;
-  margin-top: 208px;
-  padding: 0 1px;
+  margin-top: 212px;
 }
+  .bottom-space {
+    height: 68px
+  }
 
 .form {
   display: flex;
@@ -45,21 +52,21 @@
 .navbar {
   position: fixed;
   bottom: 0px;
-  width: 327px;
+  width: 328px;
   height: 28px;
   display: flex;
   justify-content: space-between;
-  padding: 12px 0px 16px 0px;
-  background-color: #1C1C1C;
-  font-size: 12px;
+  padding: 12px 16px 16px;
+  background-color: #01252E;
+  font-size: 8px;
 }
   .nav-button {
     border-style: none;
     outline-style: none;
     background: transparent;
     border-top: solid transparent 4px;
-    font-weight: bold;
     color: rgba(255, 255, 255, .5);
+    cursor: pointer;
   }
   .focus {
     border-top: solid white 4px;
