@@ -7,9 +7,14 @@ import logo from './gute_match.png'
 
 function App() {
   const [inputMatch, setInputMatch] = useState({ date: undefined, location: undefined, players_field: undefined })
+
   const [appMatchs, setAppMatchs] = useState([])
+
   const [clientRequest, setClientRequest] = useState('')
   const [apiMessage, setApiMessage] = useState('')
+  // const [buttonFocus, setButtonFocus] = useState(clientRequest)
+
+
 
   const [title, setTitle] = useState('')
 
@@ -19,14 +24,14 @@ function App() {
   // const logo = <img src={logo} alt='logo'/>
 
   // NAVIGATION
-/*   const showAllMatchs = async () => {
-    await matchService
-      .getAllMatchs()
-      .then(res => {
-        setClientRequest(undefined)
-        setAppMatchs(res)
-      })
-  } */
+  /*   const showAllMatchs = async () => {
+      await matchService
+        .getAllMatchs()
+        .then(res => {
+          setClientRequest(undefined)
+          setAppMatchs(res)
+        })
+    } */
 
   const showOpenMatchs = async () => {
     await matchService
@@ -35,10 +40,10 @@ function App() {
         setClientRequest('showOpenMatchs')
         if (typeof res === 'object') {
           setAppMatchs(res)
+          setTitle('Open matchs')
         } else {
           setAppMatchs([])
           setApiMessage(res)
-          setTitle('Open matchs')
         }
       })
   }
@@ -172,14 +177,23 @@ function App() {
               deleteMatch={() => deleteMatch(match.id_match)}
             />)}
         </div>
-        <div style={{height: '56px'}}></div>
+        <div style={{ height: '56px' }}></div>
       </div>
 
       <div className='navbar'>
-        <button onClick={() => showOpenMatchs()}>Open Matchs</button>
+        <button
+          className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
+          onClick={() => showOpenMatchs()}>Open Matchs
+        </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
-        <button onClick={() => createMatch()}>Add Match</button>
-        <button onClick={() => showMyMatchs()}>My Matchs</button>
+        <button
+          className={`${clientRequest === 'createMatch' ? 'focus' : ''} nav-button`}
+          onClick={() => createMatch()}>Add Match
+        </button>
+        <button
+          className={`${clientRequest === 'showMyMatchs' ? 'focus' : ''} nav-button`}
+          onClick={() => showMyMatchs()}>My Matchs
+        </button>
       </div>
     </div>
   );

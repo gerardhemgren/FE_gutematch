@@ -1,14 +1,14 @@
 .body {
   margin: 20px 16.5px 16px 16.5px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #03F6FF;
+  font-family: 'Segoe UI';
+  color: white;
 }
 
 .header {
   position: fixed;
   top: 20px;
   width: 327px;
-  height: 194px;
+  height: 192px;
   background-color: #1C1C1C;
 }
 
@@ -34,6 +34,7 @@
 .main {
   width: 327px;
   margin-top: 208px;
+  padding: 0 1px;
 }
 
 .form {
@@ -52,3 +53,15 @@
   background-color: #1C1C1C;
   font-size: 12px;
 }
+  .nav-button {
+    border-style: none;
+    outline-style: none;
+    background: transparent;
+    border-top: solid transparent 4px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, .5);
+  }
+  .focus {
+    border-top: solid white 4px;
+    color: white;
+  }
