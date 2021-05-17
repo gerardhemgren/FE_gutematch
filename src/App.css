@@ -17,11 +17,7 @@
 .topvar {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-}
-
-.config {
-  color: rgba(255, 255, 255, .5);
+  align-items: flex-end;
 }
 
 .message-layout {
@@ -40,13 +36,9 @@
 .main {
   margin-top: 212px;
 }
-  .bottom-space {
-    height: 68px
-  }
 
-.form {
-  display: flex;
-  flex-direction: column;
+.bottom-space {
+  height: 68px
 }
 
 .navbar {
@@ -56,19 +48,30 @@
   height: 28px;
   display: flex;
   justify-content: space-between;
-  padding: 12px 16px 16px;
+  padding: 40px 16px 16px;
   background-color: #01252E;
   font-size: 8px;
 }
-  .nav-button {
-    border-style: none;
-    outline-style: none;
-    background: transparent;
-    border-top: solid transparent 4px;
-    color: rgba(255, 255, 255, .5);
-    cursor: pointer;
-  }
-  .focus {
-    border-top: solid white 4px;
-    color: white;
-  }
+
+.nav-button {
+  border-style: none;
+  border-width: 0px;
+  outline-style: none;
+  background: transparent;
+  border-top: solid transparent 4px;
+  color: rgba(255, 255, 255, .5);
+  cursor: pointer;
+  transition: .5s;
+}
+
+.config-button {
+  font-size: 12px;
+  color: rgba(255, 255, 255, .5);
+  transition: .5s;
+}
+
+.focus {
+  transition: .5s;
+  border-top: solid white 4px;
+  color: white;
+}

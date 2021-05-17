@@ -2,7 +2,7 @@ import React from 'react'
 import './Match.css'
 
 const dayjs = require('dayjs')
-require('dayjs/locale/es')
+// require('dayjs/locale/es')
 var utc = require('dayjs/plugin/utc')
 var timezone = require('dayjs/plugin/timezone')
 dayjs.extend(utc)
@@ -28,7 +28,7 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
   return (
     <div id={`${source}`} >
       <div className='date'>
-        {dayjs(date).utc().format('DD — dddd, MMMM')}
+        {dayjs(date).utc().format('DD —— dddd, MMMM. YYYY')}
       </div>
       <div className='match'>
         <div className='time'>
@@ -47,7 +47,7 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
         </div>
 
         <div className='action'>
-          {actionButton} {deleteButton}
+          {deleteButton} {actionButton}
         </div>
       </div>
     </div>

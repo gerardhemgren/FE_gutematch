@@ -1,0 +1,110 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 16px 0 16px;
+}
+
+fieldset {
+  margin: 0px 0px 24px;
+  padding: 0px;
+  border: 1px solid rgba(0, 255, 0, .5);
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  font-size: 8px;
+}
+
+legend {
+  margin-left: 8px;
+}
+
+label {
+  padding-left: 2px;
+  color: rgba(255, 255, 255, .5);
+}
+
+input {
+  margin: 24px 0 0px 0;
+  font: 12px 'Segoe UI';
+  background-color: #002c36;
+  color: white;
+  border-style: none;
+}
+
+input:focus {
+  outline: none;
+  /* background-color: rgba(0, 255, 0, .25); */
+}
+
+.date-field {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  filter: drop-shadow(16px 16px 20px rgb(255,255,255)) invert(100%);
+}
+
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  filter: drop-shadow(16px 16px 20px rgb(255,255,255)) invert(100%);
+}
+
+.input-adress {
+  width: 100%;
+}
+
+.drop-players-field {
+  width: 80px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  align-self: flex-end;
+  margin: 24px 0 0px 0;
+  font-size: 12px;
+}
+.drop-players-field:focus {
+  background-color: rgb(0, 0, 0);
+  border-style:  none;
+  outline: 0px;
+  font-size: 12px;
+}
+
+.name-field {
+  display: flex;
+  justify-content: space-between;
+}
+.name-field fieldset {
+  width: 80px;
+}
+
+.action-box {
+  display: flex;
+  justify-content: space-between;
+}
+.action-button,.reset-button {
+  padding: 0px;
+  height: 60px;
+  border-style: none;
+  color: #03FF0B;
+  background-color: transparent;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+}
+.reset-button {
+  color: rgba(255, 255, 255, .75);
+}
+.arrow {
+  margin: 0px;
+}
+
+.action-button:active,.reset-button:active {
+  background-color: #03FF0B;
+  color: black;
+}

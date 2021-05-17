@@ -1,9 +1,15 @@
 import './App.css';
+import './Form.css';
 import React, { useState } from 'react'
 import matchService from './services/matchs'
 import Match from './components/Match'
 import Message from './components/Message';
+import Config from './components/Config';
 import logo from './gute_match.png'
+const dayjs = require('dayjs')
+// var utc = require('dayjs/plugin/utc')
+// dayjs.extend(utc)
+
 
 function App() {
   const [clientRequest, setClientRequest] = useState('')
@@ -11,7 +17,7 @@ function App() {
   const [appMatchs, setAppMatchs] = useState([])
   const [apiMessage, setApiMessage] = useState('')
 
-  const [inputMatch, setInputMatch] = useState({ date: undefined, location: undefined, players_field: undefined, name: undefined })
+  const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' })
 
   const userLS = localStorage.getItem('userId')
   const user = { id: Number(userLS) }
@@ -46,9 +52,9 @@ function App() {
       .getMyMatchs(user.id)
       .then(res => {
         setClientRequest('showMyMatchs')
+        setTitle('My matchs')
         if (typeof res === 'object') {
           setAppMatchs(res)
-          setTitle('My matchs')
         } else {
           setAppMatchs([])
           setApiMessage(res)
@@ -62,15 +68,26 @@ function App() {
     setTitle('Create a match')
   }
 
+  const config = () => {
+    setAppMatchs([])
+    setClientRequest('config')
+    setTitle('Config')
+  }
+
   // ACTIONS
   const handleInputCreateForm = (event) => {
     setInputMatch({ ...inputMatch, [event.target.name]: event.target.value })
   }
 
+  const resetForm = () => {
+    setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' })
+  }
+
+  // MATCH-ACTIONS
   const addMatch = async (event) => {
     event.preventDefault()
     const matchInfo = {
-      date: inputMatch.date,
+      date: `${inputMatch.date} ${inputMatch.time}`,
       location: inputMatch.location,
       players_field: Number(inputMatch.players_field),
       name: inputMatch.name
@@ -80,8 +97,10 @@ function App() {
       .createMatch(matchInfo, user.id)
       .then(async res => {
         setApiMessage(await res)
+        if (res === 'Match created') {
+          showMyMatchs()
+        }
       })
-    // showMyMatchs()
   }
 
   const deleteMatch = async (matchId) => {
@@ -120,13 +139,18 @@ function App() {
       }, 6000);
     }
   }
-
+  
   return (
     <div className='body'>
       <div className='header'>
         <div className='topvar'>
           <img src={logo} alt='logo'></img>
-          <div className='config'>Config</div>
+          <div className='config'>
+            <button
+              className={`${clientRequest === 'config' ? 'focus' : ''} config-button nav-button `}
+              onClick={() => config()}>Config
+            </button>
+          </div>
         </div>
         <div className='message-layout'>
           <Message msg={apiMessage} action={closeMessage()} />
@@ -139,37 +163,92 @@ function App() {
       <div className='main'>
         <div>
           {clientRequest === 'createMatch' ?
-            <form onSubmit={addMatch} className='form'>
-              <input
-                placeholder='date'
-                name='date'
-                value={inputMatch.date}
-                onChange={handleInputCreateForm}
-              />
-              <input
-                placeholder='location'
-                name='location'
-                value={inputMatch.location}
-                onChange={handleInputCreateForm}
-              />
-              <input
-                placeholder='field'
-                type='number'
-                name='players_field'
-                value={inputMatch.players_field}
-                onChange={handleInputCreateForm}
-              />
-               <input
-                placeholder='name'
-                name='name'
-                value={inputMatch.name}
-                onChange={handleInputCreateForm}
-              />
-              <button type='submit'>Create Match</button>
+            <form onSubmit={addMatch} onReset={resetForm} className='form'>
+
+              <fieldset>
+                <legend>Date</legend>
+                <div className='date-field'>
+                  <input
+                    required
+                    className='input-date'
+                    type="date"
+                    name="date"
+                    min={dayjs().format('YYYY-MM-DD')}
+                    max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
+                    value={inputMatch.date}
+                    onChange={handleInputCreateForm}>
+                  </input>
+                  <input
+                    required
+                    className='input-time'
+                    type="time"
+                    name="time"
+                    value={inputMatch.time}
+                    onChange={handleInputCreateForm}>
+                  </input>
+                </div>
+              </fieldset>
+
+
+              <fieldset>
+                <legend>Location</legend>
+                <input
+                  className='input-adress'
+                  required
+                  placeholder='Adress'
+                  name='location'
+                  value={inputMatch.location}
+                  onChange={handleInputCreateForm}
+                />
+                <label>Adress 1234, City, Country</label>
+
+              </fieldset>
+
+              <div className='name-field'>
+                <fieldset>
+                  <legend>Field</legend>
+                  <div>
+                    <select
+                      className='drop-players-field'
+                      name="players_field"
+                      type='number'
+                      value={inputMatch.players_field}
+                      onChange={handleInputCreateForm}>
+                      <option value="10">F — 5</option>
+                      <option value="14">F — 7</option>
+                      <option value="18">F — 9</option>
+                      <option value="22">F — 11</option>
+                    </select>
+                  </div>
+
+                </fieldset>
+                <fieldset>
+                  <legend>Name</legend>
+                  <input
+                    className='input-name'
+                    required
+                    placeholder='Match name'
+                    maxLength='10'
+                    name='name'
+                    value={inputMatch.name}
+                    onChange={handleInputCreateForm}
+                  />
+                  <label>Max: 10 characteres</label>
+                </fieldset>
+              </div>
+
+              <div className='action-box'>
+                <button type='reset' value='Reset' className='reset-button'>
+                  <p className='arrow'>↑</p>
+                  Reset
+                </button>
+                <button type='submit' className='action-button'>Create →</button>
+              </div>
             </form>
             : null
           }
         </div>
+        <Config source={clientRequest}/>
         <div>
           {appMatchs.map((match, index) =>
             <Match
@@ -185,23 +264,23 @@ function App() {
         <div className='bottom-space'></div>
       </div>
 
-      <div className='navbar'>
-        <button
-          className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
-          onClick={() => showOpenMatchs()}>Open Matchs
-        </button>
-        {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
-        <button
-          className={`${clientRequest === 'createMatch' ? 'focus' : ''} nav-button`}
-          onClick={() => createMatch()}>Add Match
-        </button>
-        <button
-          className={`${clientRequest === 'showMyMatchs' ? 'focus' : ''} nav-button`}
-          onClick={() => showMyMatchs()}>My Matchs
-        </button>
+        <div className='navbar'>
+          <button
+            className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
+            onClick={() => showOpenMatchs()}>Open Matchs
+          </button>
+          {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
+          <button
+            className={`${clientRequest === 'createMatch' ? 'focus' : ''} nav-button`}
+            onClick={() => createMatch()}>Add Match
+          </button>
+          <button
+            className={`${clientRequest === 'showMyMatchs' ? 'focus' : ''} nav-button`}
+            onClick={() => showMyMatchs()}>My Matchs
+          </button>
+        </div>
       </div>
-    </div>
-  );
+      )
 }
 
-export default App;
+      export default App;
