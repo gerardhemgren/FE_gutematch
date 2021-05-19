@@ -1,4 +1,6 @@
 import React from 'react'
+import AuthenticationButton from "./authentication-button";
+
 import './Config.css'
 
 const Config = ({ source }) => {
@@ -10,8 +12,11 @@ const Config = ({ source }) => {
   if (source === 'config') {
     return (
       <div className='config'>
+        <div className="navbar-nav ml-auto">
+          <AuthenticationButton />
+        </div>
         <div>
-          <button onClick={() => setU()}>Log In</button>
+          <button onClick={() => setU()}>Log In with 'Test User'</button>
         </div>
       </div>
     )

@@ -7,9 +7,6 @@ import Message from './components/Message';
 import Config from './components/Config';
 import logo from './gute_match.png'
 const dayjs = require('dayjs')
-// var utc = require('dayjs/plugin/utc')
-// dayjs.extend(utc)
-
 
 function App() {
   const [clientRequest, setClientRequest] = useState('')
@@ -139,7 +136,7 @@ function App() {
       }, 6000);
     }
   }
-  
+
   return (
     <div className='body'>
       <div className='header'>
@@ -248,7 +245,7 @@ function App() {
             : null
           }
         </div>
-        <Config source={clientRequest}/>
+        <Config source={clientRequest} />
         <div>
           {appMatchs.map((match, index) =>
             <Match
@@ -264,23 +261,23 @@ function App() {
         <div className='bottom-space'></div>
       </div>
 
-        <div className='navbar'>
-          <button
-            className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
-            onClick={() => showOpenMatchs()}>Open Matchs
-          </button>
-          {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
-          <button
-            className={`${clientRequest === 'createMatch' ? 'focus' : ''} nav-button`}
-            onClick={() => createMatch()}>Add Match
-          </button>
-          <button
-            className={`${clientRequest === 'showMyMatchs' ? 'focus' : ''} nav-button`}
-            onClick={() => showMyMatchs()}>My Matchs
-          </button>
-        </div>
+      <div className='navbar'>
+        <button
+          className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
+          onClick={() => showOpenMatchs()}>Open Matchs
+        </button>
+        {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
+        <button
+          className={`${clientRequest === 'createMatch' ? 'focus' : ''} nav-button`}
+          onClick={() => createMatch()}>Add Match
+        </button>
+        <button
+          className={`${clientRequest === 'showMyMatchs' ? 'focus' : ''} nav-button`}
+          onClick={() => showMyMatchs()}>My Matchs
+        </button>
       </div>
-      )
+    </div>
+  )
 }
 
-      export default App;
+export default App;
