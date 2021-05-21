@@ -19,7 +19,7 @@ const getMyMatchs = (userId) => {
 }
 
 const createMatch = (matchInfo, userId) => {
-    const request = axios.post(`http://localhost:5000/${userId}`, matchInfo)
+    const request = axios.post(`http://localhost:5000/add_match/${userId}`, matchInfo)
     return request
         .then(response => response.data)
 }

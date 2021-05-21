@@ -1,23 +1,42 @@
-import './App.css';
-import './Form.css';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import matchService from './services/matchs'
+import userService from './services/users'
+
+import { useAuth0 } from '@auth0/auth0-react';
+
 import Match from './components/Match'
 import Message from './components/Message';
 import Config from './components/Config';
+
 import logo from './gute_match.png'
+import './App.css';
+import './Form.css';
+
 const dayjs = require('dayjs')
 
 function App() {
+  const { isLoading, user } = useAuth0();
+
+  let playerSub = user?.sub;
+  const [playerId, setPlayerId] = useState('')
+  
+  useEffect(() => {
+    if (!isLoading) {
+      userService
+        .logIn_signUp(playerSub)
+        .then(res => {
+          setPlayerId(res[0].id)
+          console.log(res[0].id)
+        })
+    }
+  },[playerSub, isLoading])
+
   const [clientRequest, setClientRequest] = useState('')
   const [title, setTitle] = useState('')
   const [appMatchs, setAppMatchs] = useState([])
   const [apiMessage, setApiMessage] = useState('')
 
   const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' })
-
-  const userLS = localStorage.getItem('userId')
-  const user = { id: Number(userLS) }
 
   // NAVIGATION
   /*   const showAllMatchs = async () => {
@@ -31,7 +50,7 @@ function App() {
 
   const showOpenMatchs = async () => {
     await matchService
-      .getOpenMatchs(user.id)
+      .getOpenMatchs(playerId)
       .then(res => {
         setClientRequest('showOpenMatchs')
         setTitle('Open matchs')
@@ -45,8 +64,9 @@ function App() {
   }
 
   const showMyMatchs = async () => {
+    // getUserId()
     await matchService
-      .getMyMatchs(user.id)
+      .getMyMatchs(playerId)
       .then(res => {
         setClientRequest('showMyMatchs')
         setTitle('My matchs')
@@ -63,15 +83,17 @@ function App() {
     setAppMatchs([])
     setClientRequest('createMatch')
     setTitle('Create a match')
+    // getUserId()
   }
 
-  const config = () => {
+  const visitConfig = () => {
     setAppMatchs([])
     setClientRequest('config')
     setTitle('Config')
+    // getUserId()
   }
 
-  // ACTIONS
+  // FORM-ACTIONS
   const handleInputCreateForm = (event) => {
     setInputMatch({ ...inputMatch, [event.target.name]: event.target.value })
   }
@@ -91,7 +113,7 @@ function App() {
     }
 
     await matchService
-      .createMatch(matchInfo, user.id)
+      .createMatch(matchInfo, playerId)
       .then(async res => {
         setApiMessage(await res)
         if (res === 'Match created') {
@@ -102,7 +124,7 @@ function App() {
 
   const deleteMatch = async (matchId) => {
     await matchService
-      .deleteMatch(matchId, user.id)
+      .deleteMatch(matchId, playerId)
       .then(async res => {
         setApiMessage(await res)
       })
@@ -111,7 +133,7 @@ function App() {
 
   const join = async (matchId) => {
     await matchService
-      .joinMatch(matchId, user.id)
+      .joinMatch(matchId, playerId)
       .then(async res => {
         setApiMessage(await res)
       })
@@ -120,7 +142,7 @@ function App() {
 
   const left = async (matchId) => {
     await matchService
-      .leftMatch(matchId, user.id)
+      .leftMatch(matchId, playerId)
       .then(async res => {
         setApiMessage(await res)
       })
@@ -137,6 +159,10 @@ function App() {
     }
   }
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <div className='body'>
       <div className='header'>
@@ -145,7 +171,7 @@ function App() {
           <div className='config'>
             <button
               className={`${clientRequest === 'config' ? 'focus' : ''} config-button nav-button `}
-              onClick={() => config()}>Config
+              onClick={() => visitConfig()}>Config
             </button>
           </div>
         </div>
@@ -245,13 +271,13 @@ function App() {
             : null
           }
         </div>
-        <Config source={clientRequest} />
+        <Config source={clientRequest} user={user} />
         <div>
           {appMatchs.map((match, index) =>
             <Match
               key={index}
               match={match}
-              user={user.id}
+              user={playerId}
               source={clientRequest}
               join={() => join(match.id_match)}
               left={() => left(match.id_match)}
@@ -264,7 +290,7 @@ function App() {
       <div className='navbar'>
         <button
           className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
-          onClick={() => showOpenMatchs()}>Open Matchs
+          onClick={() => showOpenMatchs()} >Open Matchs
         </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
         <button

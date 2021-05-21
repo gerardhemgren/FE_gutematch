@@ -3,20 +3,28 @@ import AuthenticationButton from "./authentication-button";
 
 import './Config.css'
 
-const Config = ({ source }) => {
+const Config = ({ source, user }) => {
 
-  const setU = () => {
-    localStorage.setItem('userId', 5)
+  const Profile = () => {
+    if (user) {
+      const { name, picture } = user
+      return (
+        <div>
+          {name}
+          <img src={picture} alt='profile-pic'></img>
+        </div>
+      )
+    } else {
+      return null
+    }
   }
 
   if (source === 'config') {
     return (
       <div className='config'>
-        <div className="navbar-nav ml-auto">
+        <div className='profile'>
           <AuthenticationButton />
-        </div>
-        <div>
-          <button onClick={() => setU()}>Log In with 'Test User'</button>
+          <Profile />
         </div>
       </div>
     )
