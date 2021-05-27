@@ -15,38 +15,66 @@ import './Form.css';
 const dayjs = require('dayjs')
 
 function App() {
-  const { isLoading, user } = useAuth0();
+  const { isLoading, user } = useAuth0()
 
   let playerSub = user?.sub;
-  const [playerId, setPlayerId] = useState('')
-  
+  const [playerId, setPlayerId] = useState(0)
+
   useEffect(() => {
-    if (!isLoading) {
-      userService
+
+    const getId = async () => {
+      const fetch = await userService
         .logIn_signUp(playerSub)
-        .then(res => {
+        .then(async res => {
           setPlayerId(res[0].id)
-          console.log(res[0].id)
+          console.log('get pi', playerId)
+          console.log('get ps', playerSub)
+          console.log('get res', await res[0].id)
+          console.log(isLoading)
+        })
+      return fetch
+    }
+
+    const showOpenMatchs = async () => {
+      await matchService
+        .getOpenMatchs(playerId)
+        .then(res => {
+          setClientRequest('showOpenMatchs')
+          setTitle('Open matchs')
+          if (typeof res === 'object') {
+            setAppMatchs(res)
+          } else {
+            setAppMatchs([])
+          }
         })
     }
-  },[playerSub, isLoading])
+
+    if (!isLoading) {
+      getId()
+      showOpenMatchs()
+    }
+
+  }, [playerId, isLoading, playerSub])
 
   const [clientRequest, setClientRequest] = useState('')
   const [title, setTitle] = useState('')
+
   const [appMatchs, setAppMatchs] = useState([])
   const [apiMessage, setApiMessage] = useState('')
 
   const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' })
 
   // NAVIGATION
-  /*   const showAllMatchs = async () => {
-      await matchService
-        .getAllMatchs()
-        .then(res => {
-          setClientRequest(undefined)
-          setAppMatchs(res)
-        })
-    } */
+  const showAllMatchs = async () => {
+    await matchService
+      .getAllMatchs()
+      .then(res => {
+        setClientRequest('showAllMatchs')
+        setAppMatchs(res)
+        setTitle('Open matchs')
+        if (!user) setApiMessage('You must be logged to join a match')
+      })
+  }
 
   const showOpenMatchs = async () => {
     await matchService
@@ -64,7 +92,6 @@ function App() {
   }
 
   const showMyMatchs = async () => {
-    // getUserId()
     await matchService
       .getMyMatchs(playerId)
       .then(res => {
@@ -83,14 +110,13 @@ function App() {
     setAppMatchs([])
     setClientRequest('createMatch')
     setTitle('Create a match')
-    // getUserId()
+    if (!user) setApiMessage('You must be logged to create a match')
   }
 
   const visitConfig = () => {
     setAppMatchs([])
     setClientRequest('config')
     setTitle('Config')
-    // getUserId()
   }
 
   // FORM-ACTIONS
@@ -155,16 +181,13 @@ function App() {
     if (res) {
       setTimeout(() => {
         setApiMessage('')
-      }, 6000);
+      }, 8000);
     }
-  }
-
-  if (isLoading) {
-    return null;
   }
 
   return (
     <div className='body'>
+
       <div className='header'>
         <div className='topvar'>
           <img src={logo} alt='logo'></img>
@@ -179,15 +202,18 @@ function App() {
           <Message msg={apiMessage} action={closeMessage()} />
         </div>
         <div className='title'>
-          {title}
+          {title} {(clientRequest === 'showOpenMatchs' && appMatchs.length > 0)
+            || clientRequest === 'showMyMatchs'
+            || clientRequest === 'showAllMatchs'
+            ? `— ${appMatchs.length}` : ''}
         </div>
       </div>
 
       <div className='main'>
         <div>
-          {clientRequest === 'createMatch' ?
-            <form onSubmit={addMatch} onReset={resetForm} className='form'>
 
+          {clientRequest === 'createMatch' ?
+            <form onSubmit={user ? addMatch : visitConfig} onReset={resetForm} className='form'>
               <fieldset>
                 <legend>Date</legend>
                 <div className='date-field'>
@@ -251,12 +277,12 @@ function App() {
                     className='input-name'
                     required
                     placeholder='Match name'
-                    maxLength='10'
+                    maxLength='12'
                     name='name'
                     value={inputMatch.name}
                     onChange={handleInputCreateForm}
                   />
-                  <label>Max: 10 characteres</label>
+                  <label>Max: 12 characteres</label>
                 </fieldset>
               </div>
 
@@ -265,7 +291,7 @@ function App() {
                   <p className='arrow'>↑</p>
                   Reset
                 </button>
-                <button type='submit' className='action-button'>Create →</button>
+                <button type='submit' className='action-button primary'>Create →</button>
               </div>
             </form>
             : null
@@ -290,7 +316,7 @@ function App() {
       <div className='navbar'>
         <button
           className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
-          onClick={() => showOpenMatchs()} >Open Matchs
+          onClick={user ? () => showOpenMatchs() : () => showAllMatchs()} >Open Matchs
         </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
         <button

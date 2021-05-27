@@ -26,34 +26,41 @@
   flex-direction: row;
   align-items: flex-end;
   column-gap: 8px;
-  font-size: 8px;
 }
 
 .players div:nth-child(n) {
   width: 16px;
-  padding-bottom: 2px;
+  padding: 4px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: black;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .field {
   border-bottom: 1px solid transparent;
+  background-color: white;
 }
 
 .joined {
   border-bottom: 1px solid;
-  color: #00FF2B;
+  background-color: #00FF2B;
 }
 
 .missed {
   border-bottom: 1px solid;
-  color: rgba(255, 255, 255, .5);
+  background-color: rgba(255, 255, 255, .5);
 }
 
 .info {
   height: 48px;
   width: 80px;
+  padding-left: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  text-transform: capitalize;
 }
 
 .name {
@@ -68,6 +75,7 @@
 .action {
   width: 72px;
   height: 28px;
+  padding-right: 12px;
   display: flex;
   align-self: center;
   justify-content: flex-end;
@@ -76,7 +84,7 @@
 
 .action button {
   background-color: transparent;
-  color: yellow;
+  color: #ffff00;
   font-size: 8px;
   border-style: none;
   border: 1px solid yellow;

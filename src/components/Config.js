@@ -23,8 +23,8 @@ const Config = ({ source, user }) => {
     return (
       <div className='config'>
         <div className='profile'>
-          <AuthenticationButton />
           <Profile />
+          <AuthenticationButton />
         </div>
       </div>
     )

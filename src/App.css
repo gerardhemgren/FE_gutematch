@@ -1,3 +1,10 @@
+.primary{
+  color: #00FF2B;
+}
+.secondary{
+  color: #ffff00
+}
+
 .body {
   margin: 20px 0px 16px;
   font-family: 'Segoe UI';
@@ -22,7 +29,7 @@
 
 .message-layout {
   position: fixed;
-  top: 60px;
+  top: 160px;
   width: 327px;
 }
 
@@ -38,7 +45,7 @@
 }
 
 .bottom-space {
-  height: 68px
+  height: 40px
 }
 
 .navbar {
@@ -48,7 +55,7 @@
   height: 28px;
   display: flex;
   justify-content: space-between;
-  padding: 40px 16px 16px;
+  padding: 32px 16px 16px;
   background-color: #01252E;
   font-size: 8px;
 }
