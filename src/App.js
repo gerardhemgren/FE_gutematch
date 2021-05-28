@@ -27,10 +27,10 @@ function App() {
         .logIn_signUp(playerSub)
         .then(async res => {
           setPlayerId(res[0].id)
-          console.log('get pi', playerId)
-          console.log('get ps', playerSub)
-          console.log('get res', await res[0].id)
-          console.log(isLoading)
+          // console.log('get pi', playerId)
+          // console.log('get ps', playerSub)
+          // console.log('get res', await res[0].id)
+          // console.log(isLoading)
         })
       return fetch
     }
