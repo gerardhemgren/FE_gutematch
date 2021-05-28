@@ -13,12 +13,14 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
   const { /* id_match, */ name, date, location, /* is_full, */ players, players_field, id_admin } = match
 
   let actionButton;
-  if (source === 'showOpenMatchs') {
-    actionButton = <button onClick={join}>Join</button>
-  } else if (source === 'showMyMatchs') {
-    actionButton = <button onClick={left}>Left</button>
-  } else {
-    actionButton = undefined
+  if (user !== 32) {
+    if (source === 'showOpenMatchs') {
+      actionButton = <button onClick={join}>Join</button>
+    } else if (source === 'showMyMatchs') {
+      actionButton = <button onClick={left}>Left</button>
+    } else {
+      actionButton = undefined
+    }
   }
 
   let deleteButton

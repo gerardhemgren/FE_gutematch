@@ -102,6 +102,7 @@ function App() {
         } else {
           setAppMatchs([])
           setApiMessage(res)
+          if (!user) setApiMessage('You must be logged to join a match')
         }
       })
   }
