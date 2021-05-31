@@ -1,8 +1,8 @@
 .primary{
-  color: #00FF2B;
+  color: #ffffff;
 }
 .secondary{
-  color: #ffff00
+  color: #ffffff
 }
 
 .body {
@@ -45,14 +45,14 @@
 }
 
 .bottom-space {
-  height: 40px
+  height: 80px
 }
 
 .navbar {
   position: fixed;
   bottom: 0px;
   width: 328px;
-  height: 28px;
+  height: 32px;
   display: flex;
   justify-content: space-between;
   padding: 32px 16px 16px;
@@ -66,19 +66,29 @@
   outline-style: none;
   background: transparent;
   border-top: solid transparent 4px;
+  padding-top: 8px;
   color: rgba(255, 255, 255, .5);
   cursor: pointer;
   transition: .5s;
 }
 
 .config-button {
+  border-style: none;
+  border-width: 0px;
+  outline-style: none;
+  background: transparent;
   font-size: 12px;
   color: rgba(255, 255, 255, .5);
-  transition: .5s;
+  transition: .5s;  
+  cursor: pointer;
 }
 
 .focus {
   transition: .5s;
   border-top: solid white 4px;
   color: white;
+}
+
+.none {
+  display: none;
 }

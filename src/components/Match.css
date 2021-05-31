@@ -1,5 +1,5 @@
 .date {
-  font-size: 8px;
+  font-size: 10px;
   padding: 8px 0 16px 4px;
   border-top: solid 1px rgba(255, 255, 255, .2);
 }
@@ -7,12 +7,12 @@
 .match {
   display: flex;
   font-size: 16px;
-  padding: 0px 0px 52px 16px;
+  padding: 0px 0px 4px 16px;
 }
 
 .time {
   height: 40px;
-  width: 88px;
+  width: 96px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -20,7 +20,7 @@
 }
 
 .players {
-  width: 88px;
+  width: 112px;
   height: 38px;
   display: flex;
   flex-direction: row;
@@ -54,9 +54,10 @@
 }
 
 .info {
-  height: 48px;
-  width: 80px;
-  padding-left: 16px;
+  /* height: 48px; */
+  /* width: 80px; */
+  padding-left: 112px;
+  padding-bottom: 24px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -68,16 +69,16 @@
 }
 
 .location {
-  font-size: 8px;
+  font-size: 10px;
   color: rgba(255, 255, 255, .5);
 }
 
 .action {
-  width: 72px;
+  width: 112px;
   height: 28px;
   padding-right: 12px;
   display: flex;
-  align-self: center;
+  align-self: flex-end;
   justify-content: flex-end;
   column-gap: 8px;
 }

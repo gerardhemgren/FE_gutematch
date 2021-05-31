@@ -194,7 +194,7 @@ function App() {
           <img src={logo} alt='logo'></img>
           <div className='config'>
             <button
-              className={`${clientRequest === 'config' ? 'focus' : ''} config-button nav-button `}
+              className={`${clientRequest === 'config' ? 'none' : ''} config-button`}
               onClick={() => visitConfig()}>Config
             </button>
           </div>
@@ -215,30 +215,6 @@ function App() {
 
           {clientRequest === 'createMatch' ?
             <form onSubmit={user ? addMatch : visitConfig} onReset={resetForm} className='form'>
-              <fieldset>
-                <legend>Date</legend>
-                <div className='date-field'>
-                  <input
-                    required
-                    className='input-date'
-                    type="date"
-                    name="date"
-                    min={dayjs().format('YYYY-MM-DD')}
-                    max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
-                    value={inputMatch.date}
-                    onChange={handleInputCreateForm}>
-                  </input>
-                  <input
-                    required
-                    className='input-time'
-                    type="time"
-                    name="time"
-                    value={inputMatch.time}
-                    onChange={handleInputCreateForm}>
-                  </input>
-                </div>
-              </fieldset>
-
 
               <fieldset>
                 <legend>Location</legend>
@@ -251,7 +227,6 @@ function App() {
                   onChange={handleInputCreateForm}
                 />
                 <label>Adress 1234, City, Country</label>
-
               </fieldset>
 
               <div className='name-field'>
@@ -270,20 +245,48 @@ function App() {
                       <option value="22">F — 11</option>
                     </select>
                   </div>
-
                 </fieldset>
+
                 <fieldset>
                   <legend>Name</legend>
                   <input
                     className='input-name'
                     required
                     placeholder='Match name'
-                    maxLength='12'
+                    maxLength='10'
                     name='name'
                     value={inputMatch.name}
                     onChange={handleInputCreateForm}
                   />
-                  <label>Max: 12 characteres</label>
+                  <label>Max: 10 characteres</label>
+                </fieldset>
+              </div>
+
+              <div className='date-field'>
+                <fieldset>
+                  <legend>Date</legend>
+                  <input
+                    required
+                    className='input-date'
+                    type="date"
+                    name="date"
+                    min={dayjs().format('YYYY-MM-DD')}
+                    max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
+                    value={inputMatch.date}
+                    onChange={handleInputCreateForm}>
+                  </input>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Time</legend>
+                  <input
+                    required
+                    className='input-time'
+                    type="time"
+                    name="time"
+                    value={inputMatch.time}
+                    onChange={handleInputCreateForm}>
+                  </input>
                 </fieldset>
               </div>
 
@@ -316,7 +319,7 @@ function App() {
 
       <div className='navbar'>
         <button
-          className={`${clientRequest === 'showOpenMatchs' ? 'focus' : ''} nav-button`}
+          className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : ''} nav-button`}
           onClick={user ? () => showOpenMatchs() : () => showAllMatchs()} >Open Matchs
         </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}

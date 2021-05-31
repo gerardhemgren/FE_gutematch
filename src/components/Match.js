@@ -30,8 +30,9 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
   return (
     <div id={`${source}`} >
       <div className='date'>
-        {dayjs(date).utc().format('DD —— dddd, MMMM. YYYY')}
+        {dayjs(date).utc().format('DD — dddd, MMMM. YYYY')}
       </div>
+
       <div className='match'>
         <div className='time'>
           {dayjs(date).utc().format('HH:mm')}
@@ -42,15 +43,14 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
           <div className='joined'>{players}</div>
           <div className='missed'>{players_field - players}</div>
         </div>
-
-        <div className='info'>
-          <div className='name'>{name}</div>
-          <div className='location'>{location}</div>
-        </div>
-
         <div className='action'>
           {deleteButton} {actionButton}
         </div>
+      </div>
+
+      <div className='info'>
+        <div className='name'>{name}</div>
+        <div className='location'>{location}</div>
       </div>
     </div>
   )
