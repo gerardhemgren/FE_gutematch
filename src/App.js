@@ -17,8 +17,12 @@ const dayjs = require('dayjs')
 function App() {
   const { isLoading, user } = useAuth0()
 
-  let playerSub = user?.sub;
-  const [playerId, setPlayerId] = useState(0)
+  // fake auth !
+  let lsI = localStorage.getItem('i')
+  let lsS = localStorage.getItem('s')
+  // OR must be deleted
+  let playerSub = lsS || user?.sub;
+  const [playerId, setPlayerId] = useState(lsI || 0)
 
   useEffect(() => {
 
@@ -27,6 +31,9 @@ function App() {
         .logIn_signUp(playerSub)
         .then(async res => {
           setPlayerId(res[0].id)
+          // fake auth ! 
+          if (playerId === 32) { localStorage.setItem('i', res[0].id) }
+          if (playerSub === 'undefined') localStorage.setItem('s', user?.sub)
           // console.log('get pi', playerId)
           // console.log('get ps', playerSub)
           // console.log('get res', await res[0].id)
@@ -54,7 +61,7 @@ function App() {
       showOpenMatchs()
     }
 
-  }, [playerId, isLoading, playerSub])
+  }, [playerId, isLoading, playerSub, user?.sub])
 
   const [clientRequest, setClientRequest] = useState('')
   const [title, setTitle] = useState('')
@@ -111,7 +118,8 @@ function App() {
     setAppMatchs([])
     setClientRequest('createMatch')
     setTitle('Create a match')
-    if (!user) setApiMessage('You must be logged to create a match')
+    if (playerId === 32) setApiMessage('You must be logged to create a match')
+    // !user
   }
 
   const visitConfig = () => {
@@ -214,7 +222,8 @@ function App() {
         <div>
 
           {clientRequest === 'createMatch' ?
-            <form onSubmit={user ? addMatch : visitConfig} onReset={resetForm} className='form'>
+            <form onSubmit={playerId !== 32 ? addMatch : visitConfig} onReset={resetForm} className='form'>
+              {/* condition: user */}
 
               <fieldset>
                 <legend>Location</legend>
@@ -320,7 +329,8 @@ function App() {
       <div className='navbar'>
         <button
           className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : ''} nav-button`}
-          onClick={user ? () => showOpenMatchs() : () => showAllMatchs()} >Open Matchs
+          onClick={playerId !== 32 ? () => showOpenMatchs() : () => showAllMatchs()} >Open Matchs
+          {/* condition: user */}
         </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
         <button
