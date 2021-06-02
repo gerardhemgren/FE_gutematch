@@ -199,7 +199,11 @@ function App() {
 
       <div className='header'>
         <div className='topvar'>
-          <img src={logo} alt='logo'></img>
+          <div className='logo'>
+          gute
+          <span>match</span>
+          </div>
+          {/* <img src={logo} alt='logo'></img> */}
           <div className='config'>
             <button
               className={`${clientRequest === 'config' ? 'none' : ''} config-button`}

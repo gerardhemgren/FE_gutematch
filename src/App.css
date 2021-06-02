@@ -26,6 +26,15 @@
   justify-content: space-between;
   align-items: flex-end;
 }
+.logo {
+  font-size: 12px;
+  font-weight: bold;
+}
+.logo span{
+  font-size: 8px;
+  vertical-align: super;
+  font-weight: lighter;
+}
 
 .message-layout {
   position: fixed;
