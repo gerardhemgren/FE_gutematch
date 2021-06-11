@@ -18,7 +18,7 @@ const LogoutButton = () => {
         resetLs()
       }
     >
-      ← Log Out
+      Log Out
     </button>
   );
 };

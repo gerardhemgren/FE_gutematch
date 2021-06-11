@@ -1,5 +1,4 @@
 import React from 'react'
-import './Match.css'
 
 const dayjs = require('dayjs')
 // require('dayjs/locale/es')
@@ -28,9 +27,14 @@ const Match = ({ user, match, source, join, left, deleteMatch }) => {
     deleteButton = <button onClick={deleteMatch}>Del</button>
   }
   return (
-    <div id={`${source}`} >
+    <div id={`${source}`} className='match-container'>
       <div className='date'>
-        {dayjs(date).utc().format('DD — dddd, MMMM. YYYY')}
+        <div className='day'>
+          {dayjs(date).utc().format('DD — dddd')}
+        </div>
+        <div className='month-year'>
+          {dayjs(date).utc().format(', MMMM. YYYY')}
+        </div>
       </div>
 
       <div className='match'>

@@ -8,8 +8,6 @@ import Match from './components/Match'
 import Message from './components/Message';
 import Config from './components/Config';
 
-import logo from './gute_match.png'
-import './App.css';
 import './Form.css';
 
 const dayjs = require('dayjs')
@@ -195,18 +193,18 @@ function App() {
   }
 
   return (
-    <div className='body'>
-
+    <div className='bodyApp'>
+      <div className='bg'></div>
+      <div className='bg2'></div>
       <div className='header'>
-        <div className='topvar'>
+        <div className='topbar'>
           <div className='logo'>
           gute
           <span>match</span>
           </div>
-          {/* <img src={logo} alt='logo'></img> */}
           <div className='config'>
             <button
-              className={`${clientRequest === 'config' ? 'none' : ''} config-button`}
+              className={`${clientRequest === 'config' ? 'none' : 'config-button'}`}
               onClick={() => visitConfig()}>Config
             </button>
           </div>
@@ -303,12 +301,12 @@ function App() {
                 </fieldset>
               </div>
 
-              <div className='action-box'>
-                <button type='reset' value='Reset' className='reset-button'>
-                  <p className='arrow'>↑</p>
+              <div className='action'>
+                <button type='reset' value='Reset' /* className='reset-button' */>
+                  {/* <p className='arrow'>↑</p> */}
                   Reset
                 </button>
-                <button type='submit' className='action-button primary'>Create →</button>
+                <button type='submit' /* className='action-button' */>Create</button>
               </div>
             </form>
             : null
