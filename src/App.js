@@ -35,8 +35,8 @@ function App() {
             // console.log('if get res', await res[0].id)
             // console.log('if get res', await res[0].name)
             setuAuth(await res[0].id)
-            // localStorage.setItem('lid', await res[0].id)
-            // localStorage.setItem('ln', await res[0].name)
+            localStorage.setItem('lid', await res[0].id)
+            localStorage.setItem('ln', await res[0].name)
           })
           // .then(() => console.log('if useE uA', uAuth))
       } else {
