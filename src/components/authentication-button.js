@@ -8,7 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const AuthenticationButton = () => {
   const { isAuthenticated } = useAuth0();
   // global condition must be deleted 
-  if (localStorage.getItem('s') === 'undefined') {
+  if (localStorage.getItem('ls') !== undefined) {
     return isAuthenticated ? <LogoutButton /> : <LoginButton />;
   } else {
     return <LogoutButton />

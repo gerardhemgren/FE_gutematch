@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const logIn_signUp = (userId) => {
-    const request = axios.post(`/config/${userId}`)
+const logIn_signUp = (userId, name) => {
+    const request = axios.post(`/config/${userId}`, name)
     return request
         .then(response => response.data)
 }

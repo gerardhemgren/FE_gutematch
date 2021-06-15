@@ -13,53 +13,39 @@ import './Form.css';
 const dayjs = require('dayjs')
 
 function App() {
-  const { isLoading, user } = useAuth0()
+  const lsId = localStorage.getItem('lid') || undefined
+  const lsName = localStorage.getItem('ln') || undefined
 
-  // fake auth !
-  let lsI = localStorage.getItem('i')
-  let lsS = localStorage.getItem('s')
-  // OR must be deleted
-  let playerSub = lsS || user?.sub;
-  const [playerId, setPlayerId] = useState(lsI || 0)
+  const { user, isLoading } = useAuth0()
+  const lsSub = user ? user.sub : undefined
+  const [uAuth, setuAuth] = useState(lsId || 0)
+  // const uAuth = lsId || 0
 
   useEffect(() => {
-
-    const getId = async () => {
-      const fetch = await userService
-        .logIn_signUp(playerSub)
-        .then(async res => {
-          setPlayerId(res[0].id)
-          // fake auth ! 
-          if (playerId === 32) { localStorage.setItem('i', res[0].id) }
-          if (playerSub === 'undefined') localStorage.setItem('s', user?.sub)
-          // console.log('get pi', playerId)
-          // console.log('get ps', playerSub)
-          // console.log('get res', await res[0].id)
-          // console.log(isLoading)
-        })
-      return fetch
-    }
-
-    const showOpenMatchs = async () => {
-      await matchService
-        .getOpenMatchs(playerId)
-        .then(res => {
-          setClientRequest('showOpenMatchs')
-          setTitle('Open matchs')
-          if (typeof res === 'object') {
-            setAppMatchs(res)
-          } else {
-            setAppMatchs([])
-          }
-        })
-    }
-
     if (!isLoading) {
-      getId()
-      showOpenMatchs()
+      // console.log('parent if')
+      // console.log('useE uA', uAuth)
+      // console.log('useE sub', user?.sub)
+      if (user?.sub) {
+        // console.log('children if')
+        userService
+          .logIn_signUp(lsSub, user?.name)
+          .then(async res => {
+            // console.log('grandchildren')
+            // console.log('if get res', await res[0].id)
+            // console.log('if get res', await res[0].name)
+            setuAuth(await res[0].id)
+            // localStorage.setItem('lid', await res[0].id)
+            // localStorage.setItem('ln', await res[0].name)
+          })
+          // .then(() => console.log('if useE uA', uAuth))
+      } else {
+        // console.log('children else')
+      }
+    } else {
+      showAllMatchs()
     }
-
-  }, [playerId, isLoading, playerSub, user?.sub])
+  }, [isLoading, uAuth, user, lsSub])
 
   const [clientRequest, setClientRequest] = useState('')
   const [title, setTitle] = useState('')
@@ -69,6 +55,7 @@ function App() {
 
   const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' })
 
+
   // NAVIGATION
   const showAllMatchs = async () => {
     await matchService
@@ -76,14 +63,15 @@ function App() {
       .then(res => {
         setClientRequest('showAllMatchs')
         setAppMatchs(res)
-        setTitle('Open matchs')
-        if (!user) setApiMessage('You must be logged to join a match')
+        setTitle('All matchs')
+        // if (!user) setApiMessage('You must be logged to join a match')
       })
   }
 
-  const showOpenMatchs = async () => {
+  /* const showOpenMatchs = async () => {
+    getId()
     await matchService
-      .getOpenMatchs(playerId)
+      .getOpenMatchs(uAuth)
       .then(res => {
         setClientRequest('showOpenMatchs')
         setTitle('Open matchs')
@@ -94,11 +82,11 @@ function App() {
           setApiMessage(res)
         }
       })
-  }
+  } */
 
   const showMyMatchs = async () => {
     await matchService
-      .getMyMatchs(playerId)
+      .getMyMatchs(user ? uAuth : 0)
       .then(res => {
         setClientRequest('showMyMatchs')
         setTitle('My matchs')
@@ -106,8 +94,7 @@ function App() {
           setAppMatchs(res)
         } else {
           setAppMatchs([])
-          setApiMessage(res)
-          if (!user) setApiMessage('You must be logged to join a match')
+          user ? setApiMessage(res) : setApiMessage('You must be logged to join a match')
         }
       })
   }
@@ -116,8 +103,7 @@ function App() {
     setAppMatchs([])
     setClientRequest('createMatch')
     setTitle('Create a match')
-    if (playerId === 32) setApiMessage('You must be logged to create a match')
-    // !user
+    user ? setApiMessage('') : setApiMessage('You must be logged to create a match')
   }
 
   const visitConfig = () => {
@@ -135,7 +121,6 @@ function App() {
     setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' })
   }
 
-  // MATCH-ACTIONS
   const addMatch = async (event) => {
     event.preventDefault()
     const matchInfo = {
@@ -146,7 +131,7 @@ function App() {
     }
 
     await matchService
-      .createMatch(matchInfo, playerId)
+      .createMatch(matchInfo, uAuth)
       .then(async res => {
         setApiMessage(await res)
         if (res === 'Match created') {
@@ -155,9 +140,10 @@ function App() {
       })
   }
 
+  // MATCH-ACTIONS
   const deleteMatch = async (matchId) => {
     await matchService
-      .deleteMatch(matchId, playerId)
+      .deleteMatch(matchId, uAuth)
       .then(async res => {
         setApiMessage(await res)
       })
@@ -166,7 +152,7 @@ function App() {
 
   const join = async (matchId) => {
     await matchService
-      .joinMatch(matchId, playerId)
+      .joinMatch(matchId, uAuth)
       .then(async res => {
         setApiMessage(await res)
       })
@@ -175,7 +161,7 @@ function App() {
 
   const left = async (matchId) => {
     await matchService
-      .leftMatch(matchId, playerId)
+      .leftMatch(matchId, uAuth)
       .then(async res => {
         setApiMessage(await res)
       })
@@ -196,11 +182,12 @@ function App() {
     <div className='bodyApp'>
       <div className='bg'></div>
       <div className='bg2'></div>
+
       <div className='header'>
         <div className='topbar'>
           <div className='logo'>
-          gute
-          <span>match</span>
+            gute
+            <span>match</span>
           </div>
           <div className='config'>
             <button
@@ -209,9 +196,11 @@ function App() {
             </button>
           </div>
         </div>
+
         <div className='message-layout'>
           <Message msg={apiMessage} action={closeMessage()} />
         </div>
+
         <div className='title'>
           {title} {(clientRequest === 'showOpenMatchs' && appMatchs.length > 0)
             || clientRequest === 'showMyMatchs'
@@ -221,117 +210,120 @@ function App() {
       </div>
 
       <div className='main'>
-        <div>
 
-          {clientRequest === 'createMatch' ?
-            <form onSubmit={playerId !== 32 ? addMatch : visitConfig} onReset={resetForm} className='form'>
-              {/* condition: user */}
+        {clientRequest === 'createMatch' ?
+          <form onSubmit={addMatch} onReset={resetForm} className='form'>
+            {/* condition: user */}
 
+            <fieldset>
+              <legend>Location</legend>
+              <input
+                className='input-adress'
+                required
+                placeholder='Adress'
+                name='location'
+                value={inputMatch.location}
+                onChange={handleInputCreateForm}
+              />
+              <label>Adress 1234, City, Country</label>
+            </fieldset>
+
+            <div className='name-field'>
               <fieldset>
-                <legend>Location</legend>
-                <input
-                  className='input-adress'
-                  required
-                  placeholder='Adress'
-                  name='location'
-                  value={inputMatch.location}
-                  onChange={handleInputCreateForm}
-                />
-                <label>Adress 1234, City, Country</label>
+                <legend>Field</legend>
+                <div>
+                  <select
+                    className='drop-players-field'
+                    name="players_field"
+                    type='number'
+                    value={inputMatch.players_field}
+                    onChange={handleInputCreateForm}>
+                    <option value="10">F — 5</option>
+                    <option value="14">F — 7</option>
+                    <option value="18">F — 9</option>
+                    <option value="22">F — 11</option>
+                  </select>
+                </div>
               </fieldset>
 
-              <div className='name-field'>
-                <fieldset>
-                  <legend>Field</legend>
-                  <div>
-                    <select
-                      className='drop-players-field'
-                      name="players_field"
-                      type='number'
-                      value={inputMatch.players_field}
-                      onChange={handleInputCreateForm}>
-                      <option value="10">F — 5</option>
-                      <option value="14">F — 7</option>
-                      <option value="18">F — 9</option>
-                      <option value="22">F — 11</option>
-                    </select>
-                  </div>
-                </fieldset>
+              <fieldset>
+                <legend>Name</legend>
+                <input
+                  className='input-name'
+                  required
+                  placeholder='Match name'
+                  maxLength='10'
+                  name='name'
+                  value={inputMatch.name}
+                  onChange={handleInputCreateForm}
+                />
+                <label>Max: 10 characteres</label>
+              </fieldset>
+            </div>
 
-                <fieldset>
-                  <legend>Name</legend>
-                  <input
-                    className='input-name'
-                    required
-                    placeholder='Match name'
-                    maxLength='10'
-                    name='name'
-                    value={inputMatch.name}
-                    onChange={handleInputCreateForm}
-                  />
-                  <label>Max: 10 characteres</label>
-                </fieldset>
-              </div>
+            <div className='date-field'>
+              <fieldset>
+                <legend>Date</legend>
+                <input
+                  required
+                  className='input-date'
+                  type="date"
+                  name="date"
+                  min={dayjs().format('YYYY-MM-DD')}
+                  max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
+                  value={inputMatch.date}
+                  onChange={handleInputCreateForm}>
+                </input>
+              </fieldset>
 
-              <div className='date-field'>
-                <fieldset>
-                  <legend>Date</legend>
-                  <input
-                    required
-                    className='input-date'
-                    type="date"
-                    name="date"
-                    min={dayjs().format('YYYY-MM-DD')}
-                    max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
-                    value={inputMatch.date}
-                    onChange={handleInputCreateForm}>
-                  </input>
-                </fieldset>
+              <fieldset>
+                <legend>Time</legend>
+                <input
+                  required
+                  className='input-time'
+                  type="time"
+                  name="time"
+                  value={inputMatch.time}
+                  onChange={handleInputCreateForm}>
+                </input>
+              </fieldset>
+            </div>
 
-                <fieldset>
-                  <legend>Time</legend>
-                  <input
-                    required
-                    className='input-time'
-                    type="time"
-                    name="time"
-                    value={inputMatch.time}
-                    onChange={handleInputCreateForm}>
-                  </input>
-                </fieldset>
-              </div>
+            <div className='action'>
+              <button type='reset' value='Reset' /* className='reset-button' */>
+                {/* <p className='arrow'>↑</p> */}
+                Reset
+              </button>
+              <button type='submit' /* className='action-button' */>Create</button>
+            </div>
+          </form>
+          : null
+        }
 
-              <div className='action'>
-                <button type='reset' value='Reset' /* className='reset-button' */>
-                  {/* <p className='arrow'>↑</p> */}
-                  Reset
-                </button>
-                <button type='submit' /* className='action-button' */>Create</button>
-              </div>
-            </form>
-            : null
-          }
-        </div>
-        <Config source={clientRequest} user={user} />
+        <Config source={clientRequest} user={{ lsName }} />
+
         <div>
           {appMatchs.map((match, index) =>
             <Match
               key={index}
               match={match}
-              user={playerId}
+              user={uAuth}
               source={clientRequest}
               join={() => join(match.id_match)}
               left={() => left(match.id_match)}
               deleteMatch={() => deleteMatch(match.id_match)}
-            />)}
+            />
+          )}
+          <div className='bottom-space'></div>
         </div>
-        <div className='bottom-space'></div>
+
+
       </div>
 
       <div className='navbar'>
         <button
           className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : ''} nav-button`}
-          onClick={playerId !== 32 ? () => showOpenMatchs() : () => showAllMatchs()} >Open Matchs
+          onClick={() => showAllMatchs()} >Open Matchs
           {/* condition: user */}
         </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}

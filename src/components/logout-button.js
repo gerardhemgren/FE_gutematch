@@ -6,8 +6,9 @@ const LogoutButton = () => {
 
   // logout func must be placed on onClick
   const resetLs = () => {
-    localStorage.setItem('i', 0)
-    localStorage.setItem('s', 'undefined')
+    localStorage.removeItem('ls')
+    localStorage.removeItem('lid')
+    localStorage.removeItem('ln')
     logout({ returnTo: window.location.origin })
   }
 

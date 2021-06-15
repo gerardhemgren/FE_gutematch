@@ -4,14 +4,12 @@ import AuthenticationButton from "./authentication-button";
 // import './Config.css'
 
 const Config = ({ source, user }) => {
-
   const Profile = () => {
     if (user) {
-      const { name, picture } = user
+      const { lsName } = user
       return (
         <div>
-          {name}
-          <img src={picture} alt='profile-pic'></img>
+          {lsName}
         </div>
       )
     } else {
