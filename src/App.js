@@ -13,38 +13,78 @@ import './Form.css';
 const dayjs = require('dayjs')
 
 function App() {
-  const lsId = localStorage.getItem('lid') || undefined
-  const lsName = localStorage.getItem('ln') || undefined
+  const lsId = localStorage.getItem('lid')
+  const lsName = localStorage.getItem('ln')
 
   const { user, isLoading } = useAuth0()
   const lsSub = user ? user.sub : undefined
   const [uAuth, setuAuth] = useState(lsId || 0)
   // const uAuth = lsId || 0
 
+  
   useEffect(() => {
+    const showAllMatchs = async () => {
+      await matchService
+        .getAllMatchs()
+        .then(res => {
+          setClientRequest('showAllMatchs')
+          setAppMatchs(res)
+          setTitle('All matchs')
+          setApiMessage('You must be logged to join a match')
+        })
+    }
+  
+    const showOpenMatchs = async () => {
+      await matchService
+        .getOpenMatchs(uAuth)
+        .then(res => {
+          setClientRequest('showOpenMatchs')
+          setTitle('Open matchs')
+          if (typeof res === 'object') {
+            setAppMatchs(res)
+          } else {
+            setAppMatchs([])
+            setApiMessage(res)
+          }
+        })
+    }
+    const nav = () => {
+      if (uAuth !== 0) {
+        showOpenMatchs()
+      } else {
+        showAllMatchs()
+      }
+    }
+
     if (!isLoading) {
-      // console.log('parent if')
-      // console.log('useE uA', uAuth)
-      // console.log('useE sub', user?.sub)
+      console.log('isLoading false')
+      console.log('useE uA', uAuth)
+      console.log('useE sub', user?.sub)
       if (user?.sub) {
-        // console.log('children if')
+        console.log('user.sub true')
+        console.log(user.sub, user.name)
         userService
-          .logIn_signUp(lsSub, user?.name)
+          .logIn_signUp(lsSub, user.name)
           .then(async res => {
-            // console.log('grandchildren')
-            // console.log('if get res', await res[0].id)
-            // console.log('if get res', await res[0].name)
+            console.log('response ready')
+            console.log('if get res', await res[0].id)
+            console.log('if get res', await res[0].name)
             setuAuth(await res[0].id)
             localStorage.setItem('lid', await res[0].id)
             localStorage.setItem('ln', await res[0].name)
           })
-          // .then(() => console.log('if useE uA', uAuth))
+          .then(() => {
+            console.log('if useE uA', uAuth)
+            nav()
+          })
       } else {
-        // console.log('children else')
+        console.log('user.sub false')
+        nav()
       }
     } else {
-      showAllMatchs()
+      console.log('isLoading true')
     }
+
   }, [isLoading, uAuth, user, lsSub])
 
   const [clientRequest, setClientRequest] = useState('')
@@ -57,6 +97,7 @@ function App() {
 
 
   // NAVIGATION
+ 
   const showAllMatchs = async () => {
     await matchService
       .getAllMatchs()
@@ -64,12 +105,11 @@ function App() {
         setClientRequest('showAllMatchs')
         setAppMatchs(res)
         setTitle('All matchs')
-        // if (!user) setApiMessage('You must be logged to join a match')
+        if (!lsId) setApiMessage('You must be logged to join a match')
       })
   }
 
-  /* const showOpenMatchs = async () => {
-    getId()
+  const showOpenMatchs = async () => {
     await matchService
       .getOpenMatchs(uAuth)
       .then(res => {
@@ -82,11 +122,11 @@ function App() {
           setApiMessage(res)
         }
       })
-  } */
+  }
 
   const showMyMatchs = async () => {
     await matchService
-      .getMyMatchs(user ? uAuth : 0)
+      .getMyMatchs(uAuth)
       .then(res => {
         setClientRequest('showMyMatchs')
         setTitle('My matchs')
@@ -94,7 +134,7 @@ function App() {
           setAppMatchs(res)
         } else {
           setAppMatchs([])
-          user ? setApiMessage(res) : setApiMessage('You must be logged to join a match')
+          lsId ? setApiMessage(res) : setApiMessage('You must be logged to join a match')
         }
       })
   }
@@ -103,7 +143,7 @@ function App() {
     setAppMatchs([])
     setClientRequest('createMatch')
     setTitle('Create a match')
-    user ? setApiMessage('') : setApiMessage('You must be logged to create a match')
+    lsId ? setApiMessage('') : setApiMessage('You must be logged to create a match')
   }
 
   const visitConfig = () => {
@@ -213,7 +253,6 @@ function App() {
 
         {clientRequest === 'createMatch' ?
           <form onSubmit={addMatch} onReset={resetForm} className='form'>
-            {/* condition: user */}
 
             <fieldset>
               <legend>Location</legend>
@@ -290,11 +329,10 @@ function App() {
             </div>
 
             <div className='action'>
-              <button type='reset' value='Reset' /* className='reset-button' */>
-                {/* <p className='arrow'>↑</p> */}
+              <button type='reset' value='Reset'>
                 Reset
               </button>
-              <button type='submit' /* className='action-button' */>Create</button>
+              <button type='submit'>Create</button>
             </div>
           </form>
           : null
@@ -323,8 +361,7 @@ function App() {
       <div className='navbar'>
         <button
           className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : ''} nav-button`}
-          onClick={() => showAllMatchs()} >Open Matchs
-          {/* condition: user */}
+          onClick={lsId ? () => showOpenMatchs() : () => showAllMatchs()} >Open Matchs
         </button>
         {/* <button onClick={() => showAllMatchs()}>All Matchs</button> */}
         <button
