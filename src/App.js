@@ -19,7 +19,6 @@ function App() {
   const { user, isLoading } = useAuth0()
   const lsSub = user ? user.sub : undefined
   const [uAuth, setuAuth] = useState(lsId || 0)
-  // const uAuth = lsId || 0
 
   
   useEffect(() => {
@@ -30,7 +29,6 @@ function App() {
           setClientRequest('showAllMatchs')
           setAppMatchs(res)
           setTitle('All matchs')
-          setApiMessage('You must be logged to join a match')
         })
     }
   
@@ -57,32 +55,33 @@ function App() {
     }
 
     if (!isLoading) {
-      console.log('isLoading false')
-      console.log('useE uA', uAuth)
-      console.log('useE sub', user?.sub)
-      if (user?.sub) {
-        console.log('user.sub true')
-        console.log(user.sub, user.name)
+      // console.log('isLoading false')
+      // console.log('useE uA', uAuth)
+      // console.log('useE sub', user?.sub)
+      if (user) {
+        // console.log('user.sub true')
+        // console.log(user.sub)
+        // console.log(user.name)
         userService
           .logIn_signUp(lsSub, user.name)
           .then(async res => {
-            console.log('response ready')
-            console.log('if get res', await res[0].id)
-            console.log('if get res', await res[0].name)
+            // console.log('response ready')
+            // console.log(user.name)
+            // console.log('res id', await res[0].id)
+            // console.log('res name', await res[0].name)
             setuAuth(await res[0].id)
             localStorage.setItem('lid', await res[0].id)
             localStorage.setItem('ln', await res[0].name)
-          })
-          .then(() => {
-            console.log('if useE uA', uAuth)
+            // console.log('res useE uA', uAuth)
             nav()
+            // console.log('------------')
           })
       } else {
-        console.log('user.sub false')
+        // console.log('user.sub false')
         nav()
       }
     } else {
-      console.log('isLoading true')
+      // console.log('isLoading true')
     }
 
   }, [isLoading, uAuth, user, lsSub])
@@ -220,8 +219,8 @@ function App() {
 
   return (
     <div className='bodyApp'>
+
       <div className='bg'></div>
-      <div className='bg2'></div>
 
       <div className='header'>
         <div className='topbar'>
