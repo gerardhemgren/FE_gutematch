@@ -219,9 +219,9 @@ function App() {
 
   return (
     <div className='bodyApp'>
-
+{/* 
       <div className='bg'></div>
-
+ */}
       <div className='header'>
         <div className='topbar'>
           <div className='logo'>

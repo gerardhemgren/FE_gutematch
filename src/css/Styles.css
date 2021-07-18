@@ -16,17 +16,19 @@
   justify-content: center;
   font-family: "Segoe UI";
   color: #f7f3ce;
-}
-.app .bodyApp .bg {
-  background-image: url(https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1492&q=80);
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
-  background-color: rgba(0, 255, 132, 0.9);
-  background-blend-mode: multiply;
-  min-height: 800px;
-  width: 100%;
-  position: fixed;
+  /* 
+          .bg {
+              background-image: url(https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1492&q=80);
+              background-position: center center;
+              background-size: cover;
+              background-attachment: fixed;
+              background-color: rgba(0, 255, 132, 0.9);
+              background-blend-mode: multiply;
+              min-height: 800px;
+              width: 100%;
+              position: fixed;
+          }
+   */
 }
 .app .bodyApp .header {
   position: fixed;
