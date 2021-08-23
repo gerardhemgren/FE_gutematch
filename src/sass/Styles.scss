@@ -1,9 +1,21 @@
 @import "./components/colors";
 @import "./components/mixins";
 
+a {
+    text-decoration: none;
+    font-size: 10px
+}
+
 .focus {
-    @include button;
-    @include button-focus($text-color, $text-color);
+    transition: 0.5s;
+    filter: invert(100%);
+}
+
+.settings-icon{
+    filter: invert(100%)
+}
+.nav-icon{
+    filter: invert(50%)
 }
 
 .app {
@@ -12,19 +24,7 @@
         justify-content: center;
         font-family: "Segoe UI";
         color: $text-color;
-/* 
-        .bg {
-            background-image: url(https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1492&q=80);
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed;
-            background-color: rgba(0, 255, 132, 0.9);
-            background-blend-mode: multiply;
-            min-height: 800px;
-            width: 100%;
-            position: fixed;
-        }
- */
+
         .header {
             position: fixed;
             top: 0px;
@@ -54,10 +54,16 @@
                     display: none;
                 }
             }
-            .message-layout {
+            .message-container {
                 position: fixed;
                 top: 160px;
                 width: 327px;
+
+                .message {
+                    color: $terceary-color;
+                    display: flex;
+                    font-size: 12px;
+                }
             }
 
             .title {
@@ -109,32 +115,25 @@
                     @include df;
                     justify-content: flex-start;
                     width: 112px;
-                    column-gap: 8px;
-                    -webkit-column-gap: 8px;
 
                     div:nth-child(n) {
-                        width: 16px;
-                        padding: 4px;
-                        border: 1px solid transparent;
-                        border-radius: 2px;
+                        padding-right: 4px;
                         text-align: center;
-                        font-size: 10px;
-                        font-weight: bold;
+                        font-size: 16px;
+                        font-weight: 600;
                     }
 
                     .field {
-                        background: white;
-                        color: $text-color-terceary;
+                        color: $text-color;
                     }
 
                     .joined {
-                        background: rgba(41, 255, 55, 0.925);
-                        color: $text-color-terceary;
+                        padding-left: 8px;
+                        color: $primary-color;
                     }
 
                     .missed {
-                        background: rgb(50, 50, 50);
-                        color: white;
+                        color: $secondary-color;
                     }
                 }
 
@@ -180,9 +179,9 @@
 
                 .action {
                     @include df;
-                    // width: 80%;
                     button {
                         @include action-button;
+                        background-color: $terceary-color;
                         font-size: 12px;
                         padding: 10px;
                     }
@@ -217,7 +216,7 @@
 
                 button {
                     @include action-button;
-                    font-size: 16px;
+                    font-size: 12px;
                     padding: 16px;
                 }
             }
@@ -229,20 +228,10 @@
             position: fixed;
             bottom: 0px;
             min-width: 360px;
+            width: 414px;
             height: 32px;
             padding: 0px 0px 24px;
-            font-size: 8px;
             background-color: rgb(0, 0, 0);
-
-            .nav-button {
-                @include button;
-                padding: 14px 0px 0px;
-                border-top: solid transparent 4px;
-            }
-
-            .focus {
-                @include button-focus($text-color, $text-color);
-            }
         }
     }
 }

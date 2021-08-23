@@ -38,13 +38,13 @@ const joinMatch = (matchId, userId) => {
         .then(response => response.data)
 }
 
-const leftMatch = (matchId, userId) => {
+const leaveMatch = (matchId, userId) => {
     const match = { id_match: matchId }
     const request = axios.delete(`/my_matchs/${userId}`, { data: match })
     return request
         .then(response => response.data)
 }
 
-const exportObj = { getAllMatchs, getOpenMatchs, getMyMatchs, createMatch, deleteMatch, joinMatch, leftMatch }
+const exportObj = { getAllMatchs, getOpenMatchs, getMyMatchs, createMatch, deleteMatch, joinMatch, leaveMatch }
 
 export default exportObj

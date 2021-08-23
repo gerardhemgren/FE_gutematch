@@ -1,14 +1,19 @@
+a {
+  text-decoration: none;
+  font-size: 10px;
+}
+
 .focus {
-  color: #d4d4d4;
-  border-style: none;
-  border-width: 0px;
-  outline-style: none;
-  background: transparent;
-  cursor: pointer;
   transition: 0.5s;
-  transition: 0.5s;
-  border-top: solid #f7f3ce 4px;
-  color: #f7f3ce;
+  filter: invert(100%);
+}
+
+.settings-icon {
+  filter: invert(100%);
+}
+
+.nav-icon {
+  filter: invert(50%);
 }
 
 .app .bodyApp {
@@ -16,19 +21,6 @@
   justify-content: center;
   font-family: "Segoe UI";
   color: #f7f3ce;
-  /* 
-          .bg {
-              background-image: url(https://images.unsplash.com/photo-1579547621113-e4bb2a19bdd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1492&q=80);
-              background-position: center center;
-              background-size: cover;
-              background-attachment: fixed;
-              background-color: rgba(0, 255, 132, 0.9);
-              background-blend-mode: multiply;
-              min-height: 800px;
-              width: 100%;
-              position: fixed;
-          }
-   */
 }
 .app .bodyApp .header {
   position: fixed;
@@ -66,10 +58,15 @@
 .app .bodyApp .header .topbar .none {
   display: none;
 }
-.app .bodyApp .header .message-layout {
+.app .bodyApp .header .message-container {
   position: fixed;
   top: 160px;
   width: 327px;
+}
+.app .bodyApp .header .message-container .message {
+  color: #fbff00;
+  display: flex;
+  font-size: 12px;
 }
 .app .bodyApp .header .title {
   position: fixed;
@@ -125,29 +122,22 @@
   align-items: flex-end;
   justify-content: flex-start;
   width: 112px;
-  column-gap: 8px;
-  -webkit-column-gap: 8px;
 }
 .app .bodyApp .main .match-container .players div:nth-child(n) {
-  width: 16px;
-  padding: 4px;
-  border: 1px solid transparent;
-  border-radius: 2px;
+  padding-right: 4px;
   text-align: center;
-  font-size: 10px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 600;
 }
 .app .bodyApp .main .match-container .players .field {
-  background: white;
-  color: #000000;
+  color: #f7f3ce;
 }
 .app .bodyApp .main .match-container .players .joined {
-  background: rgba(41, 255, 55, 0.925);
-  color: #000000;
+  padding-left: 8px;
+  color: #37ff37;
 }
 .app .bodyApp .main .match-container .players .missed {
-  background: #323232;
-  color: white;
+  color: rgba(55, 255, 55, 0.4);
 }
 .app .bodyApp .main .match-container .action {
   display: flex;
@@ -161,17 +151,17 @@
 }
 .app .bodyApp .main .match-container .action button {
   width: inherit;
-  background-color: transparent;
-  color: #ffff00;
+  background-color: #37ff37;
+  color: black;
   font-size: 10px;
+  font-weight: 700;
   border-style: none;
-  border: 1px solid yellow;
   border-radius: 4px;
   cursor: pointer;
 }
 .app .bodyApp .main .match-container .action button:active {
   transition: 0.125s;
-  background-color: yellow;
+  background-color: #fbff00;
   color: black;
 }
 .app .bodyApp .main .match-container .info {
@@ -203,19 +193,20 @@
 }
 .app .bodyApp .main .form .action button {
   width: inherit;
-  background-color: transparent;
-  color: #ffff00;
+  background-color: #37ff37;
+  color: black;
   font-size: 10px;
+  font-weight: 700;
   border-style: none;
-  border: 1px solid yellow;
   border-radius: 4px;
   cursor: pointer;
+  background-color: #fbff00;
   font-size: 12px;
   padding: 10px;
 }
 .app .bodyApp .main .form .action button:active {
   transition: 0.125s;
-  background-color: yellow;
+  background-color: #fbff00;
   color: black;
 }
 .app .bodyApp .main .config {
@@ -243,19 +234,19 @@
 }
 .app .bodyApp .main .config button {
   width: inherit;
-  background-color: transparent;
-  color: #ffff00;
+  background-color: #37ff37;
+  color: black;
   font-size: 10px;
+  font-weight: 700;
   border-style: none;
-  border: 1px solid yellow;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   padding: 16px;
 }
 .app .bodyApp .main .config button:active {
   transition: 0.125s;
-  background-color: yellow;
+  background-color: #fbff00;
   color: black;
 }
 .app .bodyApp .navbar {
@@ -266,26 +257,10 @@
   position: fixed;
   bottom: 0px;
   min-width: 360px;
+  width: 414px;
   height: 32px;
   padding: 0px 0px 24px;
-  font-size: 8px;
   background-color: black;
-}
-.app .bodyApp .navbar .nav-button {
-  color: #d4d4d4;
-  border-style: none;
-  border-width: 0px;
-  outline-style: none;
-  background: transparent;
-  cursor: pointer;
-  transition: 0.5s;
-  padding: 14px 0px 0px;
-  border-top: solid transparent 4px;
-}
-.app .bodyApp .navbar .focus {
-  transition: 0.5s;
-  border-top: solid #f7f3ce 4px;
-  color: #f7f3ce;
 }
 
 /*# sourceMappingURL=Styles.css.map */
