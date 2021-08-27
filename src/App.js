@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import matchService from './services/matchs'
-import userService from './services/users'
+import matchService from './services/matchs';
+import userService from './services/users';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -10,22 +10,25 @@ import MatchPage from './components/MatchPage'
 import Message from './components/Message';
 import Config from './components/Config';
 
-import settingsIcon from './icons/settings.svg'
-import openMatchsIcon from './icons/open_matchs.svg'
-import myMatchsIcon from './icons/my_matchs.svg'
-import createMatchsIcon from './icons/create.svg'
+import icons from './icons/icons';
 import './Form.css';
 
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
 
 function App() {
-  const lsId = localStorage.getItem('lid')
-  const lsName = localStorage.getItem('ln')
+  // USER
+  const lsId = localStorage.getItem('lid');
+  const lsName = localStorage.getItem('ln');
 
-  const { user, isLoading } = useAuth0()
-  const lsSub = user ? user.sub : undefined
-  const [uAuth, setuAuth] = useState(lsId || 0)
+  const { user, isLoading } = useAuth0();
+  const lsSub = user ? user.sub : undefined;
+  const [uAuth, setuAuth] = useState(lsId || 0);
 
+  // USER-MATCHS
+  const [appMatchs, setAppMatchs] = useState([]);
+  const [apiMessage, setApiMessage] = useState('');
+
+  // LIFE CYCLE
   useEffect(() => {
     const showAllMatchs = async () => {
       await matchService
@@ -47,7 +50,7 @@ function App() {
             setAppMatchs(res)
           } else {
             setAppMatchs([])
-            setApiMessage(res)
+            // setApiMessage(res)
           }
         })
     }
@@ -99,13 +102,9 @@ function App() {
 
   }, [isLoading, uAuth, user, lsSub])
 
-  const [clientRequest, setClientRequest] = useState('')
-  const [title, setTitle] = useState('')
-
-  const [appMatchs, setAppMatchs] = useState([])
-  const [apiMessage, setApiMessage] = useState('')
-
   // NAVIGATION
+  const [clientRequest, setClientRequest] = useState('');
+  const [title, setTitle] = useState('');
 
   const showOpenMatchs = async () => {
     await matchService
@@ -117,7 +116,7 @@ function App() {
           setAppMatchs(res)
         } else {
           setAppMatchs([])
-          setApiMessage(res)
+          // setApiMessage(res)
         }
       })
   }
@@ -150,14 +149,14 @@ function App() {
   }
 
   // FORM-ACTIONS
-  const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' })
+  const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' });
 
   const handleInputCreateForm = (event) => {
-    setInputMatch({ ...inputMatch, [event.target.name]: event.target.value })
+    setInputMatch({ ...inputMatch, [event.target.name]: event.target.value });
   }
 
   const resetForm = () => {
-    setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' })
+    setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' });
   }
 
   const addMatch = async (event) => {
@@ -179,11 +178,12 @@ function App() {
       })
   }
 
-  // MATCH
+  // MATCH PROPS
   const MatchProps = {
     matchs: appMatchs,
     user: uAuth,
-    source: clientRequest
+    source: clientRequest,
+    action: () => showMyMatchs()
   }
 
   // MESSAGES
@@ -208,7 +208,7 @@ function App() {
             <Link to='/config'
               className={`${clientRequest === 'config' ? 'none' : 'config-button'}`}
               onClick={() => visitConfig()}>
-              <img src={settingsIcon} alt='settings' className='settings-icon' width="20" height="20" />
+              <img src={icons.settingsIcon} alt='settings' className='settings-icon' width="20" height="20" />
             </Link>
           </div>
           <div className='title'>
@@ -230,7 +230,7 @@ function App() {
             <Route path="/open_matchs">
               <MatchPage props={MatchProps} />
             </Route>
-            <Route path="/my_matchs">
+            <Route exact path="/my_matchs/">
               <MatchPage props={MatchProps} />
             </Route>
             <Route path="/add_match">
@@ -332,18 +332,17 @@ function App() {
         </div>
 
         <div className='navbar'>
-          <Link to='/open_matchs'
-
+          <Link to="/open_matchs"
             onClick={() => showOpenMatchs()}>
-            <img src={openMatchsIcon}
+            <img src={icons.openMatchsIcon}
               alt='Open Matchs'
-              className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : 'nav-icon'}`} 
+              className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : 'nav-icon'}`}
               width="16" height="16"
             />
           </Link>
           <Link to='/add_match'
             onClick={() => createMatch()}>
-            <img src={createMatchsIcon}
+            <img src={icons.createMatchsIcon}
               alt='Create Match'
               className={`${clientRequest === 'createMatch' ? 'focus' : 'nav-icon'}`}
               width="16" height="16"
@@ -351,7 +350,7 @@ function App() {
           </Link>
           <Link to='/my_matchs'
             onClick={() => showMyMatchs()}>
-            <img src={myMatchsIcon}
+            <img src={icons.myMatchsIcon}
               alt='My Matchs'
               className={`${clientRequest === 'showMyMatchs' ? 'focus' : 'nav-icon'}`}
               width="16" height="16"

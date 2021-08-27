@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "gutematch",
+  "name": "Join or Create futbol matchs",
   "icons": [
     {
       "src": "favicon.ico",
