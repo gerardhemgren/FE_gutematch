@@ -173,7 +173,7 @@ function App() {
       .then(async res => {
         setApiMessage(await res)
         if (res === 'Match created') {
-          window.location.pathname = '/my_matchs'
+          createMatch();
         }
       })
   }
@@ -198,7 +198,8 @@ function App() {
 
   return (
     <Router>
-      <div className='bodyApp'>
+      <div className='body-app'>
+        <div className='body-app-background'></div>
 
         <div className='header'>
           <div className='topbar'>

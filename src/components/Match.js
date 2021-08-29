@@ -7,16 +7,16 @@ var timezone = require('dayjs/plugin/timezone')
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-const Match = ({ user, match, source, join, leave, deleteMatch }) => {
+const Match = ({ user, match, source, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
 
-  let decisionButton;
+  let updateMatchButton;
   if (source === 'showOpenMatchs') {
-    decisionButton = <button onClick={join}>Join</button>
+    updateMatchButton = <button onClick={joinMatch}>Join</button>
   } else if (source === 'showMyMatchs') {
-    decisionButton = <button onClick={leave}>Leave</button>
+    updateMatchButton = <button onClick={leaveMatch}>Leave</button>
   } else {
-    decisionButton = undefined
+    updateMatchButton = undefined
   }
   let deleteButton
   if (id_admin === Number(user)) {
@@ -44,7 +44,7 @@ const Match = ({ user, match, source, join, leave, deleteMatch }) => {
           <div className='missed'>{`/ ${players_field}`}</div>
         </div>
         <div className='action'>
-          {deleteButton} {decisionButton}
+          {deleteButton} {updateMatchButton}
         </div>
       </div>
 

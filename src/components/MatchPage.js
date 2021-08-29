@@ -5,7 +5,7 @@ import matchService from '../services/matchs';
 function MatchPage({ props }) {
     const { user, source, matchs, action } = props;
 
-    const join = async (matchId) => {
+    const joinMatch = async (matchId) => {
         await matchService
             .joinMatch(matchId, user)
             .then(async res => {
@@ -14,7 +14,7 @@ function MatchPage({ props }) {
             })
     }
 
-    const leave = async (matchId) => {
+    const leaveMatch = async (matchId) => {
         await matchService
             .leaveMatch(matchId, user)
             .then(async res => {
@@ -40,8 +40,8 @@ function MatchPage({ props }) {
                     match={match}
                     user={user}
                     source={source}
-                    join={() => join(match.id_match)}
-                    leave={() => leave(match.id_match)}
+                    joinMatch={() => joinMatch(match.id_match)}
+                    leaveMatch={() => leaveMatch(match.id_match)}
                     deleteMatch={() => deleteMatch(match.id_match)}
                 />
             )}
