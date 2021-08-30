@@ -88,7 +88,7 @@ a {
   backdrop-filter: blur(15px);
   margin: 0px 0px 10px;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid #37ff37;
+  border-bottom: 1px solid rgba(55, 255, 55, 0.5);
   border-radius: 2px;
 }
 .app .body-app .main .match-container .date {
@@ -187,20 +187,20 @@ a {
 .app .body-app .main .bottom-space {
   height: 80px;
 }
-.app .body-app .main .form {
+.app .body-app .main .create-match-form {
   backdrop-filter: blur(15px);
   padding: 16px 16px 32px;
   margin-top: -24px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 2px;
 }
-.app .body-app .main .form .action {
+.app .body-app .main .create-match-form .action {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-top: 40px;
 }
-.app .body-app .main .form .action button {
+.app .body-app .main .create-match-form .action button {
   width: inherit;
   background-color: #37ff37;
   color: black;
@@ -214,7 +214,7 @@ a {
   padding: 10px;
   width: 96px;
 }
-.app .body-app .main .form .action button:active {
+.app .body-app .main .create-match-form .action button:active {
   transition: 0.125s;
   background-color: #fbff00;
   color: black;
@@ -227,7 +227,7 @@ a {
   display: flex;
   flex-direction: column;
   padding: 32px 24px 40px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 2px;
   width: 160px;
   row-gap: 40px;

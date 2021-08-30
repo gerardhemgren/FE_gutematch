@@ -61,9 +61,9 @@ function App() {
         } else if (window.location.pathname === '/my_matchs') {
           showMyMatchs()
         } else if (window.location.pathname === '/add_match') {
-          createMatch()
+          showCreateMatchForm()
         } else {
-          visitConfig()
+          showConfig()
         }
       } else {
         showAllMatchs()
@@ -106,6 +106,16 @@ function App() {
   const [clientRequest, setClientRequest] = useState('');
   const [title, setTitle] = useState('');
 
+  const showAllMatchs = async () => {
+    await matchService
+      .getAllMatchs()
+      .then(res => {
+        setClientRequest('showAllMatchs')
+        setAppMatchs(res)
+        setTitle('All matchs')
+      })
+  }
+
   const showOpenMatchs = async () => {
     await matchService
       .getOpenMatchs(uAuth)
@@ -131,19 +141,19 @@ function App() {
           setAppMatchs(res)
         } else {
           setAppMatchs([])
-          lsId ? setApiMessage(res) : setApiMessage('You must be logged to join a match')
+          lsId ? setApiMessage(res) : setApiMessage('You must be loged to join a match')
         }
       })
   }
 
-  const createMatch = () => {
+  const showCreateMatchForm = () => {
     setAppMatchs([])
-    setClientRequest('createMatch')
+    setClientRequest('showCreateMatchForm')
     setTitle('Create a match')
-    lsId ? setApiMessage('') : setApiMessage('You must be logged to create a match')
+    lsId ? setApiMessage('') : setApiMessage('You must be loged to create a match')
   }
 
-  const visitConfig = () => {
+  const showConfig = () => {
     setClientRequest('config')
     setTitle('Config')
   }
@@ -173,7 +183,7 @@ function App() {
       .then(async res => {
         setApiMessage(await res)
         if (res === 'Match created') {
-          createMatch();
+          setApiMessage(res)
         }
       })
   }
@@ -208,12 +218,13 @@ function App() {
             </div>
             <Link to='/config'
               className={`${clientRequest === 'config' ? 'none' : 'config-button'}`}
-              onClick={() => visitConfig()}>
+              onClick={() => showConfig()}>
               <img src={icons.settingsIcon} alt='settings' className='settings-icon' width="20" height="20" />
             </Link>
           </div>
           <div className='title'>
-            {title} {(clientRequest === 'showOpenMatchs' && appMatchs.length > 0)
+            {title}
+            {(clientRequest === 'showOpenMatchs' && appMatchs.length > 0)
               || clientRequest === 'showMyMatchs'
               || clientRequest === 'showAllMatchs'
               ? `— ${appMatchs.length}` : ''}
@@ -228,6 +239,9 @@ function App() {
             <Route exact path="/">
               <MatchPage props={MatchProps} />
             </Route>
+            <Route path="/all_matchs">
+              <MatchPage props={MatchProps} />
+            </Route>
             <Route path="/open_matchs">
               <MatchPage props={MatchProps} />
             </Route>
@@ -237,8 +251,8 @@ function App() {
             <Route path="/add_match">
               <div>
 
-                {clientRequest === 'createMatch' ?
-                  <form onSubmit={addMatch} onReset={resetForm} className='form'>
+                {clientRequest === 'showCreateMatchForm' ?
+                  <form onSubmit={addMatch} onReset={resetForm} className='create-match-form'>
 
                     <fieldset>
                       <legend>Location</legend>
@@ -282,7 +296,6 @@ function App() {
                           value={inputMatch.name}
                           onChange={handleInputCreateForm}
                         />
-                        <label>Max: 10 characteres</label>
                       </fieldset>
                     </div>
 
@@ -318,7 +331,9 @@ function App() {
                       <button type='reset' value='Reset'>
                         Reset
                       </button>
-                      <button type='submit'>Create</button>
+                      <button type='submit'>
+                        Create
+                      </button>
                     </div>
                   </form>
                   : null
@@ -333,19 +348,32 @@ function App() {
         </div>
 
         <div className='navbar'>
-          <Link to="/open_matchs"
-            onClick={() => showOpenMatchs()}>
-            <img src={icons.openMatchsIcon}
-              alt='Open Matchs'
-              className={`${clientRequest === 'showOpenMatchs' || clientRequest === 'showAllMatchs' ? 'focus' : 'nav-icon'}`}
-              width="16" height="16"
-            />
-          </Link>
+
+          {uAuth === 0 ?
+            <Link to="/all_matchs"
+              onClick={() => showAllMatchs()}>
+              <img src={icons.openMatchsIcon}
+                alt='All Matchs'
+                className={`${clientRequest === 'showAllMatchs' ? 'focus' : 'nav-icon'}`}
+                width="16" height="16"
+              />
+            </Link>
+            :
+            <Link to="/open_matchs"
+              onClick={() => showOpenMatchs()}>
+              <img src={icons.openMatchsIcon}
+                alt='Open Matchs'
+                className={`${clientRequest === 'showOpenMatchs' ? 'focus' : 'nav-icon'}`}
+                width="16" height="16"
+              />
+            </Link>
+          }
+
           <Link to='/add_match'
-            onClick={() => createMatch()}>
-            <img src={icons.createMatchsIcon}
+            onClick={() => showCreateMatchForm()}>
+            <img src={icons.createMatchIcon}
               alt='Create Match'
-              className={`${clientRequest === 'createMatch' ? 'focus' : 'nav-icon'}`}
+              className={`${clientRequest === 'showCreateMatchForm' ? 'focus' : 'nav-icon'}`}
               width="16" height="16"
             />
           </Link>
