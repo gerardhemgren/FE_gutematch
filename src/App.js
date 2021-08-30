@@ -17,12 +17,12 @@ const dayjs = require('dayjs');
 
 function App() {
   // USER
-  const lsId = localStorage.getItem('lid');
-  const lsName = localStorage.getItem('ln');
+  const playerIdFromLocalStorage = localStorage.getItem('player_id');
+  const playerNameFromLocalStorage = localStorage.getItem('player_name');
 
   const { user, isLoading } = useAuth0();
-  const lsSub = user ? user.sub : undefined;
-  const [uAuth, setuAuth] = useState(lsId || 0);
+  const userSub = user ? user.sub : undefined;
+  const [playerId, setPlayerId] = useState(Number(playerIdFromLocalStorage) || 0);
 
   // USER-MATCHS
   const [appMatchs, setAppMatchs] = useState([]);
@@ -42,22 +42,22 @@ function App() {
 
     const showOpenMatchs = async () => {
       await matchService
-        .getOpenMatchs(uAuth)
-        .then(res => {
+        .getOpenMatchs(playerId)
+        .then(async res => {
           setClientRequest('showOpenMatchs')
           setTitle('Open matchs')
-          if (typeof res === 'object') {
+          if (typeof await res === 'object') {
             setAppMatchs(res)
           } else {
             setAppMatchs([])
-            // setApiMessage(res)
           }
         })
     }
-    const nav = (isLogged) => {
-      if (uAuth !== isLogged) {
-        if (window.location.pathname === '/open_matchs' || window.location.pathname === '/') {
+    const nav = (playerId) => {
+      if (playerId !== 0) {
+        if (window.location.pathname === '/' || window.location.pathname === '/open_matchs') {
           showOpenMatchs()
+          console.log('player',playerId)
         } else if (window.location.pathname === '/my_matchs') {
           showMyMatchs()
         } else if (window.location.pathname === '/add_match') {
@@ -66,41 +66,42 @@ function App() {
           showConfig()
         }
       } else {
+        console.log('default player',playerId)
         showAllMatchs()
       }
     }
 
     if (!isLoading) {
-      // console.log('isLoading false')
-      // console.log('useE uA', uAuth)
-      // console.log('useE sub', user?.sub)
+      console.log('isLoading false')
+      console.log('playerId', playerId)
+      console.log('user.sub', user?.sub)
       if (user) {
-        // console.log('user.sub true')
-        // console.log(user.sub)
-        // console.log(user.name)
+        console.log('user true')
+        console.log(user.sub)
+        console.log(user.name)
+        console.log('------------')
         userService
-          .logIn_signUp(lsSub, user.name)
+          .logIn_signUp(userSub, user.name)
           .then(async res => {
-            // console.log('response ready')
-            // console.log(user.name)
-            // console.log('res id', await res[0].id)
-            // console.log('res name', await res[0].name)
-            setuAuth(await res[0].id)
-            localStorage.setItem('lid', await res[0].id)
-            localStorage.setItem('ln', await res[0].name)
-            // console.log('res useE uA', uAuth)
-            nav(1)
-            // console.log('------------')
+            console.log('response ready')
+            console.log('user.name',user.name)
+            console.log('res id', await res[0].id)
+            console.log('res name', await res[0].name)
+            console.log('------------')
+            setPlayerId(await res[0].id)
+            localStorage.setItem('player_id', await res[0].id)
+            localStorage.setItem('player_name', await res[0].name)
+            nav(await res[0].id)
           })
       } else {
-        // console.log('user.sub false')
-        nav(0)
+        console.log('user false')
+        nav(playerId)
       }
     } else {
-      // console.log('isLoading true')
+      console.log('isLoading true')
     }
 
-  }, [isLoading, uAuth, user, lsSub])
+  }, [isLoading, user, userSub, playerId])
 
   // NAVIGATION
   const [clientRequest, setClientRequest] = useState('');
@@ -118,7 +119,7 @@ function App() {
 
   const showOpenMatchs = async () => {
     await matchService
-      .getOpenMatchs(uAuth)
+      .getOpenMatchs(playerId)
       .then(res => {
         setClientRequest('showOpenMatchs')
         setTitle('Open matchs')
@@ -126,14 +127,14 @@ function App() {
           setAppMatchs(res)
         } else {
           setAppMatchs([])
-          // setApiMessage(res)
+          setApiMessage(res)
         }
       })
   }
 
   const showMyMatchs = async () => {
     await matchService
-      .getMyMatchs(uAuth)
+      .getMyMatchs(playerId)
       .then(res => {
         setClientRequest('showMyMatchs')
         setTitle('My matchs')
@@ -141,7 +142,7 @@ function App() {
           setAppMatchs(res)
         } else {
           setAppMatchs([])
-          lsId ? setApiMessage(res) : setApiMessage('You must be loged to join a match')
+          playerIdFromLocalStorage ? setApiMessage(res) : setApiMessage('You must be loged to join a match')
         }
       })
   }
@@ -150,7 +151,7 @@ function App() {
     setAppMatchs([])
     setClientRequest('showCreateMatchForm')
     setTitle('Create a match')
-    lsId ? setApiMessage('') : setApiMessage('You must be loged to create a match')
+    playerIdFromLocalStorage ? setApiMessage('') : setApiMessage('You must be loged to create a match')
   }
 
   const showConfig = () => {
@@ -179,7 +180,7 @@ function App() {
     }
 
     await matchService
-      .createMatch(matchInfo, uAuth)
+      .createMatch(matchInfo, playerId)
       .then(async res => {
         setApiMessage(await res)
         if (res === 'Match created') {
@@ -191,7 +192,7 @@ function App() {
   // MATCH PROPS
   const MatchProps = {
     matchs: appMatchs,
-    user: uAuth,
+    user: playerId,
     source: clientRequest,
     action: () => showMyMatchs()
   }
@@ -227,7 +228,7 @@ function App() {
             {(clientRequest === 'showOpenMatchs' && appMatchs.length > 0)
               || clientRequest === 'showMyMatchs'
               || clientRequest === 'showAllMatchs'
-              ? `— ${appMatchs.length}` : ''}
+              ? ` — ${appMatchs.length}` : ''}
           </div>
           <div className='message-container'>
             <Message msg={apiMessage} action={closeMessage()} />
@@ -342,14 +343,14 @@ function App() {
               </div>
             </Route>
             <Route path="/config">
-              <Config user={{ lsName }} />
+              <Config playerName={playerNameFromLocalStorage} />
             </Route>
           </Switch>
         </div>
 
         <div className='navbar'>
 
-          {uAuth === 0 ?
+          {playerId === 0 ?
             <Link to="/all_matchs"
               onClick={() => showAllMatchs()}>
               <img src={icons.openMatchsIcon}

@@ -1,13 +1,13 @@
 import React from 'react'
 import AuthenticationButton from "./authentication-button";
 
-const Config = ({ user }) => {
+const Config = ( {playerName} ) => {
+
   const Profile = () => {
-    if (user) {
-      const { lsName } = user
+    if (playerName) {
       return (
         <div>
-          {lsName}
+          {playerName}
         </div>
       )
     } else {

@@ -5,19 +5,16 @@ const LogoutButton = () => {
   const { logout } = useAuth0();
 
   // logout func must be placed on onClick
-  const resetLs = () => {
-    localStorage.removeItem('ls')
-    localStorage.removeItem('lid')
-    localStorage.removeItem('ln')
+  const deleteLocalStorage = () => {
+    localStorage.removeItem('player_id')
+    localStorage.removeItem('player_name')
     logout({ returnTo: window.location.origin })
   }
 
   return (
     <button
       className='action-button logout-button secondary'
-      onClick={() =>
-        resetLs()
-      }
+      onClick={() => deleteLocalStorage()}
     >
       Log Out
     </button>
