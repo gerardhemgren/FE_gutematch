@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'https://ftbl-pern.herokuapp.com';
+const baseUrl = 'https://gutematch.herokuapp.com';
 
 const getAllMatchs = () => {
     const request = axios.get(`${baseUrl}/all_matchs`)

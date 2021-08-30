@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+const baseUrl = 'https://gutematch.herokuapp.com';
+
 const logIn_signUp = (userId, fname) => {
     const name = { name: fname }
-    const request = axios.post(`/config/${userId}`, name)
+    const request = axios.post(`${baseUrl}/config/${userId}`, name)
     return request
         .then(response => response.data)
 }

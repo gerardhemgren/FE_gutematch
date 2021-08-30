@@ -57,7 +57,6 @@ function App() {
       if (playerId !== 0) {
         if (window.location.pathname === '/' || window.location.pathname === '/open_matchs') {
           showOpenMatchs()
-          console.log('player',playerId)
         } else if (window.location.pathname === '/my_matchs') {
           showMyMatchs()
         } else if (window.location.pathname === '/add_match') {
@@ -66,39 +65,23 @@ function App() {
           showConfig()
         }
       } else {
-        console.log('default player',playerId)
         showAllMatchs()
       }
     }
 
     if (!isLoading) {
-      console.log('isLoading false')
-      console.log('playerId', playerId)
-      console.log('user.sub', user?.sub)
       if (user) {
-        console.log('user true')
-        console.log(user.sub)
-        console.log(user.name)
-        console.log('------------')
         userService
           .logIn_signUp(userSub, user.name)
           .then(async res => {
-            console.log('response ready')
-            console.log('user.name',user.name)
-            console.log('res id', await res[0].id)
-            console.log('res name', await res[0].name)
-            console.log('------------')
             setPlayerId(await res[0].id)
             localStorage.setItem('player_id', await res[0].id)
             localStorage.setItem('player_name', await res[0].name)
             nav(await res[0].id)
           })
       } else {
-        console.log('user false')
         nav(playerId)
       }
-    } else {
-      console.log('isLoading true')
     }
 
   }, [isLoading, user, userSub, playerId])
