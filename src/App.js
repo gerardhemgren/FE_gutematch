@@ -6,179 +6,41 @@ import userService from './services/users';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
-import MatchPage from './components/MatchPage'
+import MatchPage from './components/MatchsPage'
+import MatchForm from './components/MatchForm'
 import Message from './components/Message';
 import Config from './components/Config';
 
+import constants from './constants/index'
 import icons from './icons/icons';
+import './css/Styles.css';
 import './Form.css';
-
-const dayjs = require('dayjs');
 
 function App() {
   // USER
   const playerIdFromLocalStorage = localStorage.getItem('player_id');
   const playerNameFromLocalStorage = localStorage.getItem('player_name');
 
-  const { user, isLoading } = useAuth0();
+  const { user } = useAuth0();
   const userSub = user ? user.sub : undefined;
   const [playerId, setPlayerId] = useState(Number(playerIdFromLocalStorage) || 0);
 
-  // USER-MATCHS
+  // USER CYCLE
+  useEffect(() => {
+    if (user) {
+      userService
+        .logIn_signUp(userSub, user.name)
+        .then(async res => {
+          setPlayerId(await res[0].id)
+          localStorage.setItem('player_id', await res[0].id)
+          localStorage.setItem('player_name', await res[0].name)
+        })
+    }
+  }, [user, userSub, playerId])
+
+  // MATCHS
   const [appMatchs, setAppMatchs] = useState([]);
   const [apiMessage, setApiMessage] = useState('');
-
-  // LIFE CYCLE
-  useEffect(() => {
-    const showAllMatchs = async () => {
-      await matchService
-        .getAllMatchs()
-        .then(res => {
-          setClientRequest('showAllMatchs')
-          setAppMatchs(res)
-          setTitle('All matchs')
-        })
-    }
-
-    const showOpenMatchs = async () => {
-      await matchService
-        .getOpenMatchs(playerId)
-        .then(async res => {
-          setClientRequest('showOpenMatchs')
-          setTitle('Open matchs')
-          if (typeof await res === 'object') {
-            setAppMatchs(res)
-          } else {
-            setAppMatchs([])
-          }
-        })
-    }
-    const nav = (playerId) => {
-      if (playerId !== 0) {
-        if (window.location.pathname === '/' || window.location.pathname === '/open_matchs') {
-          showOpenMatchs()
-        } else if (window.location.pathname === '/my_matchs') {
-          showMyMatchs()
-        } else if (window.location.pathname === '/add_match') {
-          showCreateMatchForm()
-        } else {
-          showConfig()
-        }
-      } else {
-        showAllMatchs()
-      }
-    }
-
-    if (!isLoading) {
-      if (user) {
-        userService
-          .logIn_signUp(userSub, user.name)
-          .then(async res => {
-            setPlayerId(await res[0].id)
-            localStorage.setItem('player_id', await res[0].id)
-            localStorage.setItem('player_name', await res[0].name)
-            nav(await res[0].id)
-          })
-      } else {
-        nav(playerId)
-      }
-    }
-
-  }, [isLoading, user, userSub, playerId])
-
-  // NAVIGATION
-  const [clientRequest, setClientRequest] = useState('');
-  const [title, setTitle] = useState('');
-
-  const showAllMatchs = async () => {
-    await matchService
-      .getAllMatchs()
-      .then(res => {
-        setClientRequest('showAllMatchs')
-        setAppMatchs(res)
-        setTitle('All matchs')
-      })
-  }
-
-  const showOpenMatchs = async () => {
-    await matchService
-      .getOpenMatchs(playerId)
-      .then(res => {
-        setClientRequest('showOpenMatchs')
-        setTitle('Open matchs')
-        if (typeof res === 'object') {
-          setAppMatchs(res)
-        } else {
-          setAppMatchs([])
-          setApiMessage(res)
-        }
-      })
-  }
-
-  const showMyMatchs = async () => {
-    await matchService
-      .getMyMatchs(playerId)
-      .then(res => {
-        setClientRequest('showMyMatchs')
-        setTitle('My matchs')
-        if (typeof res === 'object') {
-          setAppMatchs(res)
-        } else {
-          setAppMatchs([])
-          playerIdFromLocalStorage ? setApiMessage(res) : setApiMessage('You must be loged to join a match')
-        }
-      })
-  }
-
-  const showCreateMatchForm = () => {
-    setAppMatchs([])
-    setClientRequest('showCreateMatchForm')
-    setTitle('Create a match')
-    playerIdFromLocalStorage ? setApiMessage('') : setApiMessage('You must be loged to create a match')
-  }
-
-  const showConfig = () => {
-    setClientRequest('config')
-    setTitle('Config')
-  }
-
-  // FORM-ACTIONS
-  const [inputMatch, setInputMatch] = useState({ date: '', time: '', location: '', players_field: 10, name: '' });
-
-  const handleInputCreateForm = (event) => {
-    setInputMatch({ ...inputMatch, [event.target.name]: event.target.value });
-  }
-
-  const resetForm = () => {
-    setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' });
-  }
-
-  const addMatch = async (event) => {
-    event.preventDefault()
-    const matchInfo = {
-      date: `${inputMatch.date} ${inputMatch.time}`,
-      location: inputMatch.location,
-      players_field: Number(inputMatch.players_field),
-      name: inputMatch.name
-    }
-
-    await matchService
-      .createMatch(matchInfo, playerId)
-      .then(async res => {
-        setApiMessage(await res)
-        if (res === 'Match created') {
-          setApiMessage(res)
-        }
-      })
-  }
-
-  // MATCH PROPS
-  const MatchProps = {
-    matchs: appMatchs,
-    user: playerId,
-    source: clientRequest,
-    action: () => showMyMatchs()
-  }
 
   // MESSAGES
   const closeMessage = () => {
@@ -190,191 +52,173 @@ function App() {
     }
   }
 
+  // NAVIGATION
+  const [clientRequest, setClientRequest] = useState('');
+  /* let history = useHistory()
+  // const handleForm = useCallback(() => history.replace(`/my_matchs/${playerId}`), [history, playerId]);
+  const handleForm = () => history.push(`/my_matchs/${playerId}`); */
+
+  // const handleForm = () => window.location = `/my_matchs/${playerId}`
+
+  // NAVIGATION-FLOW
+  const showAllMatchs = async () => {
+    await matchService
+      .getAllMatchs()
+      .then(res => {
+        setClientRequest(constants.TITLES.ALL_MATCHS)
+        setAppMatchs(res)
+      })
+  }
+  const showOpenMatchs = async () => {
+    setClientRequest(constants.TITLES.OPEN_MATCHS)
+    if (playerId !== 0) {
+      await matchService
+        .getOpenMatchs(playerId)
+        .then(res => {
+          if (typeof res === 'object') {
+            setAppMatchs(res)
+          } else {
+            setAppMatchs([])
+            setApiMessage(res)
+          }
+        })
+    } else {
+      setApiMessage('You must be logged to see opened matchs')
+    }
+  }
+  const showMyMatchs = async () => {
+    setClientRequest(constants.TITLES.MY_MATCHS)
+    if (playerId !== 0) {
+      await matchService
+        .getMyMatchs(playerId)
+        .then(res => {
+          if (typeof res === 'object') {
+            setAppMatchs(res)
+          } else {
+            setAppMatchs([])
+            setApiMessage(res)
+          }
+        })
+    } else {
+      setAppMatchs([])
+      setApiMessage('You must be logged to join a match')
+    }
+  }
+  const showCreateMatchForm = () => {
+    setAppMatchs([])
+    setClientRequest(constants.TITLES.CREATE_MATCH)
+    playerId !== 0 ? setApiMessage('') : setApiMessage('You must be logged to create a match')
+  }
+  const showConfig = () => {
+    setAppMatchs([])
+    setClientRequest(constants.TITLES.CONFIG)
+  }
+
+  // FORM PROPS
+  const formProps = {
+    user: playerId,
+    source: clientRequest,
+    // handle: () => handleForm(),
+    action: () => showMyMatchs()
+  }
+
+  // MATCH PROPS
+  const matchProps = {
+    matchs: appMatchs,
+    user: playerId,
+    source: clientRequest,
+    action: () => showMyMatchs()
+  }
+
   return (
     <Router>
-      <div className='body-app'>
-        <div className='body-app-background'></div>
-
+      <div className='app'>
+        <div className='app-background' />
         <div className='header'>
-          <div className='topbar'>
+          <div className='topbar-container'>
             <div className='logo'>
               gute<span>match</span>
             </div>
-            <Link to='/config'
-              className={`${clientRequest === 'config' ? 'none' : 'config-button'}`}
+            <Link to={`/config`}
+              className={`${clientRequest === constants.TITLES.CONFIG ? 'display-none' : 'config-button'}`}
               onClick={() => showConfig()}>
               <img src={icons.settingsIcon} alt='settings' className='settings-icon' width="20" height="20" />
             </Link>
           </div>
-          <div className='title'>
-            {title}
-            {(clientRequest === 'showOpenMatchs' && appMatchs.length > 0)
-              || clientRequest === 'showMyMatchs'
-              || clientRequest === 'showAllMatchs'
+          <div className='title-container'>
+            {clientRequest}
+            {(clientRequest === constants.TITLES.OPEN_MATCHS ||
+              clientRequest === constants.TITLES.MY_MATCHS ||
+              clientRequest === constants.TITLES.ALL_MATCHS
+            ) && appMatchs.length > 0
               ? ` — ${appMatchs.length}` : ''}
           </div>
           <div className='message-container'>
             <Message msg={apiMessage} action={closeMessage()} />
           </div>
         </div>
-
         <div className='main'>
           <Switch>
             <Route exact path="/">
-              <MatchPage props={MatchProps} />
+              <MatchPage props={matchProps} />
             </Route>
-            <Route path="/all_matchs">
-              <MatchPage props={MatchProps} />
+            <Route path={`/all_matchs/${playerId}`}>
+              <MatchPage props={matchProps} />
             </Route>
-            <Route path="/open_matchs">
-              <MatchPage props={MatchProps} />
+            <Route path={`/open_matchs/${playerId}`}>
+              <MatchPage props={matchProps} />
             </Route>
-            <Route exact path="/my_matchs/">
-              <MatchPage props={MatchProps} />
+            <Route path={`/my_matchs/${playerId}`}>
+              <MatchPage props={matchProps} />
             </Route>
-            <Route path="/add_match">
-              <div>
-
-                {clientRequest === 'showCreateMatchForm' ?
-                  <form onSubmit={addMatch} onReset={resetForm} className='create-match-form'>
-
-                    <fieldset>
-                      <legend>Location</legend>
-                      <input
-                        className='input-adress'
-                        required
-                        placeholder='Adress'
-                        name='location'
-                        value={inputMatch.location}
-                        onChange={handleInputCreateForm}
-                      />
-                      <label>Adress 1234, City, Country</label>
-                    </fieldset>
-
-                    <div className='name-field'>
-                      <fieldset>
-                        <legend>Field</legend>
-                        <div>
-                          <select
-                            className='drop-players-field'
-                            name="players_field"
-                            type='number'
-                            value={inputMatch.players_field}
-                            onChange={handleInputCreateForm}>
-                            <option value="10">F — 5</option>
-                            <option value="14">F — 7</option>
-                            <option value="18">F — 9</option>
-                            <option value="22">F — 11</option>
-                          </select>
-                        </div>
-                      </fieldset>
-
-                      <fieldset>
-                        <legend>Name</legend>
-                        <input
-                          className='input-name'
-                          required
-                          placeholder='Match name'
-                          maxLength='10'
-                          name='name'
-                          value={inputMatch.name}
-                          onChange={handleInputCreateForm}
-                        />
-                      </fieldset>
-                    </div>
-
-                    <div className='date-field'>
-                      <fieldset>
-                        <legend>Date</legend>
-                        <input
-                          required
-                          className='input-date'
-                          type="date"
-                          name="date"
-                          min={dayjs().format('YYYY-MM-DD')}
-                          max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
-                          value={inputMatch.date}
-                          onChange={handleInputCreateForm}>
-                        </input>
-                      </fieldset>
-
-                      <fieldset>
-                        <legend>Time</legend>
-                        <input
-                          required
-                          className='input-time'
-                          type="time"
-                          name="time"
-                          value={inputMatch.time}
-                          onChange={handleInputCreateForm}>
-                        </input>
-                      </fieldset>
-                    </div>
-
-                    <div className='action'>
-                      <button type='reset' value='Reset'>
-                        Reset
-                      </button>
-                      <button type='submit'>
-                        Create
-                      </button>
-                    </div>
-                  </form>
-                  : null
-                }
-
-              </div>
+            <Route path={`/add_match/${playerId}`}>
+              <MatchForm props={formProps} />
             </Route>
-            <Route path="/config">
+            <Route path={`/config`}>
               <Config playerName={playerNameFromLocalStorage} />
             </Route>
           </Switch>
         </div>
-
         <div className='navbar'>
-
-          {playerId === 0 ?
-            <Link to="/all_matchs"
-              onClick={() => showAllMatchs()}>
+          {playerId !== 0 ?
+            <Link to={`/open_matchs/${playerId}`}
+              onClick={() => showOpenMatchs()}>
               <img src={icons.openMatchsIcon}
-                alt='All Matchs'
-                className={`${clientRequest === 'showAllMatchs' ? 'focus' : 'nav-icon'}`}
+                alt='Open Matchs'
+                className={`${clientRequest === constants.TITLES.OPEN_MATCHS ? 'focus' : 'nav-icon'}`}
                 width="16" height="16"
               />
             </Link>
             :
-            <Link to="/open_matchs"
-              onClick={() => showOpenMatchs()}>
+            <Link to={`/all_matchs/${playerId}`}
+              onClick={() => showAllMatchs()}>
               <img src={icons.openMatchsIcon}
-                alt='Open Matchs'
-                className={`${clientRequest === 'showOpenMatchs' ? 'focus' : 'nav-icon'}`}
+                alt='All Matchs'
+                className={`${clientRequest === constants.TITLES.ALL_MATCHS ? 'focus' : 'nav-icon'}`}
                 width="16" height="16"
               />
             </Link>
           }
-
-          <Link to='/add_match'
+          <Link to={`/add_match/${playerId}`}
             onClick={() => showCreateMatchForm()}>
             <img src={icons.createMatchIcon}
               alt='Create Match'
-              className={`${clientRequest === 'showCreateMatchForm' ? 'focus' : 'nav-icon'}`}
+              className={`${clientRequest === constants.TITLES.CREATE_MATCH ? 'focus' : 'nav-icon'}`}
               width="16" height="16"
             />
           </Link>
-          <Link to='/my_matchs'
+          <Link to={`/my_matchs/${playerId}`}
             onClick={() => showMyMatchs()}>
             <img src={icons.myMatchsIcon}
               alt='My Matchs'
-              className={`${clientRequest === 'showMyMatchs' ? 'focus' : 'nav-icon'}`}
+              className={`${clientRequest === constants.TITLES.MY_MATCHS ? 'focus' : 'nav-icon'}`}
               width="16" height="16"
             />
           </Link>
         </div>
-
       </div>
     </Router>
   )
 }
-
 
 export default App;

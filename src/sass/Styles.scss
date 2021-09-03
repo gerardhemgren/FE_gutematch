@@ -3,7 +3,7 @@
 
 a {
     text-decoration: none;
-    font-size: 10px
+    font-size: 10px;
 }
 
 .focus {
@@ -11,238 +11,236 @@ a {
     filter: invert(100%);
 }
 
-.settings-icon{
-    filter: invert(100%)
+.display-none {
+    display: none;
 }
-.nav-icon{
-    filter: invert(50%)
+
+.settings-icon {
+    filter: invert(100%);
+}
+.nav-icon {
+    filter: invert(50%);
 }
 
 .app {
-    .body-app {
-        display: flex;
-        justify-content: center;
-        font-family: "Segoe UI";
-        color: $text-color;
+    display: flex;
+    justify-content: center;
+    font-family: "Segoe UI";
+    color: $text-color;
 
-        .body-app-background {
-            background: linear-gradient(48deg, #202121, #536365);
-            position: fixed;
-            height: 100%;
-            width: 100%;
-        }
+    .app-background {
+        background: linear-gradient(48deg, #202121, #536365);
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
 
-        .header {
-            position: fixed;
-            top: 0px;
-            padding: 20px 16px 0px 16px;
-            width: 328px;
-            height: 192px;
+    .header {
+        position: fixed;
+        top: 0px;
+        padding: 20px 16px 0px 16px;
+        width: 328px;
+        height: 192px;
 
-            .topbar {
-                @include df;
-                align-items: normal;
+        .topbar-container {
+            @include df;
+            align-items: normal;
 
-                .logo {
-                    font-size: 12px;
-                    font-weight: bold;
-                }
-                .logo span {
-                    font-size: 8px;
-                    vertical-align: super;
-                    font-weight: lighter;
-                }
-                .config-button {
-                    @include button;
-                    padding: 0px;
-                    font-size: 12px;
-                }
-                .none {
-                    display: none;
-                }
-            }
-            .message-container {
-                position: fixed;
-                top: 160px;
-                width: 327px;
-
-                .message {
-                    color: $terceary-color;
-                    display: flex;
-                    font-size: 12px;
-                }
-            }
-
-            .title {
-                position: fixed;
-                top: 112px;
-                font-size: 24px;
+            .logo {
+                font-size: 12px;
                 font-weight: bold;
             }
+            .logo span {
+                font-size: 8px;
+                vertical-align: super;
+                font-weight: lighter;
+            }
+            .config-button {
+                @include button;
+                padding: 0px;
+                font-size: 12px;
+            }
         }
+        .title-container {
+            position: fixed;
+            top: 112px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .message-container {
+            position: fixed;
+            top: 160px;
+            width: 327px;
 
-        .main {
-            margin-top: 212px;
-            width: 340px;
-            .match-container {
-                backdrop-filter: blur(15px);
-                margin: 0px 0px 10px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                border-bottom: 1px solid rgba(55,255,55,.5);
-                border-radius: 2px;
-
-                .date {
-                    @include df;
-                    justify-content: flex-start;
-                    font-size: 12px;
-                    padding: 8px 0px 16px 4px;
-                    .day {
-                        padding-left: 12px;
-                        font-weight: 600;
-                    }
-                    .month-year {
-                        color: $text-color-secondary;
-                    }
-                }
-                .match {
-                    @include df;
-                    justify-content: normal;
-                    padding: 0px 0px 4px 16px;
-                    font-size: 16px;
-                }
-
-                .time {
-                    @include df;
-                    height: 40px;
-                    width: 96px;
-                    font-size: 24px;
-                    font-weight: 400;
-                    margin-bottom: -2px;
-                }
-
-                .players {
-                    @include df;
-                    justify-content: flex-start;
-                    width: 112px;
-
-                    div:nth-child(n) {
-                        padding-right: 4px;
-                        text-align: center;
-                        font-size: 16px;
-                        font-weight: 600;
-                    }
-
-                    .field {
-                        color: $text-color;
-                    }
-
-                    .joined {
-                        padding-left: 8px;
-                        color: $primary-color;
-                    }
-
-                    .missed {
-                        color: $secondary-color;
-                    }
-                }
-
-                .action {
-                    @include df;
-                    align-items: normal;
-                    width: 112px;
-                    height: 24px;
-                    padding-right: 12px;
-                    column-gap: 8px;
-
-                    button {
-                        @include action-button;
-                    }
-                }
-
-                .info {
-                    padding: 12px 0px 30px 112px;
-                    text-transform: capitalize;
-
-                    .name {
-                        font-size: 12px;
-                        font-weight: 500;
-                    }
-
-                    .location {
-                        font-size: 12px;
-                        color: $text-color-secondary;
-                    }
-                }
-            }
-
-            .bottom-space {
-                height: 80px;
-            }
-
-            .create-match-form {
-                backdrop-filter: blur(15px);
-                padding: 16px 16px 32px;
-                margin-top: -24px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                border-radius: 2px;
-
-                .action {
-                    @include df;
-                    margin-top: 40px;
-                    button {
-                        @include action-button;
-                        background-color: $primary-color;
-                        font-size: 12px;
-                        padding: 10px;
-                        width: 96px;
-                    }
-                }
-            }
-
-            .config {
+            .message {
+                color: $terceary-color;
                 display: flex;
-                justify-content: center;
+                font-size: 12px;
+            }
+        }
+    }
 
-                .profile {
-                    display: flex;
-                    flex-direction: column;
-                    padding: 32px 24px 40px;
-                    border: 1px solid rgba(255, 255, 255, 0.05);
-                    border-radius: 2px;
-                    width: 160px;
-                    row-gap: 40px;
-                    backdrop-filter: blur(15px);
+    .main {
+        margin-top: 212px;
+        width: 340px;
+        .match-container {
+            backdrop-filter: blur(15px);
+            margin: 0px 0px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(55, 255, 55, 0.5);
+            border-radius: 2px;
 
-                    &:nth-child(n) {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        row-gap: 18px;
-                    }
-
-                    &img {
-                        border-radius: 25%;
-                    }
+            .date {
+                @include df;
+                justify-content: flex-start;
+                font-size: 12px;
+                padding: 8px 0px 16px 4px;
+                .day {
+                    padding-left: 12px;
+                    font-weight: 600;
                 }
+                .month-year {
+                    color: $text-color-secondary;
+                }
+            }
+            .match {
+                @include df;
+                justify-content: normal;
+                padding: 0px 0px 4px 16px;
+                font-size: 16px;
+            }
+
+            .time {
+                @include df;
+                height: 40px;
+                width: 96px;
+                font-size: 24px;
+                font-weight: 400;
+                margin-bottom: -2px;
+            }
+
+            .players {
+                @include df;
+                justify-content: flex-start;
+                width: 112px;
+
+                div:nth-child(n) {
+                    padding-right: 4px;
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+
+                .field {
+                    color: $text-color;
+                }
+
+                .joined {
+                    padding-left: 8px;
+                    color: $primary-color;
+                }
+
+                .missed {
+                    color: $secondary-color;
+                }
+            }
+
+            .action-match {
+                @include df;
+                align-items: normal;
+                width: 112px;
+                height: 24px;
+                padding-right: 12px;
+                column-gap: 8px;
 
                 button {
                     @include action-button;
+                }
+            }
+
+            .info {
+                padding: 12px 0px 30px 112px;
+                text-transform: capitalize;
+
+                .name {
                     font-size: 12px;
-                    padding: 16px;
+                    font-weight: 500;
+                }
+
+                .location {
+                    font-size: 12px;
+                    color: $text-color-secondary;
                 }
             }
         }
 
-        .navbar {
-            @include df;
-            justify-content: space-around;
-            position: fixed;
-            bottom: 0px;
-            min-width: 360px;
-            width: 414px;
-            height: 40px;
-            padding: 0px 0px 24px;
-            background-color: rgb(0, 0, 0);
+        .bottom-space {
+            height: 80px;
         }
+
+        .create-match-form {
+            backdrop-filter: blur(15px);
+            padding: 16px 16px 32px;
+            margin-top: -24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+
+            .action-match-form {
+                @include df;
+                margin-top: 40px;
+                button {
+                    @include action-button;
+                    background-color: $primary-color;
+                    font-size: 12px;
+                    padding: 10px;
+                    width: 96px;
+                }
+            }
+        }
+
+        .config {
+            display: flex;
+            justify-content: center;
+
+            .profile {
+                display: flex;
+                flex-direction: column;
+                padding: 32px 24px 40px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 2px;
+                width: 160px;
+                row-gap: 40px;
+                backdrop-filter: blur(15px);
+
+                &:nth-child(n) {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    row-gap: 18px;
+                }
+
+                &img {
+                    border-radius: 25%;
+                }
+            }
+
+            button {
+                @include action-button;
+                font-size: 12px;
+                padding: 16px;
+            }
+        }
+    }
+
+    .navbar {
+        @include df;
+        justify-content: space-around;
+        position: fixed;
+        bottom: 0px;
+        min-width: 360px;
+        width: 414px;
+        height: 40px;
+        padding: 0px 0px 24px;
+        background-color: rgb(0, 0, 0);
     }
 }

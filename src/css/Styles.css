@@ -8,6 +8,10 @@ a {
   filter: invert(100%);
 }
 
+.display-none {
+  display: none;
+}
+
 .settings-icon {
   filter: invert(100%);
 }
@@ -16,41 +20,41 @@ a {
   filter: invert(50%);
 }
 
-.app .body-app {
+.app {
   display: flex;
   justify-content: center;
   font-family: "Segoe UI";
   color: #f7f3ce;
 }
-.app .body-app .body-app-background {
+.app .app-background {
   background: linear-gradient(48deg, #202121, #536365);
   position: fixed;
   height: 100%;
   width: 100%;
 }
-.app .body-app .header {
+.app .header {
   position: fixed;
   top: 0px;
   padding: 20px 16px 0px 16px;
   width: 328px;
   height: 192px;
 }
-.app .body-app .header .topbar {
+.app .header .topbar-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   align-items: normal;
 }
-.app .body-app .header .topbar .logo {
+.app .header .topbar-container .logo {
   font-size: 12px;
   font-weight: bold;
 }
-.app .body-app .header .topbar .logo span {
+.app .header .topbar-container .logo span {
   font-size: 8px;
   vertical-align: super;
   font-weight: lighter;
 }
-.app .body-app .header .topbar .config-button {
+.app .header .topbar-container .config-button {
   color: #d4d4d4;
   border-style: none;
   border-width: 0px;
@@ -61,37 +65,34 @@ a {
   padding: 0px;
   font-size: 12px;
 }
-.app .body-app .header .topbar .none {
-  display: none;
-}
-.app .body-app .header .message-container {
-  position: fixed;
-  top: 160px;
-  width: 327px;
-}
-.app .body-app .header .message-container .message {
-  color: #fbff00;
-  display: flex;
-  font-size: 12px;
-}
-.app .body-app .header .title {
+.app .header .title-container {
   position: fixed;
   top: 112px;
   font-size: 24px;
   font-weight: bold;
 }
-.app .body-app .main {
+.app .header .message-container {
+  position: fixed;
+  top: 160px;
+  width: 327px;
+}
+.app .header .message-container .message {
+  color: #fbff00;
+  display: flex;
+  font-size: 12px;
+}
+.app .main {
   margin-top: 212px;
   width: 340px;
 }
-.app .body-app .main .match-container {
+.app .main .match-container {
   backdrop-filter: blur(15px);
   margin: 0px 0px 10px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-bottom: 1px solid rgba(55, 255, 55, 0.5);
   border-radius: 2px;
 }
-.app .body-app .main .match-container .date {
+.app .main .match-container .date {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -99,14 +100,14 @@ a {
   font-size: 12px;
   padding: 8px 0px 16px 4px;
 }
-.app .body-app .main .match-container .date .day {
+.app .main .match-container .date .day {
   padding-left: 12px;
   font-weight: 600;
 }
-.app .body-app .main .match-container .date .month-year {
+.app .main .match-container .date .month-year {
   color: #d4d4d4;
 }
-.app .body-app .main .match-container .match {
+.app .main .match-container .match {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -114,7 +115,7 @@ a {
   padding: 0px 0px 4px 16px;
   font-size: 16px;
 }
-.app .body-app .main .match-container .time {
+.app .main .match-container .time {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -124,30 +125,30 @@ a {
   font-weight: 400;
   margin-bottom: -2px;
 }
-.app .body-app .main .match-container .players {
+.app .main .match-container .players {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   justify-content: flex-start;
   width: 112px;
 }
-.app .body-app .main .match-container .players div:nth-child(n) {
+.app .main .match-container .players div:nth-child(n) {
   padding-right: 4px;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
 }
-.app .body-app .main .match-container .players .field {
+.app .main .match-container .players .field {
   color: #f7f3ce;
 }
-.app .body-app .main .match-container .players .joined {
+.app .main .match-container .players .joined {
   padding-left: 8px;
   color: #37ff37;
 }
-.app .body-app .main .match-container .players .missed {
+.app .main .match-container .players .missed {
   color: rgba(55, 255, 55, 0.4);
 }
-.app .body-app .main .match-container .action {
+.app .main .match-container .action-match {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -157,7 +158,7 @@ a {
   padding-right: 12px;
   column-gap: 8px;
 }
-.app .body-app .main .match-container .action button {
+.app .main .match-container .action-match button {
   width: inherit;
   background-color: #37ff37;
   color: black;
@@ -167,40 +168,40 @@ a {
   border-radius: 4px;
   cursor: pointer;
 }
-.app .body-app .main .match-container .action button:active {
+.app .main .match-container .action-match button:active {
   transition: 0.125s;
   background-color: #fbff00;
   color: black;
 }
-.app .body-app .main .match-container .info {
+.app .main .match-container .info {
   padding: 12px 0px 30px 112px;
   text-transform: capitalize;
 }
-.app .body-app .main .match-container .info .name {
+.app .main .match-container .info .name {
   font-size: 12px;
   font-weight: 500;
 }
-.app .body-app .main .match-container .info .location {
+.app .main .match-container .info .location {
   font-size: 12px;
   color: #d4d4d4;
 }
-.app .body-app .main .bottom-space {
+.app .main .bottom-space {
   height: 80px;
 }
-.app .body-app .main .create-match-form {
+.app .main .create-match-form {
   backdrop-filter: blur(15px);
   padding: 16px 16px 32px;
   margin-top: -24px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 2px;
 }
-.app .body-app .main .create-match-form .action {
+.app .main .create-match-form .action-match-form {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-top: 40px;
 }
-.app .body-app .main .create-match-form .action button {
+.app .main .create-match-form .action-match-form button {
   width: inherit;
   background-color: #37ff37;
   color: black;
@@ -214,16 +215,16 @@ a {
   padding: 10px;
   width: 96px;
 }
-.app .body-app .main .create-match-form .action button:active {
+.app .main .create-match-form .action-match-form button:active {
   transition: 0.125s;
   background-color: #fbff00;
   color: black;
 }
-.app .body-app .main .config {
+.app .main .config {
   display: flex;
   justify-content: center;
 }
-.app .body-app .main .config .profile {
+.app .main .config .profile {
   display: flex;
   flex-direction: column;
   padding: 32px 24px 40px;
@@ -233,16 +234,16 @@ a {
   row-gap: 40px;
   backdrop-filter: blur(15px);
 }
-.app .body-app .main .config .profile:nth-child(n) {
+.app .main .config .profile:nth-child(n) {
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 18px;
 }
-.app .body-app .main .config .profileimg {
+.app .main .config .profileimg {
   border-radius: 25%;
 }
-.app .body-app .main .config button {
+.app .main .config button {
   width: inherit;
   background-color: #37ff37;
   color: black;
@@ -254,12 +255,12 @@ a {
   font-size: 12px;
   padding: 16px;
 }
-.app .body-app .main .config button:active {
+.app .main .config button:active {
   transition: 0.125s;
   background-color: #fbff00;
   color: black;
 }
-.app .body-app .navbar {
+.app .navbar {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;

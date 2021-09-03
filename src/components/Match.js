@@ -1,4 +1,5 @@
 import React from 'react'
+import constants from '../constants/index'
 
 const dayjs = require('dayjs')
 // require('dayjs/locale/es')
@@ -10,13 +11,13 @@ dayjs.extend(timezone)
 const Match = ({ user, match, source, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
 
-  let updateMatchButton;
-  if (source === 'showOpenMatchs') {
-    updateMatchButton = <button onClick={joinMatch}>Join</button>
-  } else if (source === 'showMyMatchs') {
-    updateMatchButton = <button onClick={leaveMatch}>Leave</button>
+  let actionMatchButton;
+  if (source === constants.TITLES.OPEN_MATCHS) {
+    actionMatchButton = <button onClick={joinMatch}>Join</button>
+  } else if (source === constants.TITLES.MY_MATCHS) {
+    actionMatchButton = <button onClick={leaveMatch}>Leave</button>
   } else {
-    updateMatchButton = undefined
+    actionMatchButton = undefined
   }
   let deleteButton
   if (id_admin === Number(user)) {
@@ -32,22 +33,19 @@ const Match = ({ user, match, source, joinMatch, leaveMatch, deleteMatch }) => {
           {dayjs(date).utc().format(', MMMM. YYYY')}
         </div>
       </div>
-
       <div className='match'>
         <div className='time'>
           {dayjs(date).utc().format('HH:mm')}
         </div>
-
         <div className='players'>
           <div className='field'>F{players_field / 2}</div>
           <div className='joined'>{players}</div>
           <div className='missed'>{`/ ${players_field}`}</div>
         </div>
-        <div className='action'>
-          {deleteButton} {updateMatchButton}
+        <div className='action-match'>
+          {deleteButton} {actionMatchButton}
         </div>
       </div>
-
       <div className='info'>
         <div className='name'>{name}</div>
         <div className='location'>{location}</div>

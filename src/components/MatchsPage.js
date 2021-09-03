@@ -33,7 +33,7 @@ function MatchPage({ props }) {
     }
 
     return (
-        <div>
+        <div id='match-page'>
             {matchs.map((match, index) =>
                 <Match
                     key={index}
