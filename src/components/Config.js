@@ -1,7 +1,9 @@
 import React from 'react'
 import AuthenticationButton from "./authentication-button";
+import constants from '../constants/index';
 
-const Config = ( {playerName} ) => {
+const Config = ({ playerName }) => {
+  const title = constants.CONFIG.title;
 
   const Profile = () => {
     if (playerName) {
@@ -17,6 +19,9 @@ const Config = ( {playerName} ) => {
 
   return (
     <div className='config'>
+      <div className='title-container'>
+        {title}
+      </div>
       <div className='profile'>
         <Profile />
         <AuthenticationButton />

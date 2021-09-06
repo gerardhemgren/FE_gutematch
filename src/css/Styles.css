@@ -20,13 +20,20 @@ a {
   filter: invert(50%);
 }
 
+.title-container {
+  position: fixed;
+  top: 112px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .app {
   display: flex;
   justify-content: center;
   font-family: "Segoe UI";
   color: #f7f3ce;
 }
-.app .app-background {
+.app .fixed-background {
   background: linear-gradient(48deg, #202121, #536365);
   position: fixed;
   height: 100%;
@@ -64,12 +71,6 @@ a {
   transition: 0.5s;
   padding: 0px;
   font-size: 12px;
-}
-.app .header .title-container {
-  position: fixed;
-  top: 112px;
-  font-size: 24px;
-  font-weight: bold;
 }
 .app .header .message-container {
   position: fixed;
@@ -220,25 +221,19 @@ a {
   background-color: #fbff00;
   color: black;
 }
-.app .main .config {
-  display: flex;
-  justify-content: center;
-}
 .app .main .config .profile {
   display: flex;
-  flex-direction: column;
+  align-content: center;
   padding: 32px 24px 40px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 2px;
-  width: 160px;
-  row-gap: 40px;
   backdrop-filter: blur(15px);
 }
 .app .main .config .profile:nth-child(n) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 18px;
+  row-gap: 32px;
 }
 .app .main .config .profileimg {
   border-radius: 25%;
@@ -254,6 +249,7 @@ a {
   cursor: pointer;
   font-size: 12px;
   padding: 16px;
+  width: 100px;
 }
 .app .main .config button:active {
   transition: 0.125s;

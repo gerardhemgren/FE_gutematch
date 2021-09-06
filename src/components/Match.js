@@ -1,20 +1,20 @@
-import React from 'react'
-import constants from '../constants/index'
+import React from 'react';
+import constants from '../constants/index';
 
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
 // require('dayjs/locale/es')
-var utc = require('dayjs/plugin/utc')
-var timezone = require('dayjs/plugin/timezone')
-dayjs.extend(utc)
-dayjs.extend(timezone)
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-const Match = ({ user, match, source, joinMatch, leaveMatch, deleteMatch }) => {
+const Match = ({ path, user, match, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
 
   let actionMatchButton;
-  if (source === constants.TITLES.OPEN_MATCHS) {
+  if (path === constants.OPEN_MATCHS.path) {
     actionMatchButton = <button onClick={joinMatch}>Join</button>
-  } else if (source === constants.TITLES.MY_MATCHS) {
+  } else if (path === constants.MY_MATCHS.path) {
     actionMatchButton = <button onClick={leaveMatch}>Leave</button>
   } else {
     actionMatchButton = undefined
@@ -24,7 +24,7 @@ const Match = ({ user, match, source, joinMatch, leaveMatch, deleteMatch }) => {
     deleteButton = <button onClick={deleteMatch}>Del</button>
   }
   return (
-    <div id={`${source}`} className='match-container'>
+    <div id={`${path}`} className='match-container'>
       <div className='date'>
         <div className='day'>
           {dayjs(date).utc().format('DD — dddd')}

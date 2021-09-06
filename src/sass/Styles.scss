@@ -22,13 +22,20 @@ a {
     filter: invert(50%);
 }
 
+.title-container {
+    position: fixed;
+    top: 112px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .app {
     display: flex;
     justify-content: center;
     font-family: "Segoe UI";
     color: $text-color;
 
-    .app-background {
+    .fixed-background {
         background: linear-gradient(48deg, #202121, #536365);
         position: fixed;
         height: 100%;
@@ -60,12 +67,6 @@ a {
                 padding: 0px;
                 font-size: 12px;
             }
-        }
-        .title-container {
-            position: fixed;
-            top: 112px;
-            font-size: 24px;
-            font-weight: bold;
         }
         .message-container {
             position: fixed;
@@ -199,24 +200,20 @@ a {
         }
 
         .config {
-            display: flex;
-            justify-content: center;
 
             .profile {
                 display: flex;
-                flex-direction: column;
+                align-content: center;
                 padding: 32px 24px 40px;
                 border: 1px solid rgba(255, 255, 255, 0.05);
                 border-radius: 2px;
-                width: 160px;
-                row-gap: 40px;
                 backdrop-filter: blur(15px);
 
                 &:nth-child(n) {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    row-gap: 18px;
+                    row-gap: 32px;
                 }
 
                 &img {
@@ -228,6 +225,7 @@ a {
                 @include action-button;
                 font-size: 12px;
                 padding: 16px;
+                width: 100px;
             }
         }
     }
