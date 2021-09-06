@@ -8,7 +8,7 @@ const dayjs = require('dayjs');
 function MatchForm({ props }) {
     const user = props;
 
-    const [inputMatch, setInputMatch] = useState({ date: '2021-11-03', time: '22:00', location: 'a', players_field: 10, name: 'a' });
+    const [inputMatch, setInputMatch] = useState({ date: dayjs().format('YYYY-MM-DD'), time: '20:00', location: '', players_field: 10, name: '' });
     const handleInputCreateForm = (event) => {
         setInputMatch({ ...inputMatch, [event.target.name]: event.target.value });
     }
