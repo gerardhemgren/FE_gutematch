@@ -48,7 +48,11 @@ function MatchForm({ props }) {
             <div className='title-container'>
                 {title}
             </div>
-            <form onSubmit={addMatch} onReset={resetForm} className='create-match-form'>
+            <form
+                onSubmit={addMatch}
+                onReset={resetForm}
+                className='create-match-form'
+            >
                 <div id='location-field'>
                     <fieldset>
                         <legend>Location</legend>
@@ -63,7 +67,7 @@ function MatchForm({ props }) {
                         <label>Adress 1234, City, Country</label>
                     </fieldset>
                 </div>
-                <div className='name-field'>
+                <div className='field-and-name-field'>
                     <fieldset>
                         <legend>Field</legend>
                         <select
@@ -118,15 +122,23 @@ function MatchForm({ props }) {
                     </fieldset>
                 </div>
                 <div className='action-match-form'>
-                    <button type='reset' value='Reset'>
+                    <button type='reset'>
                         Reset
                     </button>
-                    <button type='submit'>
-                        Create
-                    </button>
+                    {
+                        user === 0 ?
+                            <button
+                                type='button'
+                                className='disable-button'>
+                                Create
+                            </button> :
+                            <button type='submit'>
+                                Create
+                            </button>
+                    }
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
 

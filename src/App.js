@@ -13,7 +13,6 @@ import Config from './components/Config';
 import constants from './constants/index'
 import icons from './icons/icons';
 import './css/Styles.css';
-import './Form.css';
 
 function App() {
   // USER

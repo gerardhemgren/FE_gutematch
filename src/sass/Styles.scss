@@ -88,7 +88,7 @@ a {
             backdrop-filter: blur(15px);
             margin: 0px 0px 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(55, 255, 55, 0.5);
+            border-bottom: 1px solid rgba(55, 255, 55, 1);
             border-radius: 2px;
 
             .date {
@@ -186,6 +186,76 @@ a {
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 2px;
 
+            fieldset {
+                margin: 0px 0px 24px;
+                padding: 0px;
+                border: none;
+                font-size: 12px;
+            }
+            legend {
+                font-size: 10px;
+            }
+            label {
+                padding-left: 2px;
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 10px;
+            }
+            input {
+                margin: 4px 0 0px 0;
+                background-color: transparent;
+                color: $text-color;
+                font: 14px "Segoe UI";
+                border-style: none;
+                border-bottom: 1px solid $primary-color;
+            }
+            input:focus {
+                outline: none;
+            }
+            input::placeholder {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            .date-field {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+            .date-field input {
+                border: none;
+                background-color: rgb(0, 0, 0, 0.1);
+            }
+            input[type="date"]::-webkit-calendar-picker-indicator {
+                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" viewBox="0 0 36 36"><path fill="rgb(255, 255, 255)" d="M27,0H3C1.35,0,0,1.351,0,3v24c0,1.648,1.35,3,3,3h24c1.65,0,3-1.352,3-3V3C30,1.351,28.65,0,27,0z M8.096,26.402H3.5   v-4.088h4.596V26.402z M8.096,20.943H3.5v-4.086h4.596V20.943z M7.75,4.547c-0.703,0-1.273-0.569-1.273-1.273S7.047,2,7.75,2   s1.273,0.569,1.273,1.273S8.453,4.547,7.75,4.547z M14.229,26.402H9.634v-4.088h4.595V26.402z M14.229,20.943H9.634v-4.086h4.595   V20.943z M14.229,15.488H9.634v-4.086h4.595V15.488z M13.727,3.273C13.727,2.569,14.297,2,15,2s1.273,0.569,1.273,1.273   S15.703,4.546,15,4.546S13.727,3.978,13.727,3.273z M20.366,20.943H15.77v-4.086h4.597V20.943z M20.366,15.488H15.77v-4.086h4.597   V15.488z M20.977,3.273C20.977,2.569,21.547,2,22.25,2s1.273,0.569,1.273,1.273s-0.57,1.273-1.273,1.273S20.977,3.978,20.977,3.273   z M26.5,20.943h-4.596v-4.086H26.5V20.943z M26.5,15.488h-4.596v-4.086H26.5V15.488z"/></svg>');
+            }
+            input[type="time"]::-webkit-calendar-picker-indicator {
+                background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 524 524"><path fill="rgb(255, 255, 255)" d="m256 0c-141.164062 0-256 114.835938-256 256s114.835938 256 256 256 256-114.835938 256-256-114.835938-256-256-256zm121.75 388.414062c-4.160156 4.160157-9.621094 6.253907-15.082031 6.253907-5.460938 0-10.925781-2.09375-15.082031-6.253907l-106.667969-106.664062c-4.011719-3.988281-6.25-9.410156-6.25-15.082031v-138.667969c0-11.796875 9.554687-21.332031 21.332031-21.332031s21.332031 9.535156 21.332031 21.332031v129.835938l100.417969 100.414062c8.339844 8.34375 8.339844 21.824219 0 30.164062zm0 0"/></svg>');
+            }
+
+            .input-adress {
+                width: 100%;
+            }
+
+            .drop-players-field {
+                width: 80px;
+                color: $text-color;
+                background-color: rgb(0, 0, 0, 0.1);
+                border: none;
+                align-self: flex-end;
+                margin: 4px 0 0px 0;
+                font-size: 12px;
+            }
+            .drop-players-field:focus {
+                background-color: rgb(0, 0, 0);
+                border-style: none;
+                outline: 0px;
+                font-size: 12px;
+            }
+
+            .field-and-name-field {
+                display: flex;
+                justify-content: space-between;
+            }
+
             .action-match-form {
                 @include df;
                 margin-top: 40px;
@@ -196,11 +266,14 @@ a {
                     padding: 10px;
                     width: 96px;
                 }
+                .disable-button {
+                    background-color: $secondary-color;
+                    cursor: default;
+                }
             }
         }
 
         .config {
-
             .profile {
                 display: flex;
                 align-content: center;
@@ -236,9 +309,11 @@ a {
         position: fixed;
         bottom: 0px;
         min-width: 360px;
-        width: 414px;
-        height: 40px;
+        // width: 414px;
+        height: 48px;
         padding: 0px 0px 24px;
-        background-color: rgb(0, 0, 0);
+        background: linear-gradient(rgba(37, 37, 37, 1),rgba(37, 37, 37, 0.9));
+        // background-color: rgba(37, 37, 37, 0.95);
+        border-radius: 15px;
     }
 }
