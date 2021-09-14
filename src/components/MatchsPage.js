@@ -17,7 +17,7 @@ function MatchPage({ props }) {
 
 
     useEffect(() => {
-        if (path === constants.ALL_MATCHS.path) {
+        if (user === 0 && (path === constants.ALL_MATCHS.path || path === '/')) {
             setTitle(constants.ALL_MATCHS.title);
             const showAllMatchs = async () => {
                 await matchService
@@ -27,7 +27,7 @@ function MatchPage({ props }) {
                     })
             }
             showAllMatchs()
-        } else if (path === constants.OPEN_MATCHS.path) {
+        } else if (user !== 0 && (path === constants.OPEN_MATCHS.path || path === '/')) {
             setTitle(constants.OPEN_MATCHS.title);
             const showOpenMatchs = async () => {
                 if (user !== 0) {
@@ -67,7 +67,7 @@ function MatchPage({ props }) {
             }
             showMyMatchs()
         }
-    }, [user, path, renderSwitch])
+    }, [user, path, renderSwitch, history])
 
     const joinMatch = async (matchId) => {
         await matchService

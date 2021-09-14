@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sass:watch": "cd src && sass -w sass:css"
+    "sass:watch": "cd src && sass -w sass:css",
+    "firebase-deploy": "firebase deploy"
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {

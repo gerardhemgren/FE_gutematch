@@ -55,7 +55,7 @@ function App() {
   // NAVIGATION
   const [path, setPath] = useState();
   const [renderSwitch, setRenderSwitch] = useState(false)
-  
+
   useEffect(() => {
     setPath(window.location.pathname)
   }, [renderSwitch])
@@ -80,10 +80,10 @@ function App() {
           </div>
         </div>
         <div className='main'>
-          <Switch>
+          <Switch>{
             <Route exact path="/">
               <MatchPage props={playerId} />
-            </Route>
+            </Route>}
             <Route path={constants.ALL_MATCHS.path}>
               <MatchPage props={playerId} />
             </Route>
