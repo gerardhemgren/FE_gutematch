@@ -35,6 +35,7 @@ Firebase deploy the build folder.
 
 ### App also uses:
 CSS with flex precompiled with SASS and SVG icons.\
+Axios for rest API calls.\
 **To improve:** Already API messages (not only errors) will be shown when a store or global context is setted.
 
 ### Design:
