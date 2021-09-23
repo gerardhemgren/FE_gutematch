@@ -105,7 +105,7 @@ function App() {
           {playerId !== 0 ?
             <Link to={constants.OPEN_MATCHES.path}
               onClick={() => setRenderSwitch(!renderSwitch)}>
-              <img src={icons.openMatchsIcon}
+              <img src={icons.openMatchesIcon}
                 alt={constants.OPEN_MATCHES.title}
                 className={`${path === constants.OPEN_MATCHES.path ? 'focus' : 'nav-icon'}`}
                 width="20" height="20"
@@ -114,7 +114,7 @@ function App() {
             :
             <Link to={constants.ALL_MATCHES.path}
               onClick={() => setRenderSwitch(!renderSwitch)}>
-              <img src={icons.openMatchsIcon}
+              <img src={icons.openMatchesIcon}
                 alt={constants.ALL_MATCHES.title}
                 className={`${path === constants.ALL_MATCHES.path ? 'focus' : 'nav-icon'}`}
                 width="20" height="20"
@@ -131,7 +131,7 @@ function App() {
           </Link>
           <Link to={constants.MY_MATCHES.path}
             onClick={() => setRenderSwitch(!renderSwitch)}>
-            <img src={icons.myMatchsIcon}
+            <img src={icons.myMatchesIcon}
               alt={constants.MY_MATCHES.title}
               className={`${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'}`}
               width="20" height="20"

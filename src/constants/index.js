@@ -1,7 +1,7 @@
 module.exports = {
         ALL_MATCHES: {
             title: 'All matches',
-            path: '/all_matchs'
+            path: '/all_matches'
         },
         OPEN_MATCHES:  {
             title: 'Open matches',

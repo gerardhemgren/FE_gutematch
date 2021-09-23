@@ -21,7 +21,7 @@ function MatchesPage({ props }) {
             setTitle(constants.ALL_MATCHES.title);
             const showAllMatches = async () => {
                 await matchService
-                    .getAllMatchs()
+                    .getAllMatches()
                     .then(res => {
                         setMatches(res)
                     })

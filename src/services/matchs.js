@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const baseUrl = 'https://gutematch.herokuapp.com';
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'https://gutematch.herokuapp.com';
+// const baseUrl = 'http://localhost:5000';
 
 const getAllMatches = () => {
     const request = axios.get(`${baseUrl}/api/all_matches`)
