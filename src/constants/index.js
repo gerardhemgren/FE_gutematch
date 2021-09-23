@@ -1,15 +1,15 @@
 module.exports = {
-        ALL_MATCHS: {
-            title: 'All matchs',
+        ALL_MATCHES: {
+            title: 'All matches',
             path: '/all_matchs'
         },
-        OPEN_MATCHS:  {
-            title: 'Open matchs',
-            path: '/open_matchs'
+        OPEN_MATCHES:  {
+            title: 'Open matches',
+            path: '/open_matches'
         },
-        MY_MATCHS:  {
-            title: 'My matchs',
-            path: '/my_matchs'
+        MY_MATCHES:  {
+            title: 'My matches',
+            path: '/my_matches'
         },
         CREATE_MATCH:  {
             title: 'Create match',

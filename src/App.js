@@ -5,7 +5,7 @@ import userService from './services/users';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
-import MatchPage from './components/MatchsPage'
+import MatchPage from './components/MatchesPage'
 import MatchForm from './components/MatchForm'
 import Message from './components/Message';
 import Config from './components/Config';
@@ -39,7 +39,7 @@ function App() {
     }
   }, [user, playerId])
 
-  // MATCHS
+  // MATCHES
   const [apiMessage, setApiMessage] = useState('');
 
   // MESSAGES
@@ -72,7 +72,7 @@ function App() {
             <Link to={constants.CONFIG.path}
               onClick={() => setRenderSwitch(!renderSwitch)}
               className={`${path === constants.CONFIG.path ? 'display-none' : 'config-button'}`}>
-              <img src={icons.settingsIcon} alt='settings' className='settings-icon' width="20" height="20" />
+              <img src={icons.settingsIcon} alt={constants.CONFIG.title} className='settings-icon' width="20" height="20" />
             </Link>
           </div>
           <div className='message-container'>
@@ -84,13 +84,13 @@ function App() {
             <Route exact path="/">
               <MatchPage props={playerId} />
             </Route>}
-            <Route path={constants.ALL_MATCHS.path}>
+            <Route path={constants.ALL_MATCHES.path}>
               <MatchPage props={playerId} />
             </Route>
-            <Route path={constants.OPEN_MATCHS.path}>
+            <Route path={constants.OPEN_MATCHES.path}>
               <MatchPage props={playerId} />
             </Route>
-            <Route path={constants.MY_MATCHS.path}>
+            <Route path={constants.MY_MATCHES.path}>
               <MatchPage props={playerId} />
             </Route>
             <Route path={constants.CREATE_MATCH.path}>
@@ -103,20 +103,20 @@ function App() {
         </div>
         <div className='navbar'>
           {playerId !== 0 ?
-            <Link to={constants.OPEN_MATCHS.path}
+            <Link to={constants.OPEN_MATCHES.path}
               onClick={() => setRenderSwitch(!renderSwitch)}>
               <img src={icons.openMatchsIcon}
-                alt='Open Matchs'
-                className={`${path === constants.OPEN_MATCHS.path ? 'focus' : 'nav-icon'}`}
+                alt={constants.OPEN_MATCHES.title}
+                className={`${path === constants.OPEN_MATCHES.path ? 'focus' : 'nav-icon'}`}
                 width="20" height="20"
               />
             </Link>
             :
-            <Link to={constants.ALL_MATCHS.path}
+            <Link to={constants.ALL_MATCHES.path}
               onClick={() => setRenderSwitch(!renderSwitch)}>
               <img src={icons.openMatchsIcon}
-                alt='All Matchs'
-                className={`${path === constants.ALL_MATCHS.path ? 'focus' : 'nav-icon'}`}
+                alt={constants.ALL_MATCHES.title}
+                className={`${path === constants.ALL_MATCHES.path ? 'focus' : 'nav-icon'}`}
                 width="20" height="20"
               />
             </Link>
@@ -124,16 +124,16 @@ function App() {
           <Link to={constants.CREATE_MATCH.path}
             onClick={() => setRenderSwitch(!renderSwitch)}>
             <img src={icons.createMatchIcon}
-              alt='Create Match'
+              alt={constants.CREATE_MATCH.title}
               className={`${path === constants.CREATE_MATCH.path ? 'focus' : 'nav-icon'}`}
               width="20" height="20"
             />
           </Link>
-          <Link to={constants.MY_MATCHS.path}
+          <Link to={constants.MY_MATCHES.path}
             onClick={() => setRenderSwitch(!renderSwitch)}>
             <img src={icons.myMatchsIcon}
-              alt='My Matchs'
-              className={`${path === constants.MY_MATCHS.path ? 'focus' : 'nav-icon'}`}
+              alt={constants.MY_MATCHES.title}
+              className={`${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'}`}
               width="20" height="20"
             />
           </Link>

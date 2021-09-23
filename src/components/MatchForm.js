@@ -17,7 +17,7 @@ function MatchForm({ props }) {
     }
 
     let history = useHistory()
-    const handleForm = () => history.push(constants.MY_MATCHS.path);
+    const handleForm = () => history.push(constants.MY_MATCHES.path);
     const title = constants.CREATE_MATCH.title;
 
     const addMatch = async (event) => {
@@ -88,7 +88,7 @@ function MatchForm({ props }) {
                             className='input-name'
                             required
                             placeholder='Match name'
-                            maxLength='10'
+                            maxLength='20'
                             name='name'
                             value={inputMatch.name}
                             onChange={handleInputCreateForm}

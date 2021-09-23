@@ -4,40 +4,40 @@ import Match from './Match';
 import matchService from '../services/matchs';
 import constants from '../constants/index'
 
-function MatchPage({ props }) {
+function MatchesPage({ props }) {
     const user = props;
 
     let history = useHistory();
     const path = history.location.pathname;
-    const handleAction = () => history.push(constants.MY_MATCHS.path);
+    const handleAction = () => history.push(constants.MY_MATCHES.path);
 
-    const [matchs, setMatchs] = useState([])
+    const [matchs, setMatches] = useState([])
     const [title, setTitle] = useState('')
     const [renderSwitch, setRenderSwitch] = useState(false)
 
 
     useEffect(() => {
-        if (user === 0 && (path === constants.ALL_MATCHS.path || path === '/')) {
-            setTitle(constants.ALL_MATCHS.title);
-            const showAllMatchs = async () => {
+        if (user === 0 && (path === constants.ALL_MATCHES.path || path === '/')) {
+            setTitle(constants.ALL_MATCHES.title);
+            const showAllMatches = async () => {
                 await matchService
                     .getAllMatchs()
                     .then(res => {
-                        setMatchs(res)
+                        setMatches(res)
                     })
             }
-            showAllMatchs()
-        } else if (user !== 0 && (path === constants.OPEN_MATCHS.path || path === '/')) {
-            setTitle(constants.OPEN_MATCHS.title);
-            const showOpenMatchs = async () => {
+            showAllMatches()
+        } else if (user !== 0 && (path === constants.OPEN_MATCHES.path || path === '/')) {
+            setTitle(constants.OPEN_MATCHES.title);
+            const showOpenMatches = async () => {
                 if (user !== 0) {
                     await matchService
-                        .getOpenMatchs(user)
+                        .getOpenMatches(user)
                         .then(res => {
                             if (typeof res === 'object') {
-                                setMatchs(res)
+                                setMatches(res)
                             } else {
-                                setMatchs([])
+                                setMatches([])
                                 // setApiMessage(res)
                             }
                         })
@@ -45,27 +45,27 @@ function MatchPage({ props }) {
                     //   setApiMessage('You must be logged to see opened matchs')
                 }
             }
-            showOpenMatchs()
-        } else if (path === constants.MY_MATCHS.path) {
-            setTitle(constants.MY_MATCHS.title);
-            const showMyMatchs = async () => {
+            showOpenMatches()
+        } else if (path === constants.MY_MATCHES.path) {
+            setTitle(constants.MY_MATCHES.title);
+            const showMyMatches = async () => {
                 if (user !== 0) {
                     await matchService
-                        .getMyMatchs(user)
+                        .getMyMatches(user)
                         .then(res => {
                             if (typeof res === 'object') {
-                                setMatchs(res)
+                                setMatches(res)
                             } else {
-                                setMatchs([])
+                                setMatches([])
                                 // setApiMessage(res)
                             }
                         })
                 } else {
-                    setMatchs([])
+                    setMatches([])
                     //   setApiMessage('You must be logged to join a match')
                 }
             }
-            showMyMatchs()
+            showMyMatches()
         }
     }, [user, path, renderSwitch, history])
 
@@ -120,4 +120,4 @@ function MatchPage({ props }) {
     )
 }
 
-export default MatchPage
+export default MatchesPage

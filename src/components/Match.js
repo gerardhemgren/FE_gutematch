@@ -12,17 +12,22 @@ const Match = ({ path, user, match, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
 
   let actionMatchButton;
-  if (path === constants.OPEN_MATCHS.path) {
-    actionMatchButton = <button onClick={joinMatch}>Join</button>
-  } else if (path === constants.MY_MATCHS.path) {
-    actionMatchButton = <button onClick={leaveMatch}>Leave</button>
-  } else {
-    actionMatchButton = undefined
+  switch (path) {
+    case constants.OPEN_MATCHES.path:
+      actionMatchButton = <button onClick={joinMatch}>Join</button>
+      break;
+    case constants.MY_MATCHES.path:
+      actionMatchButton = <button onClick={leaveMatch}>Leave</button>
+      break;
+    default:
+      actionMatchButton = undefined
   }
+  
   let deleteButton
   if (id_admin === Number(user)) {
     deleteButton = <button onClick={deleteMatch}>Del</button>
   }
+
   return (
     <div id={`${path}`} className='match-container'>
       <div className='date'>
