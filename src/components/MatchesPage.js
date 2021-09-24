@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Match from './Match';
-import matchService from '../services/matchs';
+import matchService from '../services/matches';
 import constants from '../constants/index'
+
 
 function MatchesPage({ props }) {
     const user = props;
@@ -11,10 +12,31 @@ function MatchesPage({ props }) {
     const path = history.location.pathname;
     const handleAction = () => history.push(constants.MY_MATCHES.path);
 
-    const [matchs, setMatches] = useState([])
+    const [matches, setMatches] = useState([0])
     const [title, setTitle] = useState('')
     const [renderSwitch, setRenderSwitch] = useState(false)
 
+    const ConditionalSpinner = () => {
+        if (matches[0] === 0) {
+            return (
+                <div className="lds-ripple"><div></div><div></div></div>
+            )
+        } else {
+            return (
+                matches.map((match, index) =>
+                    <Match
+                        key={index}
+                        match={match}
+                        user={user}
+                        title={title}
+                        joinMatch={() => joinMatch(match.id_match)}
+                        leaveMatch={() => leaveMatch(match.id_match)}
+                        deleteMatch={() => deleteMatch(match.id_match)}
+                    />
+                )
+            )
+        }
+    }
 
     useEffect(() => {
         if (user === 0 && (path === constants.ALL_MATCHES.path || path === '/')) {
@@ -42,7 +64,7 @@ function MatchesPage({ props }) {
                             }
                         })
                 } else {
-                    //   setApiMessage('You must be logged to see opened matchs')
+                    //   setApiMessage('You must be logged to see opened matches')
                 }
             }
             showOpenMatches()
@@ -104,17 +126,7 @@ function MatchesPage({ props }) {
             <div className='title-container'>
                 {title}
             </div>
-            {matchs.map((match, index) =>
-                <Match
-                    key={index}
-                    match={match}
-                    user={user}
-                    path={path}
-                    joinMatch={() => joinMatch(match.id_match)}
-                    leaveMatch={() => leaveMatch(match.id_match)}
-                    deleteMatch={() => deleteMatch(match.id_match)}
-                />
-            )}
+            <ConditionalSpinner />
             <div className='bottom-space'></div>
         </div>
     )

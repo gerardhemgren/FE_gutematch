@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import matchService from '../services/matchs';
+import matchService from '../services/matches';
 import constants from '../constants/index';
 
 const dayjs = require('dayjs');

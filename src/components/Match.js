@@ -8,28 +8,31 @@ var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Match = ({ path, user, match, joinMatch, leaveMatch, deleteMatch }) => {
+const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
 
   let actionMatchButton;
-  switch (path) {
-    case constants.OPEN_MATCHES.path:
+  switch (title) {
+    case constants.ALL_MATCHES.title:
+      actionMatchButton = undefined
+      break;
+    case constants.OPEN_MATCHES.title:
       actionMatchButton = <button onClick={joinMatch}>Join</button>
       break;
-    case constants.MY_MATCHES.path:
+    case constants.MY_MATCHES.title:
       actionMatchButton = <button onClick={leaveMatch}>Leave</button>
       break;
     default:
       actionMatchButton = undefined
   }
-  
+
   let deleteButton
   if (id_admin === Number(user)) {
     deleteButton = <button onClick={deleteMatch}>Del</button>
   }
 
   return (
-    <div id={`${path}`} className='match-container'>
+    <div id={`${title}`} className='match-container'>
       <div className='date'>
         <div className='day'>
           {dayjs(date).utc().format('DD — dddd')}

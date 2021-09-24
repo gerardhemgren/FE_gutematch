@@ -39,10 +39,8 @@ function App() {
     }
   }, [user, playerId])
 
-  // MATCHES
-  const [apiMessage, setApiMessage] = useState('');
-
   // MESSAGES
+  const [apiMessage, setApiMessage] = useState('');
   const closeMessage = () => {
     const res = apiMessage
     if (res) {
