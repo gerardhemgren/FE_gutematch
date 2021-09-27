@@ -2,6 +2,9 @@ a {
   text-decoration: none;
   font-size: 10px;
 }
+a:active {
+  transform: scale(90%);
+}
 
 .focus {
   transition: 0.5s;
@@ -66,7 +69,6 @@ a {
   border-style: none;
   border-width: 0px;
   outline-style: none;
-  background: transparent;
   cursor: pointer;
   transition: 0.5s;
   padding: 0px;
@@ -201,9 +203,8 @@ a {
   cursor: pointer;
 }
 .app .main .match-container .action-match button:active {
-  transition: 0.125s;
-  background-color: #fbff00;
-  color: black;
+  transition: 0.225s;
+  transform: scale(80%);
 }
 .app .main .match-container .info {
   padding: 12px 0px 30px 107px;
@@ -313,9 +314,8 @@ a {
   width: 96px;
 }
 .app .main .create-match-form .action-match-form button:active {
-  transition: 0.125s;
-  background-color: #fbff00;
-  color: black;
+  transition: 0.225s;
+  transform: scale(80%);
 }
 .app .main .create-match-form .action-match-form .disable-button {
   background-color: rgba(55, 255, 55, 0.4);
@@ -323,19 +323,20 @@ a {
 }
 .app .main .config .profile {
   display: flex;
-  align-content: center;
+  flex-direction: column;
+  align-items: center;
   padding: 32px 24px 40px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 2px;
   backdrop-filter: blur(15px);
+  row-gap: 16px;
 }
-.app .main .config .profile:nth-child(n) {
+.app .main .config .profile div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 32px;
 }
-.app .main .config .profileimg {
+.app .main .config .profile div img {
   border-radius: 25%;
 }
 .app .main .config button {
@@ -348,13 +349,12 @@ a {
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
-  padding: 16px;
-  width: 100px;
+  padding: 10px;
+  width: 96px;
 }
 .app .main .config button:active {
-  transition: 0.125s;
-  background-color: #fbff00;
-  color: black;
+  transition: 0.225s;
+  transform: scale(80%);
 }
 .app .navbar {
   display: flex;

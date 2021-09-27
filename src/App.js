@@ -16,28 +16,38 @@ import './css/Styles.css';
 
 function App() {
   // USER
+  const { isLoading, isAuthenticated, user } = useAuth0();
+
   const playerIdFromLocalStorage = localStorage.getItem('player_id');
   const playerNameFromLocalStorage = localStorage.getItem('player_name');
+  const playerPictureFromLocalStorage = localStorage.getItem('player_picture')
 
-  const { user } = useAuth0();
-  const [playerId, setPlayerId] = useState(Number(playerIdFromLocalStorage) || 0);
+  const [playerId, setPlayerId] = useState(playerIdFromLocalStorage);
 
   // USER CYCLE
   useEffect(() => {
-    if (user) {
-      const userInfo = {
-        sub: user.sub,
-        name: user.name
+    if (!isLoading) {
+      if (!isAuthenticated && !playerIdFromLocalStorage) {
+        setPlayerId(false)
+      } else {
+        if (user) {
+          const userInfo = {
+            sub: user.sub,
+            name: user.name,
+            picture: user.picture
+          }
+          userService
+            .logIn_signUp(userInfo)
+            .then(async res => {
+              setPlayerId(await res[0].id)
+              localStorage.setItem('player_id', await res[0].id)
+              localStorage.setItem('player_name', await res[0].name)
+              localStorage.setItem('player_picture', userInfo.picture)
+            })
+        }
       }
-      userService
-        .logIn_signUp(userInfo)
-        .then(async res => {
-          setPlayerId(await res[0].id)
-          localStorage.setItem('player_id', await res[0].id)
-          localStorage.setItem('player_name', await res[0].name)
-        })
     }
-  }, [user, playerId])
+  }, [isLoading, isAuthenticated, user, playerIdFromLocalStorage])
 
   // MESSAGES
   const [apiMessage, setApiMessage] = useState('');
@@ -57,6 +67,10 @@ function App() {
   useEffect(() => {
     setPath(window.location.pathname)
   }, [renderSwitch])
+
+  const handleFocusIcon = () => {
+    setPath(window.location.pathname)
+  }
 
   return (
     <Router>
@@ -86,7 +100,7 @@ function App() {
               <MatchPage props={playerId} />
             </Route>
             <Route path={constants.OPEN_MATCHES.path}>
-              <MatchPage props={playerId} />
+              <MatchPage props={playerId} handleFocusIcon={() => handleFocusIcon()} />
             </Route>
             <Route path={constants.MY_MATCHES.path}>
               <MatchPage props={playerId} />
@@ -95,12 +109,12 @@ function App() {
               <MatchForm props={playerId} />
             </Route>
             <Route path={constants.CONFIG.path}>
-              <Config playerName={playerNameFromLocalStorage} />
+              <Config playerName={playerNameFromLocalStorage} playerPicture={playerPictureFromLocalStorage} />
             </Route>
           </Switch>
         </div>
         <div className='navbar'>
-          {playerId !== 0 ?
+          {playerId !== false ?
             <Link to={constants.OPEN_MATCHES.path}
               onClick={() => setRenderSwitch(!renderSwitch)}>
               <img src={icons.openMatchesIcon}
@@ -127,7 +141,7 @@ function App() {
               width="20" height="20"
             />
           </Link>
-          <Link to={constants.MY_MATCHES.path}
+          <Link to={playerId !== false ? constants.MY_MATCHES.path : constants.CONFIG.path}
             onClick={() => setRenderSwitch(!renderSwitch)}>
             <img src={icons.myMatchesIcon}
               alt={constants.MY_MATCHES.title}

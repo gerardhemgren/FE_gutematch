@@ -8,7 +8,7 @@ const dayjs = require('dayjs');
 function MatchForm({ props }) {
     const user = props;
 
-    const [inputMatch, setInputMatch] = useState({ date: dayjs().format('YYYY-MM-DD'), time: '20:00', location: '', players_field: 10, name: '' });
+    const [inputMatch, setInputMatch] = useState({ date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), location: '', players_field: 10, name: '' });
     const handleInputCreateForm = (event) => {
         setInputMatch({ ...inputMatch, [event.target.name]: event.target.value });
     }
@@ -22,7 +22,7 @@ function MatchForm({ props }) {
 
     const addMatch = async (event) => {
         event.preventDefault()
-        if (user !== 0) {
+        if (user !== false) {
             const matchInfo = {
                 date: `${inputMatch.date} ${inputMatch.time}`,
                 location: inputMatch.location,
@@ -126,7 +126,7 @@ function MatchForm({ props }) {
                         Reset
                     </button>
                     {
-                        user === 0 ?
+                        user === false ?
                             <button
                                 type='button'
                                 className='disable-button'>

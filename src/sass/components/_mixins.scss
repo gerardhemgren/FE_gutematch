@@ -9,16 +9,12 @@
     border-style: none;
     border-width: 0px;
     outline-style: none;
-    background: transparent;
     cursor: pointer;
     transition: 0.5s;
 }
 
 @mixin button-focus($bt-color, $br-color) {
     transition: 0.5s;
-    // border-top: solid $br-color 4px;
-    // color: $bt-color;
-    
 }
 
 @mixin action-button {
@@ -28,13 +24,11 @@
     font-size: 10px;
     font-weight: 700;
     border-style: none;
-    // border: 1px solid yellow;
     border-radius: 4px;
     cursor: pointer;
 
     &:active {
-        transition: 0.125s;
-        background-color: $terceary-color;
-        color: black;
+        transition: .225s;
+        transform: scale(80%);
     }
 }

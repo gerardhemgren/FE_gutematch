@@ -5,7 +5,7 @@ import matchService from '../services/matches';
 import constants from '../constants/index'
 
 
-function MatchesPage({ props }) {
+function MatchesPage({ props, handleFocusIcon }) {
     const user = props;
 
     let history = useHistory();
@@ -39,7 +39,7 @@ function MatchesPage({ props }) {
     }
 
     useEffect(() => {
-        if (user === 0 && (path === constants.ALL_MATCHES.path || path === '/')) {
+        if (user === false && (path === constants.ALL_MATCHES.path || path === '/')) {
             setTitle(constants.ALL_MATCHES.title);
             const showAllMatches = async () => {
                 await matchService
@@ -49,10 +49,10 @@ function MatchesPage({ props }) {
                     })
             }
             showAllMatches()
-        } else if (user !== 0 && (path === constants.OPEN_MATCHES.path || path === '/')) {
+        } else if (user !== false && (path === constants.OPEN_MATCHES.path || path === '/')) {
             setTitle(constants.OPEN_MATCHES.title);
             const showOpenMatches = async () => {
-                if (user !== 0) {
+                if (user !== false) {
                     await matchService
                         .getOpenMatches(user)
                         .then(res => {
@@ -71,7 +71,7 @@ function MatchesPage({ props }) {
         } else if (path === constants.MY_MATCHES.path) {
             setTitle(constants.MY_MATCHES.title);
             const showMyMatches = async () => {
-                if (user !== 0) {
+                if (user !== false) {
                     await matchService
                         .getMyMatches(user)
                         .then(res => {
@@ -95,8 +95,9 @@ function MatchesPage({ props }) {
         await matchService
             .joinMatch(matchId, user)
             .then(async res => {
-                setRenderSwitch(!renderSwitch);
                 handleAction()
+                handleFocusIcon()
+                setRenderSwitch(!renderSwitch);
                 // setApiMessage(await res)
             })
     }
