@@ -13,7 +13,7 @@ const LogoutButton = () => {
 
   return (
     <button
-      className='action-button logout-button secondary'
+      className='logout-button'
       onClick={() => deleteLocalStorage()}
     >
       Log Out

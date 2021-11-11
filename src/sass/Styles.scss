@@ -10,7 +10,7 @@ a {
 }
 
 .focus {
-    transition: .5s;
+    transition: 0.5s;
     filter: invert(100%);
 }
 
@@ -125,87 +125,93 @@ a {
             backdrop-filter: blur(15px);
             margin: 0px 0px 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(55, 255, 55, 1);
             border-radius: 2px;
 
-            .date {
-                @include df;
-                justify-content: flex-start;
-                font-size: 12px;
-                padding: 8px 0px 16px 4px;
-                .day {
-                    padding-left: 12px;
-                    font-weight: 600;
-                }
-                .month-year {
-                    color: $text-color-secondary;
-                }
-            }
-            .match {
-                @include df;
-                justify-content: normal;
-                padding: 0px 0px 4px 16px;
-                font-size: 16px;
+            display: grid;
+            grid-template-columns: repeat(12, 28.3px);
+            padding: 12px 24px 20px 24px;
+
+            .title {
+                text-transform: capitalize;
+                font-size: 10px;
+                color: $text-color-secondary;
+                grid-column: 1 / 12;
+                grid-row: 1;
+                padding-bottom: 20px;
             }
 
-            .time {
-                @include df;
-                height: 40px;
-                width: 96px;
-                font-size: 24px;
-                font-weight: 400;
-                margin-bottom: -2px;
+            .date {
+                grid-row: 2;
+                grid-column: 1 / 8;
+                padding-bottom: 16px;
+                .day {
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+                .date-month {
+                    color: $text-color-secondary;
+                    font-size: 10px;
+                }
             }
 
             .players {
-                @include df;
-                justify-content: flex-start;
-                width: 112px;
-
-                div:nth-child(n) {
-                    padding-right: 4px;
-                    font-weight: 600;
-                }
-
+                grid-row: 2;
+                grid-column: 7 / 12;
                 .field {
                     color: $text-color;
+                    font-size: 16px;
+                    font-weight: 600;
                 }
-
                 .joined {
-                    padding-left: 8px;
-                    color: $primary-color;
+                    color: $text-color;
+                    font-size: 10px;
                 }
+                .missing {
+                    color: $text-color-secondary;
+                    font-size: 10px;
+                }
+            }
 
-                .missed {
-                    color: $secondary-color;
+            .match {
+                grid-row: 3;
+                grid-column: 1 / 12;
+                padding-bottom: 24px;
+                .time {
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+                .location {
+                    text-transform: capitalize;
+                    font-size: 10px;
+                    color: $text-color-secondary;
                 }
             }
 
             .action-match {
-                @include df;
-                align-items: normal;
-                width: 112px;
+                grid-row: 4;
+                grid-column: 1 / 12;
+                width: 76px;
                 height: 24px;
-                padding-right: 12px;
-                column-gap: 8px;
-
+                display: grid;
+                grid-template-columns: repeat(12, 28.3px);
                 button {
-                    @include action-button;
+                    font-size: 10px;
+                    padding: 4px;
                 }
-            }
-
-            .info {
-                padding: 12px 0px 30px 107px;
-                text-transform: capitalize;
-
-                .name {
-                    font-size: 12px;
-                    font-weight: 500;
+                .join-btn {
+                    @include action-button($primary-color, $secondary-color);
+                    grid-column: 8 / 12;
+                    grid-row: 1;
                 }
-
-                .location {
-                    font-size: 12px;
-                    color: $text-color-secondary;
+                .leave-btn {
+                    @include action-button($leave-color, $leave-secondary-color);
+                    grid-column: 8 / 12;
+                    grid-row: 1;
+                }
+                .del-btn {
+                    @include action-button($del-color, $del-secondary-color);
+                    grid-column: 1 / 4;
+                    grid-row: 1;
                 }
             }
         }
@@ -295,8 +301,7 @@ a {
                 @include df;
                 margin-top: 40px;
                 button {
-                    @include action-button;
-                    background-color: $primary-color;
+                    @include action-button($primary-color, $secondary-color);
                     font-size: 12px;
                     padding: 10px;
                     width: 96px;
@@ -324,16 +329,20 @@ a {
                     flex-direction: column;
                     align-items: center;
                     img {
-                        border-radius: 25%;
+                        border-radius: 50%;
                     }
                 }
             }
 
-            button {
-                @include action-button;
+            .logout-button {
                 font-size: 12px;
-                padding: 10px;
-                width: 96px;
+                padding: 8px 20px;
+                @include action-button($del-color, $del-secondary-color);
+            }
+            .login-button {
+                font-size: 12px;
+                padding: 8px 20px;
+                @include action-button($primary-color, $secondary-color);
             }
         }
     }
@@ -344,11 +353,9 @@ a {
         position: fixed;
         bottom: 0px;
         min-width: 360px;
-        // width: 414px;
         height: 48px;
         padding: 0px 0px 24px;
         background: linear-gradient(rgba(37, 37, 37, 1), rgba(37, 37, 37, 0.9));
-        // background-color: rgba(37, 37, 37, 0.95);
         border-radius: 15px;
     }
 }

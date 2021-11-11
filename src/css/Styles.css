@@ -34,7 +34,7 @@ a:active {
   display: flex;
   justify-content: center;
   font-family: "Segoe UI";
-  color: #f7f3ce;
+  color: white;
 }
 .app .fixed-background {
   background: linear-gradient(48deg, #202121, #536365);
@@ -125,98 +125,125 @@ a:active {
   backdrop-filter: blur(15px);
   margin: 0px 0px 10px;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid #37ff37;
   border-radius: 2px;
+  display: grid;
+  grid-template-columns: repeat(12, 28.3px);
+  padding: 12px 24px 20px 24px;
+}
+.app .main .match-container .title {
+  text-transform: capitalize;
+  font-size: 10px;
+  color: #d4d4d4;
+  grid-column: 1/12;
+  grid-row: 1;
+  padding-bottom: 20px;
 }
 .app .main .match-container .date {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  justify-content: flex-start;
-  font-size: 12px;
-  padding: 8px 0px 16px 4px;
+  grid-row: 2;
+  grid-column: 1/8;
+  padding-bottom: 16px;
 }
 .app .main .match-container .date .day {
-  padding-left: 12px;
   font-weight: 600;
-}
-.app .main .match-container .date .month-year {
-  color: #d4d4d4;
-}
-.app .main .match-container .match {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  justify-content: normal;
-  padding: 0px 0px 4px 16px;
   font-size: 16px;
 }
-.app .main .match-container .time {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  height: 40px;
-  width: 96px;
-  font-size: 24px;
-  font-weight: 400;
-  margin-bottom: -2px;
+.app .main .match-container .date .date-month {
+  color: #d4d4d4;
+  font-size: 10px;
 }
 .app .main .match-container .players {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  justify-content: flex-start;
-  width: 112px;
-}
-.app .main .match-container .players div:nth-child(n) {
-  padding-right: 4px;
-  font-weight: 600;
+  grid-row: 2;
+  grid-column: 7/12;
 }
 .app .main .match-container .players .field {
-  color: #f7f3ce;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
 }
 .app .main .match-container .players .joined {
-  padding-left: 8px;
-  color: #37ff37;
+  color: white;
+  font-size: 10px;
 }
-.app .main .match-container .players .missed {
-  color: rgba(55, 255, 55, 0.4);
+.app .main .match-container .players .missing {
+  color: #d4d4d4;
+  font-size: 10px;
+}
+.app .main .match-container .match {
+  grid-row: 3;
+  grid-column: 1/12;
+  padding-bottom: 24px;
+}
+.app .main .match-container .match .time {
+  font-size: 16px;
+  font-weight: 400;
+}
+.app .main .match-container .match .location {
+  text-transform: capitalize;
+  font-size: 10px;
+  color: #d4d4d4;
 }
 .app .main .match-container .action-match {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  align-items: normal;
-  width: 112px;
+  grid-row: 4;
+  grid-column: 1/12;
+  width: 76px;
   height: 24px;
-  padding-right: 12px;
-  column-gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(12, 28.3px);
 }
 .app .main .match-container .action-match button {
-  width: inherit;
-  background-color: #37ff37;
-  color: black;
   font-size: 10px;
-  font-weight: 700;
+  padding: 4px;
+}
+.app .main .match-container .action-match .join-btn {
+  width: inherit;
+  background-color: rgba(55, 255, 55, 0.2);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
   border-style: none;
+  border: 1px solid #37ff37;
   border-radius: 4px;
   cursor: pointer;
+  grid-column: 8/12;
+  grid-row: 1;
 }
-.app .main .match-container .action-match button:active {
+.app .main .match-container .action-match .join-btn:active {
   transition: 0.225s;
   transform: scale(80%);
 }
-.app .main .match-container .info {
-  padding: 12px 0px 30px 107px;
-  text-transform: capitalize;
+.app .main .match-container .action-match .leave-btn {
+  width: inherit;
+  background-color: rgba(251, 255, 0, 0.2);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid #fbff00;
+  border-radius: 4px;
+  cursor: pointer;
+  grid-column: 8/12;
+  grid-row: 1;
 }
-.app .main .match-container .info .name {
-  font-size: 12px;
-  font-weight: 500;
+.app .main .match-container .action-match .leave-btn:active {
+  transition: 0.225s;
+  transform: scale(80%);
 }
-.app .main .match-container .info .location {
-  font-size: 12px;
-  color: #d4d4d4;
+.app .main .match-container .action-match .del-btn {
+  width: inherit;
+  background-color: rgba(251, 0, 0, 0.2);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid #fb0000;
+  border-radius: 4px;
+  cursor: pointer;
+  grid-column: 1/4;
+  grid-row: 1;
+}
+.app .main .match-container .action-match .del-btn:active {
+  transition: 0.225s;
+  transform: scale(80%);
 }
 .app .main .bottom-space {
   height: 80px;
@@ -245,7 +272,7 @@ a:active {
 .app .main .create-match-form input {
   margin: 4px 0 0px 0;
   background-color: transparent;
-  color: #f7f3ce;
+  color: white;
   font: 14px "Segoe UI";
   border-style: none;
   border-bottom: 1px solid #37ff37;
@@ -276,7 +303,7 @@ a:active {
 }
 .app .main .create-match-form .drop-players-field {
   width: 80px;
-  color: #f7f3ce;
+  color: white;
   background-color: rgba(0, 0, 0, 0.1);
   border: none;
   align-self: flex-end;
@@ -301,14 +328,14 @@ a:active {
 }
 .app .main .create-match-form .action-match-form button {
   width: inherit;
-  background-color: #37ff37;
-  color: black;
+  background-color: rgba(55, 255, 55, 0.2);
+  color: white;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   border-style: none;
+  border: 1px solid #37ff37;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #37ff37;
   font-size: 12px;
   padding: 10px;
   width: 96px;
@@ -318,7 +345,7 @@ a:active {
   transform: scale(80%);
 }
 .app .main .create-match-form .action-match-form .disable-button {
-  background-color: rgba(55, 255, 55, 0.4);
+  background-color: rgba(55, 255, 55, 0.2);
   cursor: default;
 }
 .app .main .config .profile {
@@ -337,22 +364,39 @@ a:active {
   align-items: center;
 }
 .app .main .config .profile div img {
-  border-radius: 25%;
+  border-radius: 50%;
 }
-.app .main .config button {
+.app .main .config .logout-button {
+  font-size: 12px;
+  padding: 8px 20px;
   width: inherit;
-  background-color: #37ff37;
-  color: black;
+  background-color: rgba(251, 0, 0, 0.2);
+  color: white;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   border-style: none;
+  border: 1px solid #fb0000;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
-  padding: 10px;
-  width: 96px;
 }
-.app .main .config button:active {
+.app .main .config .logout-button:active {
+  transition: 0.225s;
+  transform: scale(80%);
+}
+.app .main .config .login-button {
+  font-size: 12px;
+  padding: 8px 20px;
+  width: inherit;
+  background-color: rgba(55, 255, 55, 0.2);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid #37ff37;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.app .main .config .login-button:active {
   transition: 0.225s;
   transform: scale(80%);
 }

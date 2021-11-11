@@ -17,10 +17,10 @@ const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
       actionMatchButton = undefined
       break;
     case constants.OPEN_MATCHES.title:
-      actionMatchButton = <button onClick={joinMatch}>Join</button>
+      actionMatchButton = <button className='join-btn' onClick={joinMatch}>Join</button>
       break;
     case constants.MY_MATCHES.title:
-      actionMatchButton = <button onClick={leaveMatch}>Leave</button>
+      actionMatchButton = <button className='leave-btn' onClick={leaveMatch}>Leave</button>
       break;
     default:
       actionMatchButton = undefined
@@ -28,36 +28,47 @@ const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
 
   let deleteButton
   if (id_admin === Number(user)) {
-    deleteButton = <button onClick={deleteMatch}>Del</button>
+    deleteButton = <button className='del-btn' onClick={deleteMatch}>Del</button>
   }
 
   return (
     <div id={`${title}`} className='match-container'>
+
+      <div className='title'>
+        <div className='name'>{name}</div>
+      </div>
+
       <div className='date'>
         <div className='day'>
-          {dayjs(date).utc().format('DD — dddd')}
+          {dayjs(date).utc().format('dddd')}
         </div>
-        <div className='month-year'>
-          {dayjs(date).utc().format(', MMMM. YYYY')}
+        <div className='date-month'>
+          {dayjs(date).utc().format('DD — MMM')}
         </div>
       </div>
+
+      <div className='players'>
+        <div className='field'>F{players_field / 2}</div>
+        <div className='joined'>{players} joined <span className='missing'>— {`${players_field - players} missing`}</span> </div>
+        
+      </div>
+
       <div className='match'>
         <div className='time'>
           {dayjs(date).utc().format('HH:mm')}
         </div>
-        <div className='players'>
-          <div className='field'>F{players_field / 2}</div>
-          <div className='joined'>{players}</div>
-          <div className='missed'>{`/ ${players_field}`}</div>
-        </div>
-        <div className='action-match'>
-          {deleteButton} {actionMatchButton}
-        </div>
-      </div>
-      <div className='info'>
-        <div className='name'>{name}</div>
         <div className='location'>{location}</div>
       </div>
+
+      <div className='action-match'>
+        {deleteButton} {actionMatchButton}
+      </div>
+
+      {/*     <div className='info'>
+        <div className='name'>{name}</div>
+        
+      </div> */}
+
     </div>
   )
 }
