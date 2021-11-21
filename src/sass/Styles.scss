@@ -5,7 +5,8 @@ a {
     text-decoration: none;
     font-size: 10px;
     &:active {
-        transform: scale(90%);
+        transform: scale(70%);
+        transition: .25s;
     }
 }
 
@@ -18,8 +19,8 @@ a {
     display: none;
 }
 
-.settings-icon {
-    filter: invert(100%);
+.account-icon {
+    filter: invert(75%);
 }
 .nav-icon {
     filter: invert(50%);
@@ -65,7 +66,7 @@ a {
                 vertical-align: super;
                 font-weight: lighter;
             }
-            .config-button {
+            .account-button {
                 @include button;
                 padding: 0px;
                 font-size: 12px;
@@ -120,6 +121,18 @@ a {
                 height: 72px;
                 opacity: 0;
             }
+        }
+        .match-error {
+            font-size: 10px;
+            grid-column: 1 / 6;
+            color: $terceary-color;
+            position: relative;
+            animation: match-error 1.5s
+        }
+        @keyframes match-error {
+            0% {color:transparent}
+            90% {color:transparent}
+            100% {color: $terceary-color}
         }
         .match-container {
             backdrop-filter: blur(15px);
@@ -213,6 +226,7 @@ a {
                     grid-column: 1 / 4;
                     grid-row: 1;
                 }
+                
             }
         }
 
@@ -302,9 +316,9 @@ a {
                 margin-top: 40px;
                 button {
                     @include action-button($primary-color, $secondary-color);
-                    font-size: 12px;
-                    padding: 10px;
-                    width: 96px;
+                    font-size: 10px;
+                    padding: 8px;
+                    width: 88px;
                 }
                 .disable-button {
                     background-color: $secondary-color;

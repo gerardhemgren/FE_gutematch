@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import constants from '../constants/index';
 
 const dayjs = require('dayjs');
@@ -10,11 +10,12 @@ dayjs.extend(timezone);
 
 const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
+  const [message, setMessage] = useState(<div></div>)
 
   let actionMatchButton;
   switch (title) {
     case constants.ALL_MATCHES.title:
-      actionMatchButton = undefined
+      actionMatchButton = <button className='join-btn' onClick={() => setMessage(<div className='match-error'>You must login first!</div>)}>Join</button>
       break;
     case constants.OPEN_MATCHES.title:
       actionMatchButton = <button className='join-btn' onClick={joinMatch}>Join</button>
@@ -50,7 +51,7 @@ const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
       <div className='players'>
         <div className='field'>F{players_field / 2}</div>
         <div className='joined'>{players} joined <span className='missing'>— {`${players_field - players} missing`}</span> </div>
-        
+
       </div>
 
       <div className='match'>
@@ -61,13 +62,8 @@ const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
       </div>
 
       <div className='action-match'>
-        {deleteButton} {actionMatchButton}
+        {message} {deleteButton} {actionMatchButton}
       </div>
-
-      {/*     <div className='info'>
-        <div className='name'>{name}</div>
-        
-      </div> */}
 
     </div>
   )

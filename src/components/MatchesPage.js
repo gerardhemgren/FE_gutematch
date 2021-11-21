@@ -38,6 +38,18 @@ function MatchesPage({ props, handleFocusIcon }) {
         }
     }
 
+    const ConditionalMessage = () => {
+        if (!user && (path === constants.MY_MATCHES.path)) {
+            return (
+                <div className='match-error'>You must login to see your matches.</div>
+            )
+        } else {
+            return (
+                <div></div>
+            )
+        }
+    }
+
     useEffect(() => {
         if (user === false && (path === constants.ALL_MATCHES.path || path === '/')) {
             setTitle(constants.ALL_MATCHES.title);
@@ -128,6 +140,7 @@ function MatchesPage({ props, handleFocusIcon }) {
                 {title}
             </div>
             <ConditionalSpinner />
+            <ConditionalMessage />
             <div className='bottom-space'></div>
         </div>
     )

@@ -83,7 +83,7 @@ function App() {
             </div>
             <Link to={constants.CONFIG.path}
               onClick={() => setRenderSwitch(!renderSwitch)}
-              className={`${path === constants.CONFIG.path ? 'display-none' : 'config-button'}`}>
+              className={`${path === constants.CONFIG.path ? 'account-button focus' : 'account-icon'}`}              >
               <img src={icons.settingsIcon} alt={constants.CONFIG.title} className='settings-icon' width="20" height="20" />
             </Link>
           </div>
@@ -138,15 +138,15 @@ function App() {
             <img src={icons.createMatchIcon}
               alt={constants.CREATE_MATCH.title}
               className={`${path === constants.CREATE_MATCH.path ? 'focus' : 'nav-icon'}`}
-              width="20" height="20"
+              width="22" height="22"
             />
           </Link>
-          <Link to={playerId !== false ? constants.MY_MATCHES.path : constants.CONFIG.path}
+          <Link to={constants.MY_MATCHES.path}
             onClick={() => setRenderSwitch(!renderSwitch)}>
             <img src={icons.myMatchesIcon}
               alt={constants.MY_MATCHES.title}
               className={`${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'}`}
-              width="20" height="20"
+              width="22" height="22"
             />
           </Link>
         </div>

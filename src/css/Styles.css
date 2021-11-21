@@ -3,7 +3,8 @@ a {
   font-size: 10px;
 }
 a:active {
-  transform: scale(90%);
+  transform: scale(70%);
+  transition: 0.25s;
 }
 
 .focus {
@@ -15,8 +16,8 @@ a:active {
   display: none;
 }
 
-.settings-icon {
-  filter: invert(100%);
+.account-icon {
+  filter: invert(75%);
 }
 
 .nav-icon {
@@ -64,7 +65,7 @@ a:active {
   vertical-align: super;
   font-weight: lighter;
 }
-.app .header .topbar-container .config-button {
+.app .header .topbar-container .account-button {
   color: #d4d4d4;
   border-style: none;
   border-width: 0px;
@@ -119,6 +120,24 @@ a:active {
     width: 72px;
     height: 72px;
     opacity: 0;
+  }
+}
+.app .main .match-error {
+  font-size: 10px;
+  grid-column: 1/6;
+  color: #fbff00;
+  position: relative;
+  animation: match-error 1.5s;
+}
+@keyframes match-error {
+  0% {
+    color: transparent;
+  }
+  90% {
+    color: transparent;
+  }
+  100% {
+    color: #fbff00;
   }
 }
 .app .main .match-container {
@@ -336,9 +355,9 @@ a:active {
   border: 1px solid #37ff37;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
-  padding: 10px;
-  width: 96px;
+  font-size: 10px;
+  padding: 8px;
+  width: 88px;
 }
 .app .main .create-match-form .action-match-form button:active {
   transition: 0.225s;

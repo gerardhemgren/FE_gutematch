@@ -16,7 +16,7 @@ module.exports = {
             path: '/create_match'
         },
         CONFIG:  {
-            title: 'Config',
+            title: 'Account',
             path: '/config'
         }
 }

@@ -1,7 +1,7 @@
-import settingsIcon from './settings.svg';
+import settingsIcon from './login.svg';
 import openMatchesIcon from './open_matches.svg';
-import myMatchesIcon from './my_matches.svg';
-import createMatchIcon from './create.svg';
+import myMatchesIcon from './bookmark.svg';
+import createMatchIcon from './plus.svg';
 
 const icons = {
     settingsIcon,

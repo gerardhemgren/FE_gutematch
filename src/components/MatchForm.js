@@ -20,6 +20,18 @@ function MatchForm({ props }) {
     const handleForm = () => history.push(constants.MY_MATCHES.path);
     const title = constants.CREATE_MATCH.title;
 
+    const ConditionalMessage = () => {
+        if(user) {
+            return (
+                <div></div>
+            )
+        } else {
+            return (
+                <div className='match-error'>You must login to create a match.</div>
+            )
+        }
+    }
+
     const addMatch = async (event) => {
         event.preventDefault()
         if (user !== false) {
@@ -121,6 +133,7 @@ function MatchForm({ props }) {
                         </input>
                     </fieldset>
                 </div>
+                <ConditionalMessage/>
                 <div className='action-match-form'>
                     <button type='reset'>
                         Reset
