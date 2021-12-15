@@ -1,6 +1,10 @@
 @import "./components/colors";
 @import "./components/mixins";
 
+html {
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
 a {
     text-decoration: none;
     font-size: 10px;
@@ -343,6 +347,8 @@ a {
                     flex-direction: column;
                     align-items: center;
                     img {
+                        width: 96px;
+                        height: 96px;
                         border-radius: 50%;
                     }
                 }
@@ -357,6 +363,12 @@ a {
                 font-size: 12px;
                 padding: 8px 20px;
                 @include action-button($primary-color, $secondary-color);
+            }
+            .guest-login-button {
+                font-size: 12px;
+                padding: 8px 20px;
+                margin-top: 32px;
+                @include action-button($leave-color, $leave-secondary-color);
             }
         }
     }

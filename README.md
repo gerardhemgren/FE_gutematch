@@ -5,8 +5,10 @@ The logic and control of the match is conditioned from the database.
 
 ## Authorizations with Auth0 service
 Unauthorized users can only see the list of future matches which players were joined.
+**To improve:** There will not be an unauthorized user view, it will be replaced by the universal user.\
 
 Users can log-in from google or an auth0 account. For first time it auto signs up.
+There's a preview log in as a "guest user", it works as a universal user.
 
 **To improve:** The session expires when client refresh the page.\
 **Fake solution:** The user's id is holded in the local storage.
