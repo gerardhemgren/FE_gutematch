@@ -33,7 +33,7 @@ It also auto update the value of the input-date max param.
 Firebase deploy the build folder.
 
 ## App also uses:
-CSS (flex) precompiled with SASS and SVG icons.\
+CSS (flex & Grid) precompiled with SASS and SVG icons.\
 Axios for rest API calls.\
 **To improve:** Already API messages (not only errors) will be shown when a store or global context is setted.
 
