@@ -21,7 +21,7 @@ function App() {
   const playerIdFromLocalStorage = localStorage.getItem('player_id');
   const playerNameFromLocalStorage = localStorage.getItem('player_name');
   const playerPictureFromLocalStorage = localStorage.getItem('player_picture')
-  
+
   const player = localStorage.getItem('player');
 
   const [playerId, setPlayerId] = useState(playerIdFromLocalStorage);
@@ -72,25 +72,35 @@ function App() {
 
   return (
     <Router>
-        <User.Provider value={playerId}>
-          <div className='app'>
-            <div className='fixed-background' />
-            <div className='header'>
-              <div className='topbar-container'>
-                <div className='logo'>
-                  gute<span>match</span>
-                </div>
-                <Link to={constants.CONFIG.path}
-                  onClick={() => setRenderSwitch(!renderSwitch)}
-                  className={`${path === constants.CONFIG.path ? 'account-button focus' : 'account-icon'}`}              >
-                  <img src={icons.settingsIcon} alt={constants.CONFIG.title} className='settings-icon' width="22" height="22" />
-                </Link>
+      <User.Provider value={playerId}>
+        <div className='app'>
+          <div className='fixed-background' />
+          <div className='header'>
+            <div className='topbar-container'>
+              <div className='logo'>
+                gute<span>match</span>
               </div>
-              <div className='message-container'>
-                <Message msg={apiMessage} action={closeMessage()} />
-              </div>
+              <Link to={constants.CONFIG.path}
+                onClick={() => setRenderSwitch(!renderSwitch)}
+                className={`${path === constants.CONFIG.path ? 'account-button focus' : 'account-icon'}`}              >
+                <img src={icons.settingsIcon} alt={constants.CONFIG.title} className='settings-icon' width="22" height="22" />
+              </Link>
             </div>
-            <div className='main'>
+            <div className='message-container'>
+              <Message msg={apiMessage} action={closeMessage()} />
+            </div>
+          </div>
+          <div className='main'>
+            {player === 'false' ?
+              <Switch>
+                <Route exact path="/">
+                  <Config />
+                </Route>
+                <Route path={constants.CONFIG.path}>
+                  <Config/>
+                </Route>
+              </Switch>
+              :
               <Switch>
                 <Route exact path="/">
                   {player === 'true' ? <MatchPage /> : <Config />}
@@ -110,49 +120,51 @@ function App() {
                 <Route path={constants.CONFIG.path}>
                   <Config playerName={playerNameFromLocalStorage} playerPicture={playerPictureFromLocalStorage} />
                 </Route>
-              </Switch>
-            </div>
+              </Switch>}
 
-            {player === 'true' ? <div className='navbar'>
-              {playerId !== false ?
-                <Link to={constants.OPEN_MATCHES.path}
-                  onClick={() => setRenderSwitch(!renderSwitch)}>
-                  <img src={icons.openMatchesIcon}
-                    alt={constants.OPEN_MATCHES.title}
-                    className={`${path === constants.OPEN_MATCHES.path ? 'focus' : 'nav-icon'}`}
-                    width="20" height="20"
-                  />
-                </Link>
-                :
-                <Link to={constants.ALL_MATCHES.path}
-                  onClick={() => setRenderSwitch(!renderSwitch)}>
-                  <img src={icons.openMatchesIcon}
-                    alt={constants.ALL_MATCHES.title}
-                    className={`${path === constants.ALL_MATCHES.path ? 'focus' : 'nav-icon'}`}
-                    width="20" height="20"
-                  />
-                </Link>
-              }
-              <Link to={constants.CREATE_MATCH.path}
-                onClick={() => setRenderSwitch(!renderSwitch)}>
-                <img src={icons.createMatchIcon}
-                  alt={constants.CREATE_MATCH.title}
-                  className={`${path === constants.CREATE_MATCH.path ? 'focus' : 'nav-icon'}`}
-                  width="22" height="22"
-                />
-              </Link>
-              <Link to={constants.MY_MATCHES.path}
-                onClick={() => setRenderSwitch(!renderSwitch)}>
-                <img src={icons.myMatchesIcon}
-                  alt={constants.MY_MATCHES.title}
-                  className={`${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'}`}
-                  width="22" height="22"
-                />
-              </Link>
-            </div> : null}
 
           </div>
-        </User.Provider>
+
+          {player === 'true' ? <div className='navbar'>
+            {playerId !== false ?
+              <Link to={constants.OPEN_MATCHES.path}
+                onClick={() => setRenderSwitch(!renderSwitch)}>
+                <img src={icons.openMatchesIcon}
+                  alt={constants.OPEN_MATCHES.title}
+                  className={`${path === constants.OPEN_MATCHES.path ? 'focus' : 'nav-icon'}`}
+                  width="20" height="20"
+                />
+              </Link>
+              :
+              <Link to={constants.ALL_MATCHES.path}
+                onClick={() => setRenderSwitch(!renderSwitch)}>
+                <img src={icons.openMatchesIcon}
+                  alt={constants.ALL_MATCHES.title}
+                  className={`${path === constants.ALL_MATCHES.path ? 'focus' : 'nav-icon'}`}
+                  width="20" height="20"
+                />
+              </Link>
+            }
+            <Link to={constants.CREATE_MATCH.path}
+              onClick={() => setRenderSwitch(!renderSwitch)}>
+              <img src={icons.createMatchIcon}
+                alt={constants.CREATE_MATCH.title}
+                className={`${path === constants.CREATE_MATCH.path ? 'focus' : 'nav-icon'}`}
+                width="22" height="22"
+              />
+            </Link>
+            <Link to={constants.MY_MATCHES.path}
+              onClick={() => setRenderSwitch(!renderSwitch)}>
+              <img src={icons.myMatchesIcon}
+                alt={constants.MY_MATCHES.title}
+                className={`${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'}`}
+                width="22" height="22"
+              />
+            </Link>
+          </div> : null}
+
+        </div>
+      </User.Provider>
     </Router >
   )
 }

@@ -1,3 +1,7 @@
+# i20211218
+- conditional router rendering, prevents unauthorized paths
+
+
 # i20211217
 - UseContext hook added to prevent props drilling (playerId/User)
 - There is not longer an unauthorized user view, it was replaced by the universal user.
