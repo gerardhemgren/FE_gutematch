@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import matchService from '../services/matches';
 import constants from '../constants/index';
+import { User } from '../App'
 
 const dayjs = require('dayjs');
 
-function MatchForm({ props }) {
-    const user = props;
+function MatchForm() {
+    const user = useContext(User);
 
     const [inputMatch, setInputMatch] = useState({ date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), location: '', players_field: 10, name: '' });
     const handleInputCreateForm = (event) => {

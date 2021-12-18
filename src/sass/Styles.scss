@@ -44,7 +44,7 @@ a {
     color: $text-color;
 
     .fixed-background {
-        background: linear-gradient(48deg, #202121, #536365);
+        background: linear-gradient(0deg, #414d4d, #536365, #536365);
         position: fixed;
         height: 812px;
         width: 100%;
@@ -52,14 +52,17 @@ a {
 
     .header {
         position: fixed;
+        z-index: 9;
         top: 0px;
-        padding: 20px 16px 0px 16px;
-        width: 328px;
+        padding: 0px 16px 0px 16px;
+        width: 340px;
         height: 192px;
 
         .topbar-container {
             @include df;
+            padding: 20px 0px;
             align-items: normal;
+            background: #536365;
 
             .logo {
                 font-size: 12px;
@@ -350,6 +353,7 @@ a {
                         width: 96px;
                         height: 96px;
                         border-radius: 50%;
+                        filter: grayscale(1);
                     }
                 }
             }

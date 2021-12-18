@@ -1,3 +1,9 @@
+# i20211217
+- UseContext hook added to prevent props drilling (playerId/User)
+- There is not longer an unauthorized user view, it was replaced by the universal user.
+- topbar with front z-index
+
+
 # i20211215
 - README updated
 - Commits descriptions added 

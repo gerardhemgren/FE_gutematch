@@ -42,23 +42,26 @@ a:active {
   color: white;
 }
 .app .fixed-background {
-  background: linear-gradient(48deg, #202121, #536365);
+  background: linear-gradient(0deg, #414d4d, #536365, #536365);
   position: fixed;
   height: 812px;
   width: 100%;
 }
 .app .header {
   position: fixed;
+  z-index: 9;
   top: 0px;
-  padding: 20px 16px 0px 16px;
-  width: 328px;
+  padding: 0px 16px 0px 16px;
+  width: 340px;
   height: 192px;
 }
 .app .header .topbar-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  padding: 20px 0px;
   align-items: normal;
+  background: #536365;
 }
 .app .header .topbar-container .logo {
   font-size: 12px;
@@ -390,6 +393,7 @@ a:active {
   width: 96px;
   height: 96px;
   border-radius: 50%;
+  filter: grayscale(1);
 }
 .app .main .config .logout-button {
   font-size: 12px;

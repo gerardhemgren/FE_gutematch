@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import constants from '../constants/index';
+import { User } from '../App'
 
 const dayjs = require('dayjs');
 // require('dayjs/locale/es')
@@ -8,9 +9,10 @@ var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Match = ({ title, user, match, joinMatch, leaveMatch, deleteMatch }) => {
+const Match = ({ title, match, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
   const [message, setMessage] = useState(<div></div>)
+  const user = useContext(User);
 
   let actionMatchButton;
   switch (title) {

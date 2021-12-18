@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Match from './Match';
 import matchService from '../services/matches';
 import constants from '../constants/index'
+import { User } from '../App'
 
-
-function MatchesPage({ props, handleFocusIcon }) {
-    const user = props;
+function MatchesPage({ handleFocusIcon }) {
+    const user = useContext(User);
 
     let history = useHistory();
     const path = history.location.pathname;
