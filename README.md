@@ -16,11 +16,13 @@ There's a preview log-in as a "guest user", it works as a universal user.
 ## Front-End made with React js
 App starts first waiting for auth0, and then asking if there is an user (**isAuthorized**: this is true when logIn/signUp. At 'refresh' isAuthorized is false (user is lost from auth0)) but then asks if it there's a record for the playerId at local storage, and finally decides the matches and options available from the guest/registered user.
 
-## Hooks: useState and useEffect
+## Hooks: useState, useEffect, useContext
 To have the player ID in the local storage and in the database, once the user call the `loginWithRedirect` method from auth0, then the provided user's info will be available to be called by the `logIn_signUp` API service inside the useEffect.
 
 There is another switch called `renderSwitch` used to re-render the app when it needed. Like when the user joins or creates a match, is redirected to his matches component, or when the user deletes or leaves a match, is still at 'his matches' component.\
 Also to navigate between routes.
+
+useContext is used to communicate the playerIid across the whole app.
 
 ## Router with react-router
 There are two routers, the first layer provided by auth0, and the next layer is the app router that controls the components to be displayed in the main container like: the matches acceded, the form to create a match and the profile section.
@@ -39,3 +41,6 @@ Axios for rest API calls.\
 
 ## Design:
 Was made in Adobe Xd, animations and transitions will be added soon.
+
+## To improve:
+Make an "edit match" from CreateMatch form component (but first the API to the SQL database).

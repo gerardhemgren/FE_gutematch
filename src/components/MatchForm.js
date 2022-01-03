@@ -2,16 +2,17 @@ import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import matchService from '../services/matches';
 import constants from '../constants/index';
-import { User } from '../App'
+import { User } from '../auth/UserId';
 
 const dayjs = require('dayjs');
 
-function MatchForm() {
+function MatchForm({handleFocusIcon}) {
     const user = useContext(User);
 
     const [inputMatch, setInputMatch] = useState({ date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), location: '', players_field: 10, name: '' });
     const handleInputCreateForm = (event) => {
         setInputMatch({ ...inputMatch, [event.target.name]: event.target.value });
+        setApiMessage(null)
     }
     const resetForm = () => {
         setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' });
@@ -21,39 +22,31 @@ function MatchForm() {
     const handleForm = () => history.push(constants.MY_MATCHES.path);
     const title = constants.CREATE_MATCH.title;
 
+    const [apiMessage, setApiMessage] = useState('')
+
     const ConditionalMessage = () => {
-        if(user) {
-            return (
-                <div></div>
-            )
-        } else {
-            return (
-                <div className='match-error'>You must login to create a match.</div>
-            )
-        }
+        return apiMessage === 'new row for relation "matches" violates check constraint "CHK_date::date"' 
+        ? <div className='match-error'>Pick a future date</div> 
+        : <div className='match-error'>{apiMessage}</div>;
     }
 
     const addMatch = async (event) => {
         event.preventDefault()
-        if (user !== false) {
-            const matchInfo = {
-                date: `${inputMatch.date} ${inputMatch.time}`,
-                location: inputMatch.location,
-                players_field: Number(inputMatch.players_field),
-                name: inputMatch.name
-            }
-            await matchService
-                .createMatch(matchInfo, user)
-                .then(async res => {
-                    //   setApiMessage(await res)
-                    if (res === 'Match created') {
-                        handleForm()
-                        // setApiMessage(res)
-                    }
-                })
-        } else {
-            //   setApiMessage('You must be logged to create a match')
+        const matchInfo = {
+            date: `${inputMatch.date} ${inputMatch.time}`,
+            location: inputMatch.location,
+            players_field: Number(inputMatch.players_field),
+            name: inputMatch.name
         }
+        await matchService
+            .createMatch(matchInfo, user)
+            .then(async res => {
+                setApiMessage(await res)
+                if (res === 'Match created') {
+                    handleForm()
+                    handleFocusIcon()
+                }
+            })
     }
 
     return (
@@ -134,7 +127,7 @@ function MatchForm() {
                         </input>
                     </fieldset>
                 </div>
-                <ConditionalMessage/>
+                <ConditionalMessage />
                 <div className='action-match-form'>
                     <button type='reset'>
                         Reset

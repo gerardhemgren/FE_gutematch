@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { User } from '../auth/UserId';
 import { useHistory } from 'react-router-dom';
 import Match from './Match';
 import matchService from '../services/matches';
 import constants from '../constants/index'
-import { User } from '../App'
 
 function MatchesPage({ handleFocusIcon }) {
     const user = useContext(User);
@@ -12,96 +12,54 @@ function MatchesPage({ handleFocusIcon }) {
     const path = history.location.pathname;
     const handleAction = () => history.push(constants.MY_MATCHES.path);
 
-    const [matches, setMatches] = useState([0])
+    const [matches, setMatches] = useState([])
     const [title, setTitle] = useState('')
     const [renderSwitch, setRenderSwitch] = useState(false)
 
+    useEffect(() => {
+        if (user !== 'no user' && (path === constants.OPEN_MATCHES.path || path === '/')) {
+            setTitle(constants.OPEN_MATCHES.title);
+            matchService
+                .getOpenMatches(user)
+                .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+        } else {
+            setTitle(constants.MY_MATCHES.title);
+            matchService
+                .getMyMatches(user)
+                .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+        }
+        return null
+    }, [user, path, renderSwitch, history])
+
     const ConditionalSpinner = () => {
-        if (matches[0] === 0) {
+        if (matches === []) {
             return (
                 <div className="lds-ripple"><div></div><div></div></div>
             )
         } else {
             return (
-                matches.map((match, index) =>
-                    <Match
-                        key={index}
-                        match={match}
-                        user={user}
-                        title={title}
-                        joinMatch={() => joinMatch(match.id_match)}
-                        leaveMatch={() => leaveMatch(match.id_match)}
-                        deleteMatch={() => deleteMatch(match.id_match)}
-                    />
-                )
+                matches.length > 0
+                    ?
+                    matches.map((match, index) =>
+                        <Match
+                            key={index}
+                            match={match}
+                            title={title}
+                            joinMatch={() => joinMatch(match.id_match)}
+                            leaveMatch={() => leaveMatch(match.id_match)}
+                            deleteMatch={() => deleteMatch(match.id_match)}
+                        />
+                    )
+                    : <ConditionalMessage />
             )
         }
     }
 
     const ConditionalMessage = () => {
-        if (!user && (path === constants.MY_MATCHES.path)) {
-            return (
-                <div className='match-error'>You must login to see your matches.</div>
-            )
-        } else {
-            return (
-                <div></div>
-            )
-        }
+        return path === constants.MY_MATCHES.path
+            ? <div className='match-error'>Pick a match from the open matches tab.</div>
+            : <div className='match-error'>There are no games available, create one!</div>;
     }
-
-    useEffect(() => {
-        if (user === false && (path === constants.ALL_MATCHES.path || path === '/')) {
-            setTitle(constants.ALL_MATCHES.title);
-            const showAllMatches = async () => {
-                await matchService
-                    .getAllMatches()
-                    .then(res => {
-                        setMatches(res)
-                    })
-            }
-            showAllMatches()
-        } else if (user !== false && (path === constants.OPEN_MATCHES.path || path === '/')) {
-            setTitle(constants.OPEN_MATCHES.title);
-            const showOpenMatches = async () => {
-                if (user !== false) {
-                    await matchService
-                        .getOpenMatches(user)
-                        .then(res => {
-                            if (typeof res === 'object') {
-                                setMatches(res)
-                            } else {
-                                setMatches([])
-                                // setApiMessage(res)
-                            }
-                        })
-                } else {
-                    //   setApiMessage('You must be logged to see opened matches')
-                }
-            }
-            showOpenMatches()
-        } else if (path === constants.MY_MATCHES.path) {
-            setTitle(constants.MY_MATCHES.title);
-            const showMyMatches = async () => {
-                if (user !== false) {
-                    await matchService
-                        .getMyMatches(user)
-                        .then(res => {
-                            if (typeof res === 'object') {
-                                setMatches(res)
-                            } else {
-                                setMatches([])
-                                // setApiMessage(res)
-                            }
-                        })
-                } else {
-                    setMatches([])
-                    //   setApiMessage('You must be logged to join a match')
-                }
-            }
-            showMyMatches()
-        }
-    }, [user, path, renderSwitch, history])
 
     const joinMatch = async (matchId) => {
         await matchService
@@ -140,7 +98,6 @@ function MatchesPage({ handleFocusIcon }) {
                 {title}
             </div>
             <ConditionalSpinner />
-            <ConditionalMessage />
             <div className='bottom-space'></div>
         </div>
     )

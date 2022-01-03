@@ -1,3 +1,13 @@
+# i20220102
+- App 'User cycle' moved to auth/UserId component with context hook
+- MatchesPage refactored
+- Allmatches service not longer needed
+- No longer props for Config component
+- Conditionals with ternary operators
+- React.StrictMode added
+- Match card styled
+
+
 # i20211218
 - conditional router rendering, prevents unauthorized paths
 

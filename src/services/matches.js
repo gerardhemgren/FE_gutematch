@@ -3,12 +3,6 @@ import axios from 'axios';
 const baseUrl = 'https://gutematch.herokuapp.com';
 // const baseUrl = 'http://localhost:5000';
 
-const getAllMatches = () => {
-    const request = axios.get(`${baseUrl}/api/all_matches`)
-    return request
-        .then(response => response.data)
-}
-
 const getOpenMatches = (userId) => {
     const request = axios.get(`${baseUrl}/api/open_matches/${userId}`)
     return request
@@ -48,6 +42,6 @@ const leaveMatch = (matchId, userId) => {
         .then(response => response.data)
 }
 
-const exportObj = { getAllMatches, getOpenMatches, getMyMatches, createMatch, deleteMatch, joinMatch, leaveMatch }
+const exportObj = { getOpenMatches, getMyMatches, createMatch, deleteMatch, joinMatch, leaveMatch }
 
 export default exportObj

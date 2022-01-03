@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import constants from '../constants/index';
-import { User } from '../App'
+import { User } from '../auth/UserId';
 
 const dayjs = require('dayjs');
 // require('dayjs/locale/es')
@@ -11,14 +11,10 @@ dayjs.extend(timezone);
 
 const Match = ({ title, match, joinMatch, leaveMatch, deleteMatch }) => {
   const { name, date, location, players, players_field, id_admin } = match
-  const [message, setMessage] = useState(<div></div>)
   const user = useContext(User);
 
   let actionMatchButton;
   switch (title) {
-    case constants.ALL_MATCHES.title:
-      actionMatchButton = <button className='join-btn' onClick={() => setMessage(<div className='match-error'>You must login first!</div>)}>Join</button>
-      break;
     case constants.OPEN_MATCHES.title:
       actionMatchButton = <button className='join-btn' onClick={joinMatch}>Join</button>
       break;
@@ -35,39 +31,39 @@ const Match = ({ title, match, joinMatch, leaveMatch, deleteMatch }) => {
   }
 
   return (
-    <div id={`${title}`} className='match-container'>
+      <div id={`${title}`} className='match-container'>
 
-      <div className='title'>
-        <div className='name'>{name}</div>
-      </div>
-
-      <div className='date'>
-        <div className='day'>
-          {dayjs(date).utc().format('dddd')}
+        <div className='title'>
+          <div className='name'>{name}</div>
         </div>
-        <div className='date-month'>
-          {dayjs(date).utc().format('DD — MMM')}
+
+        <div className='date'>
+          <div className='day'>
+            {dayjs(date).utc().format('dddd')}
+          </div>
+          <div className='date-month'>
+            {dayjs(date).utc().format('DD — MMM')}
+          </div>
         </div>
-      </div>
 
-      <div className='players'>
-        <div className='field'>F{players_field / 2}</div>
-        <div className='joined'>{players} joined <span className='missing'>— {`${players_field - players} missing`}</span> </div>
+        <div className='players'>
+          <div className='field'>F{players_field / 2}</div>
+          <div className='joined'>{players} joined <span className='missing'>— {`${players_field - players} missing`}</span> </div>
 
-      </div>
-
-      <div className='match'>
-        <div className='time'>
-          {dayjs(date).utc().format('HH:mm')}
         </div>
-        <div className='location'>{location}</div>
-      </div>
 
-      <div className='action-match'>
-        {message} {deleteButton} {actionMatchButton}
-      </div>
+        <div className='match'>
+          <div className='time'>
+            {dayjs(date).utc().format('HH:mm')}
+          </div>
+          <div className='location'>{location}</div>
+        </div>
 
-    </div>
+        <div className='action-match'>
+          {deleteButton} {actionMatchButton}
+        </div>
+
+      </div>
   )
 }
 

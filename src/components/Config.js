@@ -2,14 +2,16 @@ import React from 'react'
 import AuthenticationButton from "./authentication-button";
 import constants from '../constants/index';
 
-const Config = ({ playerName, playerPicture }) => {
+const Config = () => {
   const title = constants.CONFIG.title;
+  const playerName = localStorage.getItem('player_name');
+  const playerPicture = localStorage.getItem('player_picture')
 
   const Profile = () => {
     if (playerName) {
       return (
         <div>
-          <img src={playerPicture} alt='profile'/>
+          <img src={playerPicture} alt='profile' />
           <p>{playerName}</p>
         </div>
       )
