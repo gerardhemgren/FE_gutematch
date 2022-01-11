@@ -12,7 +12,7 @@ function MatchesPage({ handleFocusIcon }) {
     const path = history.location.pathname;
     const handleAction = () => history.push(constants.MY_MATCHES.path);
 
-    const [matches, setMatches] = useState([])
+    const [matches, setMatches] = useState(null)
     const [title, setTitle] = useState('')
     const [renderSwitch, setRenderSwitch] = useState(false)
 
@@ -32,7 +32,7 @@ function MatchesPage({ handleFocusIcon }) {
     }, [user, path, renderSwitch, history])
 
     const ConditionalSpinner = () => {
-        if (matches === []) {
+        if (matches === null) {
             return (
                 <div className="lds-ripple"><div></div><div></div></div>
             )
