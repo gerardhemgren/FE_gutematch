@@ -12,7 +12,6 @@ const LoginButton = () => {
 
   // fake-login
   const addUserLocalStorage = () => {
-    
     localStorage.setItem('player', true)
     localStorage.setItem('player_id', 0)
     localStorage.setItem('player_name', 'Guest User')

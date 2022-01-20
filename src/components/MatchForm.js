@@ -1,151 +1,161 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { User } from '../auth/UserId';
 import matchService from '../services/matches';
 import constants from '../constants/index';
-import { User } from '../auth/UserId';
 
 const dayjs = require('dayjs');
+var utc = require('dayjs/plugin/utc');
+var timezone = require('dayjs/plugin/timezone');
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-function MatchForm({handleFocusIcon}) {
+function MatchForm({ handleFocusIcon, props, afterClick, toggleSwitch }) {
+    const { actions, matchInfo } = props
     const user = useContext(User);
-
-    const [inputMatch, setInputMatch] = useState({ date: dayjs().format('YYYY-MM-DD'), time: dayjs().format('HH:mm'), location: '', players_field: 10, name: '' });
+    const [input, setInput] = useState({
+        date: matchInfo.date,
+        time: matchInfo.time,
+        location: matchInfo.location,
+        players_field: matchInfo.players_field,
+        name: matchInfo.name
+    });
     const handleInputCreateForm = (event) => {
-        setInputMatch({ ...inputMatch, [event.target.name]: event.target.value });
-        setApiMessage(null)
+        setInput({ ...input, [event.target.name]: event.target.value });
     }
     const resetForm = () => {
-        setInputMatch({ ...inputMatch, date: '', time: '', location: '', players_field: 10, name: '' });
+        setInput({
+            ...input,
+            date: matchInfo.date,
+            time: matchInfo.time,
+            location: matchInfo.location,
+            players_field: matchInfo.players_field,
+            name: matchInfo.name
+        });
     }
-
     let history = useHistory()
     const handleForm = () => history.push(constants.MY_MATCHES.path);
-    const title = constants.CREATE_MATCH.title;
 
-    const [apiMessage, setApiMessage] = useState('')
-
-    const ConditionalMessage = () => {
-        return apiMessage === 'new row for relation "matches" violates check constraint "CHK_date::date"' 
-        ? <div className='match-error'>Pick a future date</div> 
-        : <div className='match-error'>{apiMessage}</div>;
-    }
-
-    const addMatch = async (event) => {
-        event.preventDefault()
-        const matchInfo = {
-            date: `${inputMatch.date} ${inputMatch.time}`,
-            location: inputMatch.location,
-            players_field: Number(inputMatch.players_field),
-            name: inputMatch.name
+    const callService = async (e) => {
+        e.preventDefault()
+        const newMatchInfo = {
+            matchId: matchInfo.matchId,
+            date: `${input.date} ${input.time}`,
+            location: input.location,
+            players_field: Number(input.players_field),
+            name: input.name
         }
-        await matchService
-            .createMatch(matchInfo, user)
-            .then(async res => {
-                setApiMessage(await res)
-                if (res === 'Match created') {
+        switch (actions[0]) {
+            case 'create':
+                await matchService.createMatch(newMatchInfo, user).then(r => {
                     handleForm()
                     handleFocusIcon()
-                }
-            })
+                })
+                break;
+            case 'edit':
+                await matchService.editMatch(newMatchInfo).then(r => {
+                    // handleFocusIcon()
+                    handleForm()
+                    afterClick()
+                    toggleSwitch()
+                })
+                break;
+            default:
+                console.log('fail to call')
+                break;
+        }
     }
 
     return (
-        <div id='match-form'>
-            <div className='title-container'>
-                {title}
+        <form
+            onSubmit={callService}
+            onReset={resetForm}
+            className='match-form'
+        >
+            <>
+            <div id='location-field'>
+                <fieldset>
+                    <legend>Location</legend>
+                    <input
+                        className='input-adress'
+                        required
+                        placeholder='Adress'
+                        name='location'
+                        value={input.location}
+                        onChange={handleInputCreateForm}
+                    />
+                    <label>Adress 1234, City, Country</label>
+                </fieldset>
             </div>
-            <form
-                onSubmit={addMatch}
-                onReset={resetForm}
-                className='create-match-form'
-            >
-                <div id='location-field'>
-                    <fieldset>
-                        <legend>Location</legend>
-                        <input
-                            className='input-adress'
-                            required
-                            placeholder='Adress'
-                            name='location'
-                            value={inputMatch.location}
-                            onChange={handleInputCreateForm}
-                        />
-                        <label>Adress 1234, City, Country</label>
-                    </fieldset>
-                </div>
-                <div className='field-and-name-field'>
-                    <fieldset>
-                        <legend>Field</legend>
-                        <select
-                            className='drop-players-field'
-                            name="players_field"
-                            type='number'
-                            value={inputMatch.players_field}
-                            onChange={handleInputCreateForm}>
-                            <option value="10">F — 5</option>
-                            <option value="14">F — 7</option>
-                            <option value="18">F — 9</option>
-                            <option value="22">F — 11</option>
-                        </select>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Name</legend>
-                        <input
-                            className='input-name'
-                            required
-                            placeholder='Match name'
-                            maxLength='20'
-                            name='name'
-                            value={inputMatch.name}
-                            onChange={handleInputCreateForm}
-                        />
-                    </fieldset>
-                </div>
-                <div className='date-field'>
-                    <fieldset>
-                        <legend>Date</legend>
-                        <input
-                            required
-                            className='input-date'
-                            type="date"
-                            name="date"
-                            min={dayjs().format('YYYY-MM-DD')}
-                            max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
-                            value={inputMatch.date}
-                            onChange={handleInputCreateForm}>
-                        </input>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Time</legend>
-                        <input
-                            required
-                            className='input-time'
-                            type="time"
-                            name="time"
-                            value={inputMatch.time}
-                            onChange={handleInputCreateForm}>
-                        </input>
-                    </fieldset>
-                </div>
-                <ConditionalMessage />
-                <div className='action-match-form'>
+            <div className='field-and-name-field'>
+                <fieldset>
+                    <legend>Field</legend>
+                    <select
+                        className='drop-players-field'
+                        name="players_field"
+                        type='number'
+                        value={input.players_field}
+                        onChange={handleInputCreateForm}>
+                        <option value="10">F — 5</option>
+                        <option value="14">F — 7</option>
+                        <option value="18">F — 9</option>
+                        <option value="22">F — 11</option>
+                    </select>
+                </fieldset>
+                <fieldset>
+                    <legend>Name</legend>
+                    <input
+                        className='input-name'
+                        required
+                        placeholder='Match name'
+                        maxLength='20'
+                        name='name'
+                        value={input.name}
+                        onChange={handleInputCreateForm}
+                    />
+                </fieldset>
+            </div>
+            <div className='date-field'>
+                <fieldset>
+                    <legend>Date</legend>
+                    <input
+                        required
+                        className='input-date'
+                        type="date"
+                        name="date"
+                        min={dayjs().format('YYYY-MM-DD')}
+                        max={dayjs().add(3, 'M').format('YYYY-MM-DD')}
+                        value={input.date}
+                        onChange={handleInputCreateForm}>
+                    </input>
+                </fieldset>
+                <fieldset>
+                    <legend>Time</legend>
+                    <input
+                        required
+                        className='input-time'
+                        type="time"
+                        name="time"
+                        value={input.time}
+                        onChange={handleInputCreateForm}>
+                    </input>
+                </fieldset>
+            </div>
+            </>
+            <div className='action-match-form'>
+                {actions[1] === 'reset' ?
                     <button type='reset'>
-                        Reset
+                        {actions[1]}
+                    </button> :
+                    <button type='button' onClick={afterClick}>
+                        {actions[1]}
                     </button>
-                    {
-                        user === false ?
-                            <button
-                                type='button'
-                                className='disable-button'>
-                                Create
-                            </button> :
-                            <button type='submit'>
-                                Create
-                            </button>
-                    }
-                </div>
-            </form >
-        </div >
+                }
+                <button type='submit'>
+                    {actions[0]}
+                </button>
+            </div>
+        </form >
     )
 }
 

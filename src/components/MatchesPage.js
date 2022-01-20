@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { User } from '../auth/UserId';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import Match from './Match';
+import { User } from '../auth/UserId';
 import matchService from '../services/matches';
 import constants from '../constants/index'
+import Match from './Match';
 
-function MatchesPage({ handleFocusIcon }) {
+function MatchesPage(/* { handleFocusIcon } */) {
     const user = useContext(User);
+    const mounted = useRef(null)
 
     let history = useHistory();
     const path = history.location.pathname;
@@ -17,19 +18,25 @@ function MatchesPage({ handleFocusIcon }) {
     const [renderSwitch, setRenderSwitch] = useState(false)
 
     useEffect(() => {
-        if (user !== 'no user' && (path === constants.OPEN_MATCHES.path || path === '/')) {
-            setTitle(constants.OPEN_MATCHES.title);
-            matchService
-                .getOpenMatches(user)
-                .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
-        } else {
-            setTitle(constants.MY_MATCHES.title);
-            matchService
-                .getMyMatches(user)
-                .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+        mounted.current = true
+        if (mounted) {
+            if (user !== 'no user' && (path === constants.OPEN_MATCHES.path || path === '/')) {
+                setTitle(constants.OPEN_MATCHES.title);
+                matchService
+                    .getOpenMatches(user)
+                    .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+            } else {
+                setTitle(constants.MY_MATCHES.title);
+                matchService
+                    .getMyMatches(user)
+                    .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+            }
         }
-        return null
-    }, [user, path, renderSwitch, history])
+        return () => {
+            setMatches([])
+            mounted.current = false
+        }
+    }, [user, path, renderSwitch])
 
     const ConditionalSpinner = () => {
         if (matches === null) {
@@ -45,6 +52,8 @@ function MatchesPage({ handleFocusIcon }) {
                             key={index}
                             match={match}
                             title={title}
+                            user={user}
+                            toggleSwitch={() => toggleswitch()}
                             joinMatch={() => joinMatch(match.id_match)}
                             leaveMatch={() => leaveMatch(match.id_match)}
                             deleteMatch={() => deleteMatch(match.id_match)}
@@ -53,6 +62,10 @@ function MatchesPage({ handleFocusIcon }) {
                     : <ConditionalMessage />
             )
         }
+    }
+
+    function toggleswitch() {
+        setRenderSwitch(!renderSwitch);
     }
 
     const ConditionalMessage = () => {
@@ -66,8 +79,8 @@ function MatchesPage({ handleFocusIcon }) {
             .joinMatch(matchId, user)
             .then(async res => {
                 handleAction()
-                handleFocusIcon()
-                setRenderSwitch(!renderSwitch);
+                // if (mounted) { handleFocusIcon() }
+                toggleswitch()
                 // setApiMessage(await res)
             })
     }
@@ -93,7 +106,7 @@ function MatchesPage({ handleFocusIcon }) {
     }
 
     return (
-        <div id='match-page'>
+        <div className='match-page'>
             <div className='title-container'>
                 {title}
             </div>

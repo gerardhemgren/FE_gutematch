@@ -1,17 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import constants from '../constants/index';
-import { User } from '../auth/UserId';
+import MatchForm from './MatchForm';
+import Modal from 'react-modal'
 
 const dayjs = require('dayjs');
-// require('dayjs/locale/es')
 var utc = require('dayjs/plugin/utc');
 var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Match = ({ title, match, joinMatch, leaveMatch, deleteMatch }) => {
-  const { name, date, location, players, players_field, id_admin } = match
-  const user = useContext(User);
+const Match = ({ user, title, match, joinMatch, leaveMatch, deleteMatch, toggleSwitch }) => {
+  const { id_match, name, date, location, players, players_field, id_admin } = match
+  const props = {
+    actions: ['edit', 'cancel'],
+    matchInfo: {
+      matchId: id_match,
+      date: dayjs(date).utc().format('YYYY-MM-DD'),
+      time: dayjs(date).utc().format('HH:mm'),
+      location: location,
+      players_field: players_field,
+      name: name
+    }
+  };
 
   let actionMatchButton;
   switch (title) {
@@ -30,9 +40,43 @@ const Match = ({ title, match, joinMatch, leaveMatch, deleteMatch }) => {
     deleteButton = <button className='del-btn' onClick={deleteMatch}>Del</button>
   }
 
-  return (
-      <div id={`${title}`} className='match-container'>
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const setModalIsOpenToTrue = () => {
+    setModalIsOpen(true)
+  }
+  const setModalIsOpenToFalse = () => {
+    setModalIsOpen(false)
+  }
+  const customStyles = {
+    content: {
+      color: 'rgba(255, 255, 255, 0.5)',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      padding: '0px',
+      overflow: 'hidden',
+      transform: 'translate(-50%, -50%)',
+      background: 'linear-gradient(0deg, #414d4d, #536365, #536365)'
+    }
+  };
 
+  let editButton
+  if (id_admin === Number(user)) {
+    editButton = <button className='edit-btn' onClick={setModalIsOpenToTrue}>Edit</button>
+  }
+
+  return (
+    <>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        ariaHideApp={false}
+        style={customStyles}>
+        <MatchForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
+      </Modal>
+
+      <div id={`${title}`} className='match-container'>
         <div className='title'>
           <div className='name'>{name}</div>
         </div>
@@ -60,10 +104,10 @@ const Match = ({ title, match, joinMatch, leaveMatch, deleteMatch }) => {
         </div>
 
         <div className='action-match'>
-          {deleteButton} {actionMatchButton}
+          {deleteButton} {editButton} {actionMatchButton}
         </div>
-
       </div>
+    </>
   )
 }
 
