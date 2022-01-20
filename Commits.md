@@ -1,3 +1,12 @@
+# i20220120
+- Edit match feature added with React-Modal.
+- Hour at form setted 1 hour next
+- Grid improved
+- Conditional main app fixed
+- Fixed memory leak with cleanups useEffect
+- Fixed utc date and time
+
+
 # i20220102
 - App 'User cycle' moved to auth/UserId component with context hook
 - MatchesPage refactored

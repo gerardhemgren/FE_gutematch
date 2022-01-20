@@ -37,10 +37,8 @@ Firebase deploy the build folder.
 ## App also uses:
 CSS (flex & Grid) precompiled with SASS and SVG icons.\
 Axios for rest API calls.\
+A Modal feature reusing a component with props, switch case, api services, etc.\
 **To improve:** Already API messages (not only errors) will be shown when a store or global context is setted.
 
 ## Design:
 Was made in Adobe Xd, animations and transitions will be added soon.
-
-## To improve:
-Make an "edit match" from CreateMatch form component (but first the API to the SQL database).

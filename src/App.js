@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import MatchPage from './components/MatchesPage'
-import MatchForm from './components/MatchForm'
+import CreateMatch from './components/CreateMatch'
 import Message from './components/Message';
 import Config from './components/Config';
 
@@ -37,6 +37,38 @@ function App() {
 
   const user = useContext(User)
 
+  const ConditionalSwitch = () => { 
+    if (user === 'no user') {
+      return (
+        <Switch>
+          <Route exact path={"/" || constants.CONFIG.path}>
+            <Config />
+          </Route>
+        </Switch>
+      )
+    } else {
+      return (
+        <Switch>
+          <Route exact path="/">
+            <MatchPage />
+          </Route>
+          <Route path={constants.OPEN_MATCHES.path}>
+            <MatchPage handleFocusIcon={() => handleFocusIcon()} />
+          </Route>
+          <Route path={constants.MY_MATCHES.path}>
+            <MatchPage />
+          </Route>
+          <Route path={constants.CREATE_MATCH.path}>
+            <CreateMatch handleFocusIcon={() => handleFocusIcon()} />
+          </Route>
+          <Route path={constants.CONFIG.path}>
+            <Config />
+          </Route>
+        </Switch>
+      )
+    }
+  }
+
   return (
     <Router>
       <div className='app'>
@@ -56,33 +88,11 @@ function App() {
             <Message msg={apiMessage} action={closeMessage()} />
           </div>
         </div>
+
         <div className='main'>
-          {user === 'no user' ?
-            <Switch>
-              <Route path={"/" || constants.CONFIG.path}>
-                <Config />
-              </Route>
-            </Switch>
-            :
-            <Switch>
-              <Route exact path="/" >
-                <MatchPage />
-              </Route>
-              <Route path={constants.OPEN_MATCHES.path}>
-                <MatchPage handleFocusIcon={() => handleFocusIcon()}
-                />
-              </Route>
-              <Route path={constants.MY_MATCHES.path}>
-                <MatchPage />
-              </Route>
-              <Route path={constants.CREATE_MATCH.path}>
-                <MatchForm handleFocusIcon={() => handleFocusIcon()}/>
-              </Route>
-              <Route path={constants.CONFIG.path}>
-                <Config />
-              </Route>
-            </Switch>}
+          {user === null ? null : <ConditionalSwitch />}
         </div>
+
         {user !== 'no user'
           ? <div className='navbar'>
             <Link to={constants.OPEN_MATCHES.path}
