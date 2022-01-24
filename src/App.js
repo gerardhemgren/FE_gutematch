@@ -37,7 +37,7 @@ function App() {
 
   const user = useContext(User)
 
-  const ConditionalSwitch = () => { 
+  const ConditionalSwitch = () => {
     if (user === 'no user') {
       return (
         <Switch>
@@ -99,7 +99,10 @@ function App() {
               onClick={() => setRenderSwitch(!renderSwitch)}>
               <img src={icons.openMatchesIcon}
                 alt={constants.OPEN_MATCHES.title}
-                className={`${path === constants.OPEN_MATCHES.path || path === '/' ? 'focus' : 'nav-icon'}`}
+                className={
+                  // `${path === constants.OPEN_MATCHES.path || path === '/' ? 'focus' : 'nav-icon'}`
+                  'nav-icon'
+                }
                 width="20" height="20"
               />
             </Link>
@@ -107,7 +110,10 @@ function App() {
               onClick={() => setRenderSwitch(!renderSwitch)}>
               <img src={icons.createMatchIcon}
                 alt={constants.CREATE_MATCH.title}
-                className={`${path === constants.CREATE_MATCH.path ? 'focus' : 'nav-icon'}`}
+                className={
+                  // `${path === constants.CREATE_MATCH.path ? 'focus' : 'nav-icon'}`
+                  'nav-icon'
+                }
                 width="22" height="22"
               />
             </Link>
@@ -115,7 +121,10 @@ function App() {
               onClick={() => setRenderSwitch(!renderSwitch)}>
               <img src={icons.myMatchesIcon}
                 alt={constants.MY_MATCHES.title}
-                className={`${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'}`}
+                className={
+                  // `${path === constants.MY_MATCHES.path ? 'focus' : 'nav-icon'`
+                  'nav-icon'
+                }
                 width="22" height="22"
               />
             </Link>

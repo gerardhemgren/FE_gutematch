@@ -5,14 +5,14 @@ html {
     font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 
-a {
+/* a {
     text-decoration: none;
     font-size: 10px;
     &:active {
         transform: scale(70%);
         transition: .25s;
     }
-}
+} */
 
 .focus {
     transition: 0.5s;
@@ -27,7 +27,8 @@ a {
     filter: invert(75%);
 }
 .nav-icon {
-    filter: invert(50%);
+    // filter: invert(50%);
+    filter: invert(100%);
 }
 
 .title-container {
@@ -327,7 +328,7 @@ a {
         font-size: 10px;
     }
     input {
-        margin: 4px 0 0px 0;
+        margin: 4px 4px 0px 0px;
         background-color: transparent;
         color: $text-color;
         font: 14px "Segoe UI";

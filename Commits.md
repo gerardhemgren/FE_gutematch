@@ -1,3 +1,8 @@
+# i20220123
+- focus nav buttons disable (to be implemented with a hook)
+- form input with right margin (fix mobile modal issue)
+
+
 # i20220120
 - Edit match feature added with React-Modal.
 - Hour at form setted 1 hour next

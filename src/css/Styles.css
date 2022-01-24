@@ -2,15 +2,14 @@ html {
   font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-a {
-  text-decoration: none;
-  font-size: 10px;
-}
-a:active {
-  transform: scale(70%);
-  transition: 0.25s;
-}
-
+/* a {
+    text-decoration: none;
+    font-size: 10px;
+    &:active {
+        transform: scale(70%);
+        transition: .25s;
+    }
+} */
 .focus {
   transition: 0.5s;
   filter: invert(100%);
@@ -25,7 +24,7 @@ a:active {
 }
 
 .nav-icon {
-  filter: invert(50%);
+  filter: invert(100%);
 }
 
 .title-container {
@@ -403,7 +402,7 @@ a:active {
   font-size: 10px;
 }
 .match-form input {
-  margin: 4px 0 0px 0;
+  margin: 4px 4px 0px 0px;
   background-color: transparent;
   color: white;
   font: 14px "Segoe UI";
