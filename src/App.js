@@ -41,7 +41,7 @@ function App() {
     if (user === 'no user') {
       return (
         <Switch>
-          <Route exact path={"/" || constants.CONFIG.path}>
+          <Route path="/">
             <Config />
           </Route>
         </Switch>
@@ -78,11 +78,13 @@ function App() {
             <div className='logo'>
               gute<span>match</span>
             </div>
-            <Link to={constants.CONFIG.path}
-              onClick={() => setRenderSwitch(!renderSwitch)}
-              className={`${path === constants.CONFIG.path ? 'account-button focus' : 'account-icon'}`}              >
-              <img src={icons.settingsIcon} alt={constants.CONFIG.title} className='settings-icon' width="22" height="22" />
-            </Link>
+            {user !== 'no user' ?
+              <Link to={constants.CONFIG.path}
+                onClick={() => setRenderSwitch(!renderSwitch)}
+                className={`${path === constants.CONFIG.path ? 'account-button focus' : 'account-icon'}`}              >
+                <img src={icons.settingsIcon} alt={constants.CONFIG.title} className='settings-icon' width="22" height="22" />
+              </Link>
+              : null}
           </div>
           <div className='message-container'>
             <Message msg={apiMessage} action={closeMessage()} />
