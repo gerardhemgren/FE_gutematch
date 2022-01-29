@@ -2,15 +2,15 @@ html {
   font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-/* a {
-    text-decoration: none;
-    font-size: 10px;
-    &:active {
-        transform: scale(70%);
-        transition: .25s;
-    }
-} */
-.focus {
+.nav-icon {
+  filter: invert(50%);
+}
+
+.account-icon {
+  filter: invert(75%);
+}
+
+.active {
   transition: 0.5s;
   filter: invert(100%);
 }
@@ -19,12 +19,13 @@ html {
   display: none;
 }
 
-.account-icon {
-  filter: invert(75%);
-}
-
-.nav-icon {
-  filter: invert(100%);
+.no-match {
+  position: fixed;
+  top: 160px;
+  width: 327px;
+  color: #fbff00;
+  display: flex;
+  font-size: 12px;
 }
 
 .title-container {
@@ -194,7 +195,7 @@ html {
   color: white;
   font-size: 10px;
 }
-.app .main .match-container .players .missing {
+.app .main .match-container .players .absents {
   color: #d4d4d4;
   font-size: 10px;
 }
@@ -295,28 +296,25 @@ html {
 .app .main .bottom-space {
   height: 80px;
 }
-.app .main .config .profile {
+.app .main .account .profile {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 32px 24px 40px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 2px;
-  backdrop-filter: blur(15px);
   row-gap: 16px;
 }
-.app .main .config .profile div {
+.app .main .account .profile div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.app .main .config .profile div img {
+.app .main .account .profile div img {
   width: 96px;
   height: 96px;
   border-radius: 50%;
   filter: grayscale(1);
 }
-.app .main .config .logout-button {
+.app .main .account .logout-button {
   font-size: 12px;
   padding: 8px 20px;
   width: inherit;
@@ -329,11 +327,11 @@ html {
   border-radius: 4px;
   cursor: pointer;
 }
-.app .main .config .logout-button:active {
+.app .main .account .logout-button:active {
   transition: 0.225s;
   transform: scale(80%);
 }
-.app .main .config .login-button {
+.app .main .account .login-button {
   font-size: 12px;
   padding: 8px 20px;
   width: inherit;
@@ -346,11 +344,11 @@ html {
   border-radius: 4px;
   cursor: pointer;
 }
-.app .main .config .login-button:active {
+.app .main .account .login-button:active {
   transition: 0.225s;
   transform: scale(80%);
 }
-.app .main .config .guest-login-button {
+.app .main .account .guest-login-button {
   font-size: 12px;
   padding: 8px 20px;
   margin-top: 32px;
@@ -364,7 +362,7 @@ html {
   border-radius: 4px;
   cursor: pointer;
 }
-.app .main .config .guest-login-button:active {
+.app .main .account .guest-login-button:active {
   transition: 0.225s;
   transform: scale(80%);
 }

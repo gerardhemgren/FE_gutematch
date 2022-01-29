@@ -1,34 +1,32 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { User } from '../auth/UserId';
 import matchService from '../services/matches';
 import constants from '../constants/index'
 import Match from './Match';
 
-function MatchesPage(/* { handleFocusIcon } */) {
+function MatchesPage() {
     const user = useContext(User);
-    const mounted = useRef(null)
-
-    let history = useHistory();
-    const path = history.location.pathname;
-    const handleAction = () => history.push(constants.MY_MATCHES.path);
-
     const [matches, setMatches] = useState(null)
     const [title, setTitle] = useState('')
+
+    const mounted = useRef(null)
+    const navigate = useNavigate()
+    const path = window.location.pathname;
     const [renderSwitch, setRenderSwitch] = useState(false)
 
     useEffect(() => {
         mounted.current = true
         if (mounted) {
-            if (user !== 'no user' && (path === constants.OPEN_MATCHES.path || path === '/')) {
-                setTitle(constants.OPEN_MATCHES.title);
+            if (user !== 'no user' && (path === constants.OPEN_GAMES.path || path === '/')) {
+                setTitle(constants.OPEN_GAMES.title);
                 matchService
-                    .getOpenMatches(user)
+                    .getOpenGames(user)
                     .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
             } else {
-                setTitle(constants.MY_MATCHES.title);
+                setTitle(constants.MY_GAMES.title);
                 matchService
-                    .getMyMatches(user)
+                    .getMyGames(user)
                     .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
             }
         }
@@ -38,11 +36,25 @@ function MatchesPage(/* { handleFocusIcon } */) {
         }
     }, [user, path, renderSwitch])
 
-    const ConditionalSpinner = () => {
+    function toggleswitch() {
+        setRenderSwitch(!renderSwitch);
+    }
+
+    const Spinner = () => {
+        return (
+            <div className="lds-ripple"><div></div><div></div></div>
+        )
+    }
+
+    const EmptyGamesMessage = () => {
+        return path === constants.MY_GAMES.path
+            ? <div className='match-error'>Pick a game from the open games tab.</div>
+            : <div className='match-error'>There are no games available, create one!</div>;
+    }
+
+    const Games = () => {
         if (matches === null) {
-            return (
-                <div className="lds-ripple"><div></div><div></div></div>
-            )
+            return <Spinner />
         } else {
             return (
                 matches.length > 0
@@ -54,54 +66,40 @@ function MatchesPage(/* { handleFocusIcon } */) {
                             title={title}
                             user={user}
                             toggleSwitch={() => toggleswitch()}
-                            joinMatch={() => joinMatch(match.id_match)}
-                            leaveMatch={() => leaveMatch(match.id_match)}
-                            deleteMatch={() => deleteMatch(match.id_match)}
+                            joinGame={() => joinGame(match.id_match)}
+                            leaveGame={() => leaveGame(match.id_match)}
+                            deleteGame={() => deleteGame(match.id_match)}
                         />
                     )
-                    : <ConditionalMessage />
+                    : <EmptyGamesMessage />
             )
         }
     }
 
-    function toggleswitch() {
-        setRenderSwitch(!renderSwitch);
-    }
-
-    const ConditionalMessage = () => {
-        return path === constants.MY_MATCHES.path
-            ? <div className='match-error'>Pick a match from the open matches tab.</div>
-            : <div className='match-error'>There are no games available, create one!</div>;
-    }
-
-    const joinMatch = async (matchId) => {
+    const joinGame = async (matchId) => {
         await matchService
-            .joinMatch(matchId, user)
+            .joinGame(matchId, user)
             .then(async res => {
-                handleAction()
-                // if (mounted) { handleFocusIcon() }
+                navigate('../my_games')
                 toggleswitch()
-                // setApiMessage(await res)
             })
     }
 
-    const leaveMatch = async (matchId) => {
+    const leaveGame = async (matchId) => {
         await matchService
-            .leaveMatch(matchId, user)
+            .leaveGame(matchId, user)
             .then(async res => {
                 setRenderSwitch(!renderSwitch);
-                handleAction()
-                // setApiMessage(await res)
+                navigate('../my_games')
             })
     }
 
-    const deleteMatch = async (matchId) => {
+    const deleteGame = async (matchId) => {
         await matchService
-            .deleteMatch(matchId, user)
+            .deleteGame(matchId, user)
             .then(async res => {
                 setRenderSwitch(!renderSwitch);
-                handleAction()
-                // setApiMessage(await res)
+                navigate('../my_games')
             })
     }
 
@@ -110,7 +108,7 @@ function MatchesPage(/* { handleFocusIcon } */) {
             <div className='title-container'>
                 {title}
             </div>
-            <ConditionalSpinner />
+            <Games />
             <div className='bottom-space'></div>
         </div>
     )

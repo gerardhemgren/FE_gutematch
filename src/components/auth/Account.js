@@ -1,9 +1,9 @@
 import React from 'react'
 import AuthenticationButton from "./authentication-button";
-import constants from '../constants/index';
+import constants from '../../constants/index';
 
-const Config = () => {
-  const title = constants.CONFIG.title;
+const Account = () => {
+  const title = constants.ACCOUNT.title;
   const playerName = localStorage.getItem('player_name');
   const playerPicture = localStorage.getItem('player_picture')
 
@@ -21,16 +21,16 @@ const Config = () => {
   }
 
   return (
-    <div className='config'>
-      <div className='title-container'>
-        {title}
+      <div className='account'>
+        <div className='title-container'>
+          {title}
+        </div>
+        <div className='profile'>
+          <Profile />
+          <AuthenticationButton />
+        </div>
       </div>
-      <div className='profile'>
-        <Profile />
-        <AuthenticationButton />
-      </div>
-    </div>
   )
 }
 
-export default Config
+export default Account

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import constants from '../constants/index';
-import MatchForm from './MatchForm';
+import GameForm from './GameForm';
 import Modal from 'react-modal'
 
 const dayjs = require('dayjs');
@@ -9,7 +9,7 @@ var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Match = ({ user, title, match, joinMatch, leaveMatch, deleteMatch, toggleSwitch }) => {
+const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwitch }) => {
   const { id_match, name, date, location, players, players_field, id_admin } = match
   const props = {
     actions: ['edit', 'cancel'],
@@ -25,11 +25,11 @@ const Match = ({ user, title, match, joinMatch, leaveMatch, deleteMatch, toggleS
 
   let actionMatchButton;
   switch (title) {
-    case constants.OPEN_MATCHES.title:
-      actionMatchButton = <button className='join-btn' onClick={joinMatch}>Join</button>
+    case constants.OPEN_GAMES.title:
+      actionMatchButton = <button className='join-btn' onClick={joinGame}>Join</button>
       break;
-    case constants.MY_MATCHES.title:
-      actionMatchButton = <button className='leave-btn' onClick={leaveMatch}>Leave</button>
+    case constants.MY_GAMES.title:
+      actionMatchButton = <button className='leave-btn' onClick={leaveGame}>Leave</button>
       break;
     default:
       actionMatchButton = undefined
@@ -37,7 +37,7 @@ const Match = ({ user, title, match, joinMatch, leaveMatch, deleteMatch, toggleS
 
   let deleteButton
   if (id_admin === Number(user)) {
-    deleteButton = <button className='del-btn' onClick={deleteMatch}>Del</button>
+    deleteButton = <button className='del-btn' onClick={deleteGame}>Del</button>
   }
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -73,7 +73,7 @@ const Match = ({ user, title, match, joinMatch, leaveMatch, deleteMatch, toggleS
         onRequestClose={() => setModalIsOpen(false)}
         ariaHideApp={false}
         style={customStyles}>
-        <MatchForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
+        <GameForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
       </Modal>
 
       <div id={`${title}`} className='match-container'>
@@ -92,7 +92,7 @@ const Match = ({ user, title, match, joinMatch, leaveMatch, deleteMatch, toggleS
 
         <div className='players'>
           <div className='field'>F{players_field / 2}</div>
-          <div className='joined'>{players} joined <span className='missing'>— {`${players_field - players} missing`}</span> </div>
+          <div className='joined'>{players} joined <span className='absents'>— {`${players_field - players} absents`}</span> </div>
 
         </div>
 

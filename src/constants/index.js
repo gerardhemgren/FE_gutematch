@@ -1,22 +1,22 @@
 module.exports = {
-        ALL_MATCHES: {
-            title: 'All matches',
-            path: '/all_matches'
+        ALL_GAMES: {
+            title: 'All games',
+            path: '/all_games'
         },
-        OPEN_MATCHES:  {
-            title: 'Open matches',
-            path: '/open_matches'
+        OPEN_GAMES:  {
+            title: 'Open games',
+            path: '/open_games'
         },
-        MY_MATCHES:  {
-            title: 'My matches',
-            path: '/my_matches'
+        MY_GAMES:  {
+            title: 'My games',
+            path: '/my_games'
         },
-        CREATE_MATCH:  {
-            title: 'Create match',
-            path: '/create_match'
+        CREATE_GAME:  {
+            title: 'Create game',
+            path: '/create_game'
         },
-        CONFIG:  {
+        ACCOUNT:  {
             title: 'Account',
-            path: '/config'
+            path: '/account'
         }
 }

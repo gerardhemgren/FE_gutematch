@@ -1,3 +1,10 @@
+# i20220129
+- updated react-router to @6
+- focus nav buttons enable (with NavLink)
+- 'match' word renamed to 'game'
+- unused files removed (App.test.js, etc)
+
+
 # i20220123
 - focus nav buttons disable (to be implemented with a hook)
 - form input with right margin (fix mobile modal issue)

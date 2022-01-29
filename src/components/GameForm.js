@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { User } from '../auth/UserId';
 import matchService from '../services/matches';
-import constants from '../constants/index';
 
 const dayjs = require('dayjs');
 var utc = require('dayjs/plugin/utc');
@@ -10,7 +9,7 @@ var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-function MatchForm({ handleFocusIcon, props, afterClick, toggleSwitch }) {
+function GameForm({ props, afterClick, toggleSwitch }) {
     const { actions, matchInfo } = props
     const user = useContext(User);
     const [input, setInput] = useState({
@@ -33,8 +32,7 @@ function MatchForm({ handleFocusIcon, props, afterClick, toggleSwitch }) {
             name: matchInfo.name
         });
     }
-    let history = useHistory()
-    const handleForm = () => history.push(constants.MY_MATCHES.path);
+    const navigate = useNavigate()
 
     const callService = async (e) => {
         e.preventDefault()
@@ -47,15 +45,13 @@ function MatchForm({ handleFocusIcon, props, afterClick, toggleSwitch }) {
         }
         switch (actions[0]) {
             case 'create':
-                await matchService.createMatch(newMatchInfo, user).then(r => {
-                    handleForm()
-                    handleFocusIcon()
+                await matchService.createGame(newMatchInfo, user).then(r => {
+                    navigate('../my_games')
                 })
                 break;
             case 'edit':
-                await matchService.editMatch(newMatchInfo).then(r => {
-                    // handleFocusIcon()
-                    handleForm()
+                await matchService.editGame(newMatchInfo).then(r => {
+                    navigate('../my_games')
                     afterClick()
                     toggleSwitch()
                 })
@@ -107,7 +103,7 @@ function MatchForm({ handleFocusIcon, props, afterClick, toggleSwitch }) {
                     <input
                         className='input-name'
                         required
-                        placeholder='Match name'
+                        placeholder='Game name'
                         maxLength='20'
                         name='name'
                         value={input.name}
@@ -159,4 +155,4 @@ function MatchForm({ handleFocusIcon, props, afterClick, toggleSwitch }) {
     )
 }
 
-export default MatchForm
+export default GameForm

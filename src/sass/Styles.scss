@@ -2,19 +2,15 @@
 @import "./components/mixins";
 
 html {
-    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
-
-/* a {
-    text-decoration: none;
-    font-size: 10px;
-    &:active {
-        transform: scale(70%);
-        transition: .25s;
-    }
-} */
-
-.focus {
+.nav-icon {
+    filter: invert(50%);
+}
+.account-icon {
+    filter: invert(75%);
+}
+.active {
     transition: 0.5s;
     filter: invert(100%);
 }
@@ -22,13 +18,13 @@ html {
 .display-none {
     display: none;
 }
-
-.account-icon {
-    filter: invert(75%);
-}
-.nav-icon {
-    // filter: invert(50%);
-    filter: invert(100%);
+.no-match {
+    position: fixed;
+    top: 160px;
+    width: 327px;
+    color: $terceary-color;
+    display: flex;
+    font-size: 12px;
 }
 
 .title-container {
@@ -99,7 +95,7 @@ html {
         width: 340px;
 
         .match-page {
-            z-index: -1
+            z-index: -1;
         }
         .lds-ripple {
             position: absolute;
@@ -139,19 +135,25 @@ html {
             grid-column: 1 / 6;
             color: $terceary-color;
             position: relative;
-            animation: match-error 1.25s
+            animation: match-error 1.25s;
         }
         @keyframes match-error {
-            0% {color:transparent}
-            90% {color:transparent}
-            100% {color: $terceary-color}
+            0% {
+                color: transparent;
+            }
+            90% {
+                color: transparent;
+            }
+            100% {
+                color: $terceary-color;
+            }
         }
         .match-container {
             backdrop-filter: blur(15px);
             margin: 0px 0px 20px;
             border-radius: 4px;
             border-left: 4px solid rgba(255, 255, 255, 0.25);
-            background-color: rgba(0,0,0,0.035);
+            background-color: rgba(0, 0, 0, 0.035);
 
             display: grid;
             grid-template-columns: repeat(12, 28px);
@@ -192,7 +194,7 @@ html {
                     color: $text-color;
                     font-size: 10px;
                 }
-                .missing {
+                .absents {
                     color: $text-color-secondary;
                     font-size: 10px;
                 }
@@ -244,7 +246,6 @@ html {
                     grid-column: 5 / 7;
                     grid-row: 1;
                 }
-                
             }
         }
 
@@ -252,15 +253,12 @@ html {
             height: 80px;
         }
 
-        .config {
+        .account {
             .profile {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 padding: 32px 24px 40px;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                border-radius: 2px;
-                backdrop-filter: blur(15px);
                 row-gap: 16px;
 
                 div {
@@ -399,5 +397,3 @@ html {
         }
     }
 }
-
-

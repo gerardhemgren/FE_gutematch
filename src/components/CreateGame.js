@@ -1,11 +1,11 @@
 import React from 'react';
 import constants from '../constants/index';
-import MatchForm from './MatchForm';
+import GameForm from './GameForm';
 
 const dayjs = require('dayjs');
 
-function CreateMatch({ handleFocusIcon }) {
-    const title = constants.CREATE_MATCH.title;
+function CreateGame() {
+    const title = constants.CREATE_GAME.title;
     const props = {
         actions: ['create', 'reset'],
         matchInfo: {
@@ -23,13 +23,10 @@ function CreateMatch({ handleFocusIcon }) {
                 <div className='title-container'>
                     {title}
                 </div>
-                <MatchForm
-                    handleFocusIcon={handleFocusIcon}
-                    props={props}
-                />
+                <GameForm props={props} />
             </div>
         </>
     )
 }
 
-export default CreateMatch
+export default CreateGame
