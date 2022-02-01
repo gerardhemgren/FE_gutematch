@@ -41,7 +41,7 @@ html {
     color: $text-color;
 
     .fixed-background {
-        background: linear-gradient(0deg, #414d4d, #536365, #536365);
+        background: linear-gradient(0deg, #414d4d, #3d4a4b, #242a2b, #242a2b);
         position: fixed;
         height: 812px;
         width: 100%;
@@ -50,17 +50,17 @@ html {
 
     .header {
         position: fixed;
-        z-index: 0;
+        z-index: 1;
         top: 0px;
         padding: 0px 16px 0px 16px;
         width: 340px;
         height: 192px;
+        background: #242a2b;
 
         .topbar-container {
             @include df;
             padding: 20px 0px;
             align-items: normal;
-            background: #536365;
 
             .logo {
                 font-size: 12px;
@@ -94,9 +94,11 @@ html {
         margin-top: 212px;
         width: 340px;
 
-        .match-page {
-            z-index: -1;
+        .title-container {
+            z-index: 1;
         }
+
+        // spinner animation
         .lds-ripple {
             position: absolute;
             left: 40.5%;
@@ -130,6 +132,7 @@ html {
                 opacity: 0;
             }
         }
+        //
         .match-error {
             font-size: 10px;
             grid-column: 1 / 6;
@@ -149,11 +152,11 @@ html {
             }
         }
         .match-container {
+            z-index: -1;
             backdrop-filter: blur(15px);
             margin: 0px 0px 20px;
-            border-radius: 4px;
-            border-left: 4px solid rgba(255, 255, 255, 0.25);
-            background-color: rgba(0, 0, 0, 0.035);
+            border-left: 2px solid rgba(255, 255, 255, 0.75);
+            background-color: rgba(0, 0, 0, 0.1);
 
             display: grid;
             grid-template-columns: repeat(12, 28px);
@@ -396,4 +399,8 @@ html {
             cursor: default;
         }
     }
+}
+.modal {
+    position: fixed;
+    z-index: 1;
 }

@@ -80,7 +80,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
                         value={input.location}
                         onChange={handleInputCreateForm}
                     />
-                    <label>Adress 1234, City, Country</label>
+                    {/* <label>Adress 1234, City, Country</label> */}
                 </fieldset>
             </div>
             <div className='field-and-name-field'>

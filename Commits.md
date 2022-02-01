@@ -1,4 +1,9 @@
 # i20220129
+- layouting with z-index
+- better contrast
+
+
+# i20220129
 - updated react-router to @6
 - focus nav buttons enable (with NavLink)
 - 'match' word renamed to 'game'

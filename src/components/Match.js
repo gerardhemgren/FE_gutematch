@@ -50,6 +50,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
   const customStyles = {
     content: {
       color: 'rgba(255, 255, 255, 0.5)',
+      width: '340px',
       top: '50%',
       left: '50%',
       right: 'auto',
@@ -57,7 +58,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
       padding: '0px',
       overflow: 'hidden',
       transform: 'translate(-50%, -50%)',
-      background: 'linear-gradient(0deg, #414d4d, #536365, #536365)'
+      background: '#242a2b'
     }
   };
 
@@ -72,7 +73,9 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         ariaHideApp={false}
-        style={customStyles}>
+        portalClassName={'ReactModal__Overlay ReactModal__Overlay--after-open modal'}
+        style={customStyles}
+        >
         <GameForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
       </Modal>
 
