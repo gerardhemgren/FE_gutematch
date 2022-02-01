@@ -6,7 +6,7 @@ import CreateGame from './components/CreateGame'
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import Account from './components/auth/Account';
-import NoMatch from './components/NoMatch';
+import PageNotFound from './components/PageNotFound';
 
 import constants from './constants/index'
 import './css/Styles.css';
@@ -21,7 +21,7 @@ function App() {
       return (
         <Routes>
           <Route path="/" element={<Account />} />
-          <Route path={'*'} element={<NoMatch />}></Route>
+          <Route path={'*'} element={<PageNotFound />}></Route>
         </Routes >
       )
     } else {
@@ -32,7 +32,7 @@ function App() {
           <Route path={constants.MY_GAMES.path} element={<MatchPage />} />
           <Route path={constants.CREATE_GAME.path} element={<CreateGame />} />
           <Route path={constants.ACCOUNT.path} element={<Account />} />
-          <Route path={'*'} element={<NoMatch />}></Route>
+          <Route path={'*'} element={<PageNotFound />}></Route>
         </Routes>
       )
     }

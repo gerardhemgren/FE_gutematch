@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import constants from '../constants/index';
 import GameForm from './GameForm';
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 
 const dayjs = require('dayjs');
 var utc = require('dayjs/plugin/utc');
@@ -47,9 +47,11 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
   const setModalIsOpenToFalse = () => {
     setModalIsOpen(false)
   }
+
   const customStyles = {
+    overlay: { background: 'rgba(0, 0, 0, 0.4)' },
     content: {
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: 'rgba(255, 255, 255, 1)',
       width: '340px',
       top: '50%',
       left: '50%',
@@ -58,7 +60,11 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
       padding: '0px',
       overflow: 'hidden',
       transform: 'translate(-50%, -50%)',
-      background: '#242a2b'
+      background: 'rgba(0, 0, 0, 0.1)',
+      'backdrop-filter': 'blur(15px)',
+      border: '1px solid rgb(152, 230, 235)',
+      'border-top': '8px solid rgb(152, 230, 235)',
+      'border-radius': '0 0 20px 20px',
     }
   };
 
@@ -75,7 +81,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
         ariaHideApp={false}
         portalClassName={'ReactModal__Overlay ReactModal__Overlay--after-open modal'}
         style={customStyles}
-        >
+      >
         <GameForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
       </Modal>
 
