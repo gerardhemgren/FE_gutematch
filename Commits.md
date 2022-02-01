@@ -1,3 +1,9 @@
+# i20220201
+- color buttons
+- components with blur filter
+- app heigth 100% + 100px
+
+
 # i20220129
 - layouting with z-index
 - better contrast

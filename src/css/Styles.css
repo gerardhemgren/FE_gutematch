@@ -19,13 +19,8 @@ html {
   display: none;
 }
 
-.no-match {
-  position: fixed;
-  top: 160px;
-  width: 327px;
-  color: #fbff00;
-  display: flex;
-  font-size: 12px;
+.page-not-found {
+  color: #cbcd2f;
 }
 
 .title-container {
@@ -44,7 +39,7 @@ html {
 .app .fixed-background {
   background: linear-gradient(0deg, #414d4d, #3d4a4b, #242a2b, #242a2b);
   position: fixed;
-  height: 812px;
+  height: calc(100% + 100px);
   width: 100%;
   z-index: -2;
 }
@@ -55,7 +50,7 @@ html {
   padding: 0px 16px 0px 16px;
   width: 340px;
   height: 192px;
-  background: #242a2b;
+  backdrop-filter: blur(15px);
 }
 .app .header .topbar-container {
   display: flex;
@@ -89,7 +84,7 @@ html {
   width: 327px;
 }
 .app .header .message-container .message {
-  color: #fbff00;
+  color: #c7c7c7;
   display: flex;
   font-size: 12px;
 }
@@ -109,7 +104,7 @@ html {
 }
 .app .main .lds-ripple div {
   position: absolute;
-  border: 4px solid #37ff37;
+  border: 4px solid #88f7ff;
   opacity: 1;
   border-radius: 50%;
   animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
@@ -136,7 +131,7 @@ html {
 .app .main .match-error {
   font-size: 10px;
   grid-column: 1/6;
-  color: #fbff00;
+  color: #cbcd2f;
   position: relative;
   animation: match-error 1.25s;
 }
@@ -148,15 +143,16 @@ html {
     color: transparent;
   }
   100% {
-    color: #fbff00;
+    color: #c7c7c7;
   }
 }
 .app .main .match-container {
   z-index: -1;
   backdrop-filter: blur(15px);
   margin: 0px 0px 20px;
-  border-left: 2px solid rgba(255, 255, 255, 0.75);
+  border-top: 1px solid rgba(152, 230, 235, 0.8);
   background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 20px 20px;
   display: grid;
   grid-template-columns: repeat(12, 28px);
   padding: 12px 0px 20px 0px;
@@ -227,14 +223,15 @@ html {
 }
 .app .main .match-container .action-match .join-btn {
   width: inherit;
-  background-color: rgba(55, 255, 55, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #37ff37;
+  border: 1px solid #88f7ff;
   border-radius: 4px;
   cursor: pointer;
+  color: #88f7ff;
   grid-column: 9/11;
   grid-row: 1;
 }
@@ -244,14 +241,15 @@ html {
 }
 .app .main .match-container .action-match .leave-btn {
   width: inherit;
-  background-color: rgba(251, 255, 0, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #fbff00;
+  border: 1px solid #cbcd2f;
   border-radius: 4px;
   cursor: pointer;
+  color: #cbcd2f;
   grid-column: 9/11;
   grid-row: 1;
 }
@@ -261,14 +259,15 @@ html {
 }
 .app .main .match-container .action-match .del-btn {
   width: inherit;
-  background-color: rgba(251, 0, 0, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #fb0000;
+  border: 1px solid #c7c7c7;
   border-radius: 4px;
   cursor: pointer;
+  color: white;
   grid-column: 1/3;
   grid-row: 1;
 }
@@ -283,9 +282,10 @@ html {
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid white;
+  border: 1px solid #c7c7c7;
   border-radius: 4px;
   cursor: pointer;
+  color: white;
   grid-column: 5/7;
   grid-row: 1;
 }
@@ -309,8 +309,8 @@ html {
   align-items: center;
 }
 .app .main .account .profile div img {
-  width: 96px;
-  height: 96px;
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   filter: grayscale(1);
 }
@@ -318,14 +318,15 @@ html {
   font-size: 12px;
   padding: 8px 20px;
   width: inherit;
-  background-color: rgba(251, 0, 0, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #fb0000;
+  border: 1px solid #cbcd2f;
   border-radius: 4px;
   cursor: pointer;
+  color: #cbcd2f;
 }
 .app .main .account .logout-button:active {
   transition: 0.225s;
@@ -335,14 +336,15 @@ html {
   font-size: 12px;
   padding: 8px 20px;
   width: inherit;
-  background-color: rgba(55, 255, 55, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #37ff37;
+  border: 1px solid #88f7ff;
   border-radius: 4px;
   cursor: pointer;
+  color: #88f7ff;
 }
 .app .main .account .login-button:active {
   transition: 0.225s;
@@ -353,14 +355,15 @@ html {
   padding: 8px 20px;
   margin-top: 32px;
   width: inherit;
-  background-color: rgba(251, 255, 0, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #fbff00;
+  border: 1px solid #cbcd2f;
   border-radius: 4px;
   cursor: pointer;
+  color: #cbcd2f;
 }
 .app .main .account .guest-login-button:active {
   transition: 0.225s;
@@ -383,7 +386,6 @@ html {
 .match-form {
   padding: 16px 16px 32px;
   margin-top: 0px;
-  border-radius: 2px;
 }
 .match-form fieldset {
   margin: 0px 0px 24px;
@@ -405,7 +407,7 @@ html {
   color: white;
   font: 14px "Segoe UI";
   border-style: none;
-  border-bottom: 1px solid #37ff37;
+  border-bottom: 1px solid #88f7ff;
 }
 .match-form input:focus {
   outline: none;
@@ -458,14 +460,15 @@ html {
 }
 .match-form .action-match-form button {
   width: inherit;
-  background-color: rgba(55, 255, 55, 0.2);
+  background-color: transparent;
   color: white;
   font-size: 10px;
   font-weight: 600;
   border-style: none;
-  border: 1px solid #37ff37;
+  border: 1px solid #88f7ff;
   border-radius: 4px;
   cursor: pointer;
+  color: #88f7ff;
   font-size: 10px;
   text-transform: capitalize;
   padding: 8px;
@@ -475,9 +478,22 @@ html {
   transition: 0.225s;
   transform: scale(80%);
 }
-.match-form .action-match-form .disable-button {
-  background-color: rgba(55, 255, 55, 0.2);
-  cursor: default;
+.match-form .action-match-form .reset-cancel {
+  width: inherit;
+  background-color: transparent;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid #c7c7c7;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  width: 88px;
+}
+.match-form .action-match-form .reset-cancel:active {
+  transition: 0.225s;
+  transform: scale(80%);
 }
 
 .modal {
