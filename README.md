@@ -46,4 +46,4 @@ Was made in Adobe Xd, animations and transitions will be added soon.
 
 
 ## Commits:
-Are detailed at [Commits](Commits)
+Are detailed at [Commits](Commits.md)
