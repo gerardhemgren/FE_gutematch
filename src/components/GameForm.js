@@ -75,7 +75,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
                     <input
                         className='input-adress'
                         required
-                        placeholder='Adress'
+                        placeholder='Address'
                         name='location'
                         value={input.location}
                         onChange={handleInputCreateForm}
