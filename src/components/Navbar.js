@@ -7,7 +7,7 @@ import '../css/Styles.css';
 function Navbar() {
     return (
         <nav className='navbar'>
-            <NavLink to={constants.OPEN_GAMES.path} className={'nav-icon'}>
+            <NavLink to={constants.OPEN_GAMES.path} className={window.location.pathname === '/' ? 'active' : 'nav-icon'}>
                 <img src={icons.openMatchesIcon}
                     alt={constants.OPEN_GAMES.title}
                     width="20" height="20"

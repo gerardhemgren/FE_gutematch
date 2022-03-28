@@ -1,3 +1,14 @@
+# i20220328
+- utc format in verified created's game modal fixed
+- default active nav-bar button style added
+- verified modal transition first effect
+
+
+# i20220313
+- verified modal added when a game is created
+- minimalist design
+
+
 # i20220201
 - color buttons
 - components with blur filter

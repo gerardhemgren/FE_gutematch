@@ -23,6 +23,24 @@ html {
   color: black;
 }
 
+.modal {
+  position: fixed;
+  z-index: 1;
+}
+
+.ReactModal__Overlay {
+  margin: -800px;
+  transition: margin 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  margin: 0px;
+}
+
+.ReactModal__Overlay--before-close {
+  margin: -800px;
+}
+
 .app {
   display: flex;
   justify-content: center;
@@ -30,7 +48,7 @@ html {
   color: white;
 }
 .app .fixed-background {
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   position: fixed;
   height: calc(100% + 100px);
   width: 100%;
@@ -43,7 +61,7 @@ html {
   padding: 0px 16px 0px 16px;
   width: 340px;
   height: 192px;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
 }
 .app .header .topbar-container {
   display: flex;
@@ -144,150 +162,6 @@ html {
     color: black;
   }
 }
-.app .main .match-container {
-  z-index: -1;
-  backdrop-filter: blur(15px);
-  margin: 0px 0px 20px;
-  background-color: white;
-  border-radius: 8px;
-  display: grid;
-  grid-template-columns: repeat(12, 28px);
-  padding: 12px 0px 20px 0px;
-}
-.app .main .match-container .title {
-  text-transform: capitalize;
-  font-size: 10px;
-  color: black;
-  grid-column: 2/12;
-  grid-row: 1;
-  padding-bottom: 20px;
-}
-.app .main .match-container .date {
-  grid-row: 2;
-  grid-column: 2/7;
-  padding-bottom: 16px;
-}
-.app .main .match-container .date .day {
-  font-weight: 600;
-  font-size: 16px;
-  color: black;
-}
-.app .main .match-container .date .date-month {
-  color: grey;
-  font-size: 10px;
-}
-.app .main .match-container .players {
-  grid-row: 2;
-  grid-column: 8/12;
-}
-.app .main .match-container .players .field {
-  color: black;
-  font-size: 16px;
-  font-weight: 600;
-}
-.app .main .match-container .players .joined {
-  color: black;
-  font-size: 10px;
-}
-.app .main .match-container .players .absents {
-  color: grey;
-  font-size: 10px;
-}
-.app .main .match-container .match {
-  grid-row: 3;
-  grid-column: 2/12;
-  padding-bottom: 24px;
-}
-.app .main .match-container .match .time {
-  font-size: 16px;
-  font-weight: 400;
-  color: black;
-}
-.app .main .match-container .match .location {
-  text-transform: capitalize;
-  font-size: 10px;
-  color: grey;
-}
-.app .main .match-container .action-match {
-  grid-row: 4;
-  grid-column: 2/12;
-  width: 56px;
-  height: 24px;
-  display: grid;
-  grid-template-columns: repeat(11, 26px);
-}
-.app .main .match-container .action-match button {
-  font-size: 10px;
-  padding: 4px;
-}
-.app .main .match-container .action-match .join-btn {
-  background-color: black;
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  border-style: none;
-  border: 1px solid black;
-  border-radius: 4px;
-  cursor: pointer;
-  color: white;
-  grid-column: 9/12;
-  grid-row: 1;
-}
-.app .main .match-container .action-match .join-btn:active {
-  transition: 0.225s;
-  transform: scale(80%);
-}
-.app .main .match-container .action-match .leave-btn {
-  background-color: #E3FF72;
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  border-style: none;
-  border: 1px solid black;
-  border-radius: 4px;
-  cursor: pointer;
-  color: black;
-  grid-column: 9/12;
-  grid-row: 1;
-}
-.app .main .match-container .action-match .leave-btn:active {
-  transition: 0.225s;
-  transform: scale(80%);
-}
-.app .main .match-container .action-match .del-btn {
-  background-color: transparent;
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  border-style: none;
-  border: 1px solid black;
-  border-radius: 4px;
-  cursor: pointer;
-  color: black;
-  grid-column: 1/4;
-  grid-row: 1;
-}
-.app .main .match-container .action-match .del-btn:active {
-  transition: 0.225s;
-  transform: scale(80%);
-}
-.app .main .match-container .action-match .edit-btn {
-  background-color: transparent;
-  color: white;
-  font-size: 10px;
-  font-weight: 600;
-  border-style: none;
-  border: 1px solid black;
-  border-radius: 4px;
-  cursor: pointer;
-  color: black;
-  grid-column: 5/8;
-  grid-row: 1;
-}
-.app .main .match-container .action-match .edit-btn:active {
-  transition: 0.225s;
-  transform: scale(80%);
-}
 .app .main .bottom-space {
   height: 80px;
 }
@@ -313,7 +187,7 @@ html {
 .app .main .account .logout-button {
   font-size: 12px;
   padding: 8px 20px;
-  background-color: #E3FF72;
+  background-color: #e3ff72;
   color: white;
   font-size: 10px;
   font-weight: 600;
@@ -330,7 +204,7 @@ html {
 .app .main .account .login-button {
   font-size: 12px;
   padding: 8px 20px;
-  background-color: #74FF99;
+  background-color: #74ff99;
   color: white;
   font-size: 10px;
   font-weight: 600;
@@ -490,9 +364,157 @@ html {
   transform: scale(80%);
 }
 
-.modal {
-  position: fixed;
-  z-index: 1;
+.match-container {
+  margin: 0px 0px 20px;
+  background-color: white;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(12, 28px);
+  padding: 12px 0px 20px 0px;
+}
+.match-container .title {
+  text-transform: capitalize;
+  font-size: 10px;
+  color: black;
+  grid-column: 2/12;
+  grid-row: 1;
+  padding-bottom: 20px;
+}
+.match-container .date {
+  grid-row: 2;
+  grid-column: 2/7;
+  padding-bottom: 16px;
+}
+.match-container .date .day {
+  font-weight: 600;
+  font-size: 16px;
+  color: black;
+}
+.match-container .date .date-month {
+  color: grey;
+  font-size: 10px;
+}
+.match-container .players {
+  grid-row: 2;
+  grid-column: 8/12;
+}
+.match-container .players .field {
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+}
+.match-container .players .joined {
+  color: black;
+  font-size: 10px;
+}
+.match-container .players .absents {
+  color: grey;
+  font-size: 10px;
+}
+.match-container .match {
+  grid-row: 3;
+  grid-column: 2/12;
+  padding-bottom: 24px;
+}
+.match-container .match .time {
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+}
+.match-container .match .location {
+  text-transform: capitalize;
+  font-size: 10px;
+  color: grey;
+}
+.match-container .action-match {
+  grid-row: 4;
+  grid-column: 2/12;
+  width: 56px;
+  height: 24px;
+  display: grid;
+  grid-template-columns: repeat(11, 26px);
+}
+.match-container .action-match button {
+  font-size: 10px;
+  padding: 4px;
+}
+.match-container .action-match .join-btn {
+  background-color: black;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  grid-column: 9/12;
+  grid-row: 1;
+}
+.match-container .action-match .join-btn:active {
+  transition: 0.225s;
+  transform: scale(80%);
+}
+.match-container .action-match .leave-btn {
+  background-color: #e3ff72;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+  grid-column: 9/12;
+  grid-row: 1;
+}
+.match-container .action-match .leave-btn:active {
+  transition: 0.225s;
+  transform: scale(80%);
+}
+.match-container .action-match .del-btn {
+  background-color: transparent;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+  grid-column: 1/4;
+  grid-row: 1;
+}
+.match-container .action-match .del-btn:active {
+  transition: 0.225s;
+  transform: scale(80%);
+}
+.match-container .action-match .edit-btn {
+  background-color: transparent;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  border-style: none;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  color: black;
+  grid-column: 5/8;
+  grid-row: 1;
+}
+.match-container .action-match .edit-btn:active {
+  transition: 0.225s;
+  transform: scale(80%);
+}
+
+.verified {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.verified img {
+  padding: 80px 0px 60px 0px;
+  filter: opacity(0.4);
 }
 
 /*# sourceMappingURL=Styles.css.map */

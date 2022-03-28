@@ -22,6 +22,22 @@ html {
 .page-not-found {
     color: black;
 }
+.modal {
+    position: fixed;
+    z-index: 1;
+}
+.ReactModal__Overlay {
+    margin: -800px;
+    transition: margin 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+    margin: 0px;
+}
+
+.ReactModal__Overlay--before-close{
+    margin: -800px;
+}
 
 .app {
     display: flex;
@@ -30,7 +46,7 @@ html {
     color: $text-color;
 
     .fixed-background {
-        background-color: #EBEBEB;
+        background-color: #ebebeb;
         position: fixed;
         height: calc(100% + 100px);
         width: 100%;
@@ -44,7 +60,7 @@ html {
         padding: 0px 16px 0px 16px;
         width: 340px;
         height: 192px;
-        background-color:#EBEBEB;
+        background-color: #ebebeb;
         // backdrop-filter: blur(50px);
 
         .topbar-container {
@@ -146,112 +162,6 @@ html {
                 color: black;
             }
         }
-        .match-container {
-            z-index: -1;
-            backdrop-filter: blur(15px);
-            margin: 0px 0px 20px;
-            // border-top: 1px solid hsl(184deg 68% 76% / 80%);
-            background-color: white;
-            border-radius: 8px;
-            display: grid;
-            grid-template-columns: repeat(12, 28px);
-            padding: 12px 0px 20px 0px;
-
-            .title {
-                text-transform: capitalize;
-                font-size: 10px;
-                color: black;
-                grid-column: 2 / 12;
-                grid-row: 1;
-                padding-bottom: 20px;
-            }
-
-            .date {
-                grid-row: 2;
-                grid-column: 2 / 7;
-                padding-bottom: 16px;
-                .day {
-                    font-weight: 600;
-                    font-size: 16px;
-                    color: black;
-                }
-                .date-month {
-                    color: grey;
-                    font-size: 10px;
-                }
-            }
-
-            .players {
-                grid-row: 2;
-                grid-column: 8 / 12;
-                .field {
-                    color: black;
-                    font-size: 16px;
-                    font-weight: 600;
-                }
-                .joined {
-                    color: black;
-                    font-size: 10px;
-                }
-                .absents {
-                    color: grey;
-                    font-size: 10px;
-                }
-            }
-
-            .match {
-                grid-row: 3;
-                grid-column: 2 / 12;
-                padding-bottom: 24px;
-                .time {
-                    font-size: 16px;
-                    font-weight: 400;
-                    color: black;
-                }
-                .location {
-                    text-transform: capitalize;
-                    font-size: 10px;
-                    color: grey;
-                }
-            }
-
-            .action-match {
-                grid-row: 4;
-                grid-column: 2 / 12;
-                width: 56px;
-                height: 24px;
-                display: grid;
-                grid-template-columns: repeat(11, 26px);
-                button {
-                    font-size: 10px;
-                    padding: 4px;
-                }
-                .join-btn {
-                    @include action-button(black, black);
-                    color: white;
-                    grid-column: 9 / 12;
-                    grid-row: 1;
-                }
-                .leave-btn {
-                    @include action-button(black, #E3FF72);
-                    color: black;
-                    grid-column: 9 / 12;
-                    grid-row: 1;
-                }
-                .del-btn {
-                    @include action-button(black, transparent);
-                    color: black;
-                    grid-column: 1 / 4;
-                    grid-row: 1;
-                }
-                .edit-btn {
-                    @include action-button(black, transparent);
-                    color: black;
-                    grid-column: 5 / 8;
-                    grid-row: 1;
-                }
-            }
-        }
 
         .bottom-space {
             height: 80px;
@@ -282,13 +192,13 @@ html {
             .logout-button {
                 font-size: 12px;
                 padding: 8px 20px;
-                @include action-button(black, #E3FF72);
+                @include action-button(black, #e3ff72);
                 color: black;
             }
             .login-button {
                 font-size: 12px;
                 padding: 8px 20px;
-                @include action-button(black, #74FF99);
+                @include action-button(black, #74ff99);
                 color: black;
             }
             .guest-login-button {
@@ -355,7 +265,7 @@ html {
     .date-field input {
         border: none;
         background-color: rgb(0, 0, 0, 0.01);
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
     }
     input[type="date"]::-webkit-calendar-picker-indicator {
@@ -373,7 +283,7 @@ html {
         width: 80px;
         color: black;
         background-color: rgba(0, 0, 0, 0.01);
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         align-self: flex-end;
         margin: 4px 0 0px 0;
@@ -409,7 +319,116 @@ html {
         }
     }
 }
-.modal {
-    position: fixed;
-    z-index: 1;
+
+.match-container {
+    margin: 0px 0px 20px;
+    background-color: white;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(12, 28px);
+    padding: 12px 0px 20px 0px;
+
+    .title {
+        text-transform: capitalize;
+        font-size: 10px;
+        color: black;
+        grid-column: 2 / 12;
+        grid-row: 1;
+        padding-bottom: 20px;
+    }
+
+    .date {
+        grid-row: 2;
+        grid-column: 2 / 7;
+        padding-bottom: 16px;
+        .day {
+            font-weight: 600;
+            font-size: 16px;
+            color: black;
+        }
+        .date-month {
+            color: grey;
+            font-size: 10px;
+        }
+    }
+
+    .players {
+        grid-row: 2;
+        grid-column: 8 / 12;
+        .field {
+            color: black;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .joined {
+            color: black;
+            font-size: 10px;
+        }
+        .absents {
+            color: grey;
+            font-size: 10px;
+        }
+    }
+
+    .match {
+        grid-row: 3;
+        grid-column: 2 / 12;
+        padding-bottom: 24px;
+        .time {
+            font-size: 16px;
+            font-weight: 400;
+            color: black;
+        }
+        .location {
+            text-transform: capitalize;
+            font-size: 10px;
+            color: grey;
+        }
+    }
+
+    .action-match {
+        grid-row: 4;
+        grid-column: 2 / 12;
+        width: 56px;
+        height: 24px;
+        display: grid;
+        grid-template-columns: repeat(11, 26px);
+        button {
+            font-size: 10px;
+            padding: 4px;
+        }
+        .join-btn {
+            @include action-button(black, black);
+            color: white;
+            grid-column: 9 / 12;
+            grid-row: 1;
+        }
+        .leave-btn {
+            @include action-button(black, #e3ff72);
+            color: black;
+            grid-column: 9 / 12;
+            grid-row: 1;
+        }
+        .del-btn {
+            @include action-button(black, transparent);
+            color: black;
+            grid-column: 1 / 4;
+            grid-row: 1;
+        }
+        .edit-btn {
+            @include action-button(black, transparent);
+            color: black;
+            grid-column: 5 / 8;
+            grid-row: 1;
+        }
+    }
+}
+.verified {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+        padding: 80px 0px 60px 0px;
+        filter: opacity(0.4);
+    }
 }

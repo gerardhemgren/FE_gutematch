@@ -39,11 +39,9 @@ CSS (flex & Grid) precompiled with SASS.\
 SVG icons.\
 Axios for rest API calls.\
 A Modal feature reusing a component with props, switch case, api services, etc.\
-**To improve:** Already API messages will be shown when a store or global context is setted.
 
 ## Design:
 Was made in Adobe Xd, animations and transitions will be added soon.
-
 
 ## Commits:
 Are detailed at [Commits](Commits.md)
