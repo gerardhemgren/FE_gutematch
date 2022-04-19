@@ -46,6 +46,7 @@ html {
   justify-content: center;
   font-family: "Segoe UI";
   color: white;
+  background-color: #ebebeb;
 }
 .app .fixed-background {
   background-color: #ebebeb;
