@@ -1,13 +1,15 @@
-import settingsIcon from './login.svg';
+import accountIcon from './user.svg';
 import openMatchesIcon from './open_matches.svg';
 import myMatchesIcon from './bookmark.svg';
 import createMatchIcon from './plus.svg';
+import verifiedIcon from './verified.svg'
 
 const icons = {
-    settingsIcon,
+    accountIcon,
     openMatchesIcon,
     myMatchesIcon,
-    createMatchIcon
+    createMatchIcon,
+    verifiedIcon
 }
 
 export default icons

@@ -44,7 +44,7 @@ function App() {
         <div className='fixed-background' />
         {user !== 'no user' ? <Header></Header> : null}
         <div className='main'>
-          {user === null ? null : <Main />}
+          {user !== null ? <Main /> : null}
         </div>
         {user !== 'no user' ? <Navbar></Navbar> : null}
       </div>

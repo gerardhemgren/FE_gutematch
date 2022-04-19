@@ -13,7 +13,7 @@ function Header() {
                 </div>
                 <NavLink to={constants.ACCOUNT.path}
                     className={'account-icon'}>
-                    <img src={icons.settingsIcon} alt={constants.ACCOUNT.title} width="22" height="22" />
+                    <img src={icons.accountIcon} alt={constants.ACCOUNT.title} width="22" height="22" />
                 </NavLink>
             </div>
         </div>

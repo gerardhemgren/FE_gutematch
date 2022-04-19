@@ -37,7 +37,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
 
   let deleteButton
   if (id_admin === Number(user)) {
-    deleteButton = <button className='del-btn' onClick={deleteGame}>Del</button>
+    deleteButton = <button className='del-btn' onClick={deleteGame}>Delete</button>
   }
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -49,7 +49,8 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
   }
 
   const customStyles = {
-    overlay: { background: 'rgba(0, 0, 0, 0.4)' },
+    overlay: { background: 'rgba(255, 255, 255, 0.5)',
+    'backdropFilter': 'blur(5px)' },
     content: {
       color: 'rgba(255, 255, 255, 1)',
       width: '340px',
@@ -57,14 +58,12 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
       left: '50%',
       right: 'auto',
       bottom: 'auto',
-      padding: '0px',
+      padding: '12px 0px 0px 0px',
       overflow: 'hidden',
       transform: 'translate(-50%, -50%)',
-      background: 'rgba(0, 0, 0, 0.1)',
-      'backdrop-filter': 'blur(15px)',
-      border: '1px solid rgb(152, 230, 235)',
-      'border-top': '8px solid rgb(152, 230, 235)',
-      'border-radius': '0 0 20px 20px',
+      background: 'rgba(255, 255, 255, 0.5)',
+      'backdropFilter': 'blur(50px)',
+      'borderRadius': '8px',
     }
   };
 
@@ -85,29 +84,35 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
         <GameForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
       </Modal>
 
-      <div id={`${title}`} className='match-container'>
+      <div className='match-container'>
         <div className='title'>
           <div className='name'>{name}</div>
         </div>
 
         <div className='date'>
           <div className='day'>
-            {dayjs(date).utc().format('dddd')}
+            {dayjs(date).format('dddd')}
           </div>
           <div className='date-month'>
-            {dayjs(date).utc().format('DD — MMM')}
+            {dayjs(date).format('DD — MMM')}
           </div>
         </div>
 
         <div className='players'>
           <div className='field'>F{players_field / 2}</div>
+          {players ?
           <div className='joined'>{players} joined <span className='absents'>— {`${players_field - players} absents`}</span> </div>
-
+        : null
+        }
         </div>
 
         <div className='match'>
           <div className='time'>
-            {dayjs(date).utc().format('HH:mm')}
+            {
+            window.location.pathname === constants.CREATE_GAME.path ?
+            dayjs(date).format('HH:mm')
+            :
+            dayjs(date).utc().format('HH:mm')}
           </div>
           <div className='location'>{location}</div>
         </div>

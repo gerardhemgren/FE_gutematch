@@ -15,7 +15,7 @@ const LoginButton = () => {
     localStorage.setItem('player', true)
     localStorage.setItem('player_id', 0)
     localStorage.setItem('player_name', 'Guest User')
-    localStorage.setItem('player_picture', '/gutematch.png')
+    localStorage.setItem('player_picture', '/guest.png')
     logout({ returnTo: window.location.origin })
   }
   return (
