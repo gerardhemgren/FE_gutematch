@@ -100,15 +100,13 @@ function GameForm({ props, afterClick, toggleSwitch }) {
         <>
             <Modal
                 isOpen={modalIsOpen}
-                onRequestClose={() => setModalIsOpen(false)}
+                onRequestClose={() => setModalIsOpenToFalse()}
                 portalClassName={'ReactModal__Overlay ReactModal__Overlay--after-open modal'}
                 style={customStyles}
                 backdrop={true}
                 ariaHideApp={false}
             >
-                <div onClick={() => setModalIsOpenToFalse()} className='verified'>
-                    <>Match created successfully!</>
-                    <br></br><br></br>
+                <div className='verified'>
                     <Match
                         closeTimeoutMS={200}
                         isOpen

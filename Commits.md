@@ -1,3 +1,8 @@
+# i20220419
+- fixed open games's active icon after '/'
+- fixed navigate to '/My_games' when close verified modal
+
+
 # i20220328
 - utc format in verified created's game modal fixed
 - default active nav-bar button style added

@@ -44,7 +44,9 @@ html {
     justify-content: center;
     font-family: "Segoe UI";
     color: $text-color;
+    background-color: #ebebeb;
 
+    // cover blank spaces at navigation
     .fixed-background {
         background-color: #ebebeb;
         position: fixed;

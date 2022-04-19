@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { User } from '../auth/UserId';
 import matchService from '../services/matches';
 import constants from '../constants/index'
@@ -10,11 +10,16 @@ function MatchesPage() {
     const [matches, setMatches] = useState(null)
     const [title, setTitle] = useState('')
 
-    const mounted = useRef(null)
+    const location = useLocation().pathname
+    const [path, setPath] = useState(location)
+    useEffect(() => {
+      setPath(location)
+    }, [location])
+    
     const navigate = useNavigate()
-    const path = window.location.pathname;
     const [renderSwitch, setRenderSwitch] = useState(false)
 
+    const mounted = useRef(null)
     useEffect(() => {
         mounted.current = true
         if (mounted) {
