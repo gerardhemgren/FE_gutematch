@@ -1,3 +1,8 @@
+# i20220420
+- open games & my games API call get results with date filter (future games) with time precision
+- create or edit games with prevention & alert for games with past dates input with time precision
+
+
 # i20220419
 - fixed open games's active icon after '/'
 - fixed navigate to '/My_games' when close verified modal

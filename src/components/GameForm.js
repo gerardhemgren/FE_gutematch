@@ -8,10 +8,7 @@ import icons from '../icons/icons';
 import '../css/Styles.css';
 
 const dayjs = require('dayjs');
-var utc = require('dayjs/plugin/utc');
-var timezone = require('dayjs/plugin/timezone');
-dayjs.extend(utc);
-dayjs.extend(timezone);
+const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ss') };
 
 function GameForm({ props, afterClick, toggleSwitch }) {
     const { actions, matchInfo } = props
@@ -25,6 +22,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
     });
     const handleInputCreateForm = (event) => {
         setInput({ ...input, [event.target.name]: event.target.value });
+        toggleAlert(false);
     }
     const resetForm = () => {
         setInput({
@@ -40,6 +38,11 @@ function GameForm({ props, afterClick, toggleSwitch }) {
 
     const message = () => {
         setModalIsOpenToTrue()
+    }
+
+    const [alert, setAlert] = useState(false);
+    const toggleAlert = (condition) =>{
+        setAlert(condition)
     }
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -74,25 +77,28 @@ function GameForm({ props, afterClick, toggleSwitch }) {
     }
     const callService = async (e) => {
         e.preventDefault()
-
-        switch (actions[0]) {
-            case 'create':
-                await matchService.createGame(newMatchInfo, user).then(r => {
-                    r === 'Match created' ?
-                        message()
-                        : console.log('error')
-                })
-                break;
-            case 'edit':
-                await matchService.editGame(newMatchInfo).then(r => {
-                    navigate('../my_games')
-                    afterClick()
-                    toggleSwitch()
-                })
-                break;
-            default:
-                console.log('fail to call')
-                break;
+        if (clientDate.clientDate < (input.date + ' ' + input.time)) {
+            switch (actions[0]) {
+                case 'create':
+                    await matchService.createGame(newMatchInfo, user).then(r => {
+                        r === 'Match created' ?
+                            message()
+                            : console.log('error')
+                    })
+                    break;
+                case 'edit':
+                    await matchService.editGame(newMatchInfo).then(r => {
+                        navigate('../my_games')
+                        afterClick()
+                        toggleSwitch()
+                    })
+                    break;
+                default:
+                    console.log('fail to call')
+                    break;
+            }
+        } else {
+            toggleAlert(true)
         }
     }
 
@@ -172,7 +178,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
                             />
                         </fieldset>
                     </div>
-                    <div className='date-field'>
+                    <div className={`${alert ? 'date-invalid' : 'null'} date-field`} >
                         <fieldset>
                             <legend>Date</legend>
                             <input

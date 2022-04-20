@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import constants from '../constants/index';
 import GameForm from './GameForm';
 import Modal from 'react-modal';
@@ -22,6 +23,12 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
       name: name
     }
   };
+
+  const routeLocation = useLocation().pathname
+  const [path, setPath] = useState(routeLocation)
+  useEffect(() => {
+    setPath(routeLocation)
+  }, [routeLocation])
 
   let actionMatchButton;
   switch (title) {
@@ -49,8 +56,10 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
   }
 
   const customStyles = {
-    overlay: { background: 'rgba(255, 255, 255, 0.5)',
-    'backdropFilter': 'blur(5px)' },
+    overlay: {
+      background: 'rgba(255, 255, 255, 0.5)',
+      'backdropFilter': 'blur(5px)'
+    },
     content: {
       color: 'rgba(255, 255, 255, 1)',
       width: '340px',
@@ -94,25 +103,25 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
             {dayjs(date).format('dddd')}
           </div>
           <div className='date-month'>
-            {dayjs(date).format('DD — MMM')}
+            {dayjs(date).format('DD — MMM — YY')}
           </div>
         </div>
 
         <div className='players'>
           <div className='field'>F{players_field / 2}</div>
           {players ?
-          <div className='joined'>{players} joined <span className='absents'>— {`${players_field - players} absents`}</span> </div>
-        : null
-        }
+            <div className='joined'>{players} joined <span className='absents'>— {`${players_field - players} absents`}</span> </div>
+            : null
+          }
         </div>
 
         <div className='match'>
           <div className='time'>
             {
-            window.location.pathname === constants.CREATE_GAME.path ?
-            dayjs(date).format('HH:mm')
-            :
-            dayjs(date).utc().format('HH:mm')}
+              path === constants.CREATE_GAME.path ?
+                dayjs(date).format('HH:mm')
+                :
+                dayjs(date).utc().format('HH:mm')}
           </div>
           <div className='location'>{location}</div>
         </div>

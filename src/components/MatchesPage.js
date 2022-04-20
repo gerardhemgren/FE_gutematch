@@ -4,18 +4,19 @@ import { User } from '../auth/UserId';
 import matchService from '../services/matches';
 import constants from '../constants/index'
 import Match from './Match';
-
+const dayjs = require('dayjs');
+const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ss') };
 function MatchesPage() {
     const user = useContext(User);
     const [matches, setMatches] = useState(null)
     const [title, setTitle] = useState('')
 
-    const location = useLocation().pathname
-    const [path, setPath] = useState(location)
+    const routeLocation = useLocation().pathname
+    const [path, setPath] = useState(routeLocation)
     useEffect(() => {
-      setPath(location)
-    }, [location])
-    
+        setPath(routeLocation)
+    }, [routeLocation])
+
     const navigate = useNavigate()
     const [renderSwitch, setRenderSwitch] = useState(false)
 
@@ -26,12 +27,12 @@ function MatchesPage() {
             if (user !== 'no user' && (path === constants.OPEN_GAMES.path || path === '/')) {
                 setTitle(constants.OPEN_GAMES.title);
                 matchService
-                    .getOpenGames(user)
+                    .getOpenGames(user, clientDate)
                     .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
             } else {
                 setTitle(constants.MY_GAMES.title);
                 matchService
-                    .getMyGames(user)
+                    .getMyGames(user, clientDate)
                     .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
             }
         }
@@ -41,7 +42,7 @@ function MatchesPage() {
         }
     }, [user, path, renderSwitch])
 
-    function toggleswitch() {
+    function toggleSwitch() {
         setRenderSwitch(!renderSwitch);
     }
 
@@ -70,7 +71,7 @@ function MatchesPage() {
                             match={match}
                             title={title}
                             user={user}
-                            toggleSwitch={() => toggleswitch()}
+                            toggleSwitch={() => toggleSwitch()}
                             joinGame={() => joinGame(match.id_match)}
                             leaveGame={() => leaveGame(match.id_match)}
                             deleteGame={() => deleteGame(match.id_match)}
@@ -86,7 +87,7 @@ function MatchesPage() {
             .joinGame(matchId, user)
             .then(async res => {
                 navigate('../my_games')
-                toggleswitch()
+                toggleSwitch()
             })
     }
 

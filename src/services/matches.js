@@ -3,16 +3,16 @@ import axios from 'axios';
 const baseUrl = 'https://gutematch.herokuapp.com';
 // const baseUrl = 'http://localhost:5000';
 
-async function getOpenGames(userId) {
-    return await axios.get(`${baseUrl}/api/open_matches/${userId}`).then(response => response.data)
+async function getOpenGames(userId, clientDate) {
+    return await axios.post(`${baseUrl}/api/open_matches/${userId}`, clientDate).then(response => response.data)
 }
 
-async function getMyGames(userId) {
-    return await axios.get(`${baseUrl}/api/my_matches/${userId}`).then(response => response.data)  
+async function getMyGames(userId, clientDate) {
+    return await axios.post(`${baseUrl}/api/my_matches/${userId}`, clientDate).then(response => response.data)
 }
 
-async function createGame(matchInfo, userId){
-    return await axios.post(`${baseUrl}/api/create_match/${userId}`, matchInfo).then(response => response.data)       
+async function createGame(matchInfo, userId) {
+    return await axios.post(`${baseUrl}/api/create_match/${userId}`, matchInfo).then(response => response.data)
 }
 
 async function deleteGame(matchId, userId) {
@@ -26,12 +26,12 @@ async function editGame(matchInfo) {
 
 async function joinGame(matchId, userId) {
     const match = { id_match: matchId }
-    return await axios.post(`${baseUrl}/api/open_matches/${userId}`, match).then(response => response.data)        
+    return await axios.post(`${baseUrl}/api/open_matches/owner/${userId}`, match).then(response => response.data)
 }
 
 async function leaveGame(matchId, userId) {
     const match = { id_match: matchId }
-    return await axios.delete(`${baseUrl}/api/my_matches/${userId}`, { data: match }).then(response => response.data)   
+    return await axios.delete(`${baseUrl}/api/my_matches/${userId}`, { data: match }).then(response => response.data)
 }
 
 const exportObj = { getOpenGames, getMyGames, createGame, deleteGame, editGame, joinGame, leaveGame }
