@@ -44,11 +44,11 @@ html {
     justify-content: center;
     font-family: "Segoe UI";
     color: $text-color;
-    background-color: #ebebeb;
+    background-color: $bg-color;
 
     // cover blank spaces at navigation
     .fixed-background {
-        background-color: #ebebeb;
+        background-color: $bg-color;
         position: fixed;
         height: calc(100% + 100px);
         width: 100%;
@@ -62,7 +62,7 @@ html {
         padding: 0px 16px 0px 16px;
         width: 340px;
         height: 192px;
-        background-color: #ebebeb;
+        background-color: $bg-color;
         // backdrop-filter: blur(50px);
 
         .topbar-container {
@@ -356,7 +356,7 @@ html {
             color: black;
         }
         .date-month {
-            color: grey;
+            color: $text-color-secondary;
             font-size: 10px;
         }
     }
@@ -374,7 +374,7 @@ html {
             font-size: 10px;
         }
         .absents {
-            color: grey;
+            color: $text-color-secondary;
             font-size: 10px;
         }
     }
@@ -391,7 +391,7 @@ html {
         .location {
             text-transform: capitalize;
             font-size: 10px;
-            color: grey;
+            color: $text-color-secondary;
         }
     }
 

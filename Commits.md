@@ -1,3 +1,8 @@
+# i20220421
+- better accessibility contrast at match card info
+- sass color variables added
+
+
 # i20220420
 - open games & my games API call get results with date filter (future games) with time precision
 - create or edit games with prevention & alert for games with past dates input with time precision
