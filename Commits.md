@@ -1,3 +1,10 @@
+# i20220502
+- better weight name/field @match
+- location maxLength @form adedd
+- fixed close modal
+- empty svg icons added
+
+
 # i20220421
 - better accessibility contrast at match card info
 - sass color variables added

@@ -112,12 +112,11 @@ function GameForm({ props, afterClick, toggleSwitch }) {
                 backdrop={true}
                 ariaHideApp={false}
             >
-                <div className='verified'>
+                <div className='verified' onClick={() => setModalIsOpenToFalse()}>
                     <Match
                         closeTimeoutMS={200}
                         isOpen
                         contentLabel="modal"
-                        onRequestClose={() => this.toggleModal()}
                         match={newMatchInfo}
                         user={null}
                         toggleSwitch={null}
@@ -145,6 +144,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
                                 required
                                 placeholder='Address'
                                 name='location'
+                                maxLength='20'
                                 value={input.location}
                                 onChange={handleInputCreateForm}
                             />

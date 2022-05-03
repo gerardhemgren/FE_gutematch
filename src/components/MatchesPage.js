@@ -4,40 +4,46 @@ import { User } from '../auth/UserId';
 import matchService from '../services/matches';
 import constants from '../constants/index'
 import Match from './Match';
+import icons from '../icons/icons';
+
 const dayjs = require('dayjs');
 const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ss') };
+
 function MatchesPage() {
     const user = useContext(User);
-    const [matches, setMatches] = useState(null)
-    const [title, setTitle] = useState('')
+    const [matches, setMatches] = useState(null);
+    const [title, setTitle] = useState('');
 
-    const routeLocation = useLocation().pathname
-    const [path, setPath] = useState(routeLocation)
+    const routeLocation = useLocation().pathname;
+    const [path, setPath] = useState(routeLocation);
     useEffect(() => {
         setPath(routeLocation)
     }, [routeLocation])
 
-    const navigate = useNavigate()
-    const [renderSwitch, setRenderSwitch] = useState(false)
+    const navigate = useNavigate();
+    const [renderSwitch, setRenderSwitch] = useState(false);
 
-    const mounted = useRef(null)
+    const mounted = useRef(null);
     useEffect(() => {
         mounted.current = true
-        if (mounted) {
-            if (user !== 'no user' && (path === constants.OPEN_GAMES.path || path === '/')) {
-                setTitle(constants.OPEN_GAMES.title);
-                matchService
-                    .getOpenGames(user, clientDate)
-                    .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
-            } else {
-                setTitle(constants.MY_GAMES.title);
-                matchService
-                    .getMyGames(user, clientDate)
-                    .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+        // async function fetchData() {
+            if (mounted) {
+                if (user !== 'no user' && (path === constants.OPEN_GAMES.path || path === '/')) {
+                    setTitle(constants.OPEN_GAMES.title);
+                    matchService
+                        .getOpenGames(user, clientDate)
+                        .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+                } else {
+                    setTitle(constants.MY_GAMES.title);
+                    matchService
+                        .getMyGames(user, clientDate)
+                        .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+                }
             }
-        }
+        // }
+        // fetchData();
         return () => {
-            setMatches([])
+            setMatches(null)
             mounted.current = false
         }
     }, [user, path, renderSwitch])
@@ -54,17 +60,23 @@ function MatchesPage() {
 
     const EmptyGamesMessage = () => {
         return path === constants.MY_GAMES.path
-            ? <div className='match-error'>Pick a game from the open games tab.</div>
-            : <div className='match-error'>There are no games available, create one!</div>;
+            ?
+            <div className='match-error'>
+                <img src={icons.emptyBookmark} alt='Empty bookmarks'></img>
+                <p>Pick a game from open games</p>
+            </div>
+            :
+            <div className='match-error'>
+                <img src={icons.emptyGames} alt='Empty bookmarks'></img>
+                <p>There are no games available, create one!</p></div>;
     }
 
     const Games = () => {
         if (matches === null) {
             return <Spinner />
         } else {
-            return (
-                matches.length > 0
-                    ?
+            if (matches.length > 0) {
+                return (
                     matches.map((match, index) =>
                         <Match
                             key={index}
@@ -77,8 +89,10 @@ function MatchesPage() {
                             deleteGame={() => deleteGame(match.id_match)}
                         />
                     )
-                    : <EmptyGamesMessage />
-            )
+                )
+            } else if (matches.length === 0) {
+                return <EmptyGamesMessage />
+            } else { return null }
         }
     }
 

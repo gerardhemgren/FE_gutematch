@@ -41,7 +41,7 @@ Axios for rest API calls.\
 A Modal feature reusing a component with props, switch case, api services, etc.\
 
 ## Design:
-Was made in Adobe Xd, animations and transitions will be added soon.
+Was made in Adobe Xd.
 
 ## Commits:
 Are detailed at [Commits](Commits.md)
