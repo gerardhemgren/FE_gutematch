@@ -10,9 +10,10 @@ var timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwitch }) => {
-  const { id_match, name, date, location, players, players_field, id_admin } = match
-  const props = {
+const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRenderAgain }) => {
+  const { id_match, name, date, location, players, players_field, id_admin } = match;
+
+  const gameObject = {
     actions: ['edit', 'cancel'],
     matchInfo: {
       matchId: id_match,
@@ -24,37 +25,19 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
     }
   };
 
-  const routeLocation = useLocation().pathname
-  const [path, setPath] = useState(routeLocation)
+  const routeLocation = useLocation().pathname;
+  const [path, setPath] = useState(routeLocation);
   useEffect(() => {
-    setPath(routeLocation)
-  }, [routeLocation])
-
-  let actionMatchButton;
-  switch (title) {
-    case constants.OPEN_GAMES.title:
-      actionMatchButton = <button className='join-btn' onClick={joinGame}>Join</button>
-      break;
-    case constants.MY_GAMES.title:
-      actionMatchButton = <button className='leave-btn' onClick={leaveGame}>Leave</button>
-      break;
-    default:
-      actionMatchButton = undefined
-  }
-
-  let deleteButton
-  if (id_admin === Number(user)) {
-    deleteButton = <button className='del-btn' onClick={deleteGame}>Delete</button>
-  }
+    setPath(routeLocation);
+  }, [routeLocation]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const setModalIsOpenToTrue = () => {
-    setModalIsOpen(true)
-  }
+    setModalIsOpen(true);
+  };
   const setModalIsOpenToFalse = () => {
-    setModalIsOpen(false)
-  }
-
+    setModalIsOpen(false);
+  };
   const customStyles = {
     overlay: {
       background: 'rgba(255, 255, 255, 0.5)',
@@ -76,10 +59,27 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
     }
   };
 
-  let editButton
+  let actionMatchButton;
+  switch (title) {
+    case constants.OPEN_GAMES.title:
+      actionMatchButton = <button className='join-btn' onClick={joinGame}>Join</button>;
+      break;
+    case constants.MY_GAMES.title:
+      actionMatchButton = <button className='leave-btn' onClick={leaveGame}>Leave</button>;
+      break;
+    default:
+      actionMatchButton = undefined;
+  };
+
+  let editButton;
   if (id_admin === Number(user)) {
     editButton = <button className='edit-btn' onClick={setModalIsOpenToTrue}>Edit</button>
-  }
+  };
+
+  let deleteButton;
+  if (id_admin === Number(user)) {
+    deleteButton = <button className='del-btn' onClick={deleteGame}>Delete</button>
+  };
 
   return (
     <>
@@ -90,7 +90,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
         portalClassName={'ReactModal__Overlay ReactModal__Overlay--after-open modal'}
         style={customStyles}
       >
-        <GameForm props={props} afterClick={setModalIsOpenToFalse} toggleSwitch={toggleSwitch} />
+        <GameForm gameObject={gameObject} afterClick={setModalIsOpenToFalse} toggleRenderAgain={toggleRenderAgain} />
       </Modal>
 
       <div className='match-container'>
@@ -134,4 +134,4 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleSwit
   )
 }
 
-export default Match
+export default Match;

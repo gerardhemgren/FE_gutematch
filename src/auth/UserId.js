@@ -30,14 +30,14 @@ function UserId({ children }) {
                 }
             }
         }
-    }, [playerId, isLoading, user])
+    }, [playerId, isLoading, user]);
 
     return (
         <User.Provider value={playerId}>
             {children}
         </User.Provider>
     )
-}
+};
 
-export const User = React.createContext()
+export const User = React.createContext();
 export default UserId;

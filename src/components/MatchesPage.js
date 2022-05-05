@@ -18,45 +18,41 @@ function MatchesPage() {
     const [path, setPath] = useState(routeLocation);
     useEffect(() => {
         setPath(routeLocation)
-    }, [routeLocation])
+    }, [routeLocation]);
 
     const navigate = useNavigate();
-    const [renderSwitch, setRenderSwitch] = useState(false);
+    const [renderAgain, setRenderAgain] = useState(false);
+    function toggleRenderAgain() {
+        setRenderAgain(!renderAgain);
+    };
 
     const mounted = useRef(null);
     useEffect(() => {
-        mounted.current = true
-        // async function fetchData() {
+        mounted.current = true;
             if (mounted) {
                 if (user !== 'no user' && (path === constants.OPEN_GAMES.path || path === '/')) {
                     setTitle(constants.OPEN_GAMES.title);
                     matchService
                         .getOpenGames(user, clientDate)
-                        .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+                        .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) });
                 } else {
                     setTitle(constants.MY_GAMES.title);
                     matchService
                         .getMyGames(user, clientDate)
-                        .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) })
+                        .then(res => { typeof res === 'object' ? setMatches(res) : setMatches([]) });
                 }
             }
-        // }
-        // fetchData();
         return () => {
-            setMatches(null)
-            mounted.current = false
+            setMatches(null);
+            mounted.current = false;
         }
-    }, [user, path, renderSwitch])
-
-    function toggleSwitch() {
-        setRenderSwitch(!renderSwitch);
-    }
+    }, [user, path, renderAgain]);
 
     const Spinner = () => {
         return (
             <div className="lds-ripple"><div></div><div></div></div>
         )
-    }
+    };
 
     const EmptyGamesMessage = () => {
         return path === constants.MY_GAMES.path
@@ -69,7 +65,7 @@ function MatchesPage() {
             <div className='match-error'>
                 <img src={icons.emptyGames} alt='Empty bookmarks'></img>
                 <p>There are no games available, create one!</p></div>;
-    }
+    };
 
     const Games = () => {
         if (matches === null) {
@@ -83,7 +79,7 @@ function MatchesPage() {
                             match={match}
                             title={title}
                             user={user}
-                            toggleSwitch={() => toggleSwitch()}
+                            toggleRenderAgain={() => toggleRenderAgain()}
                             joinGame={() => joinGame(match.id_match)}
                             leaveGame={() => leaveGame(match.id_match)}
                             deleteGame={() => deleteGame(match.id_match)}
@@ -91,37 +87,37 @@ function MatchesPage() {
                     )
                 )
             } else if (matches.length === 0) {
-                return <EmptyGamesMessage />
-            } else { return null }
+                return <EmptyGamesMessage />;
+            } else { return null };
         }
-    }
+    };
 
     const joinGame = async (matchId) => {
         await matchService
             .joinGame(matchId, user)
             .then(async res => {
-                navigate('../my_games')
-                toggleSwitch()
+                navigate('../my_games');
+                toggleRenderAgain();
             })
-    }
+    };
 
     const leaveGame = async (matchId) => {
         await matchService
             .leaveGame(matchId, user)
             .then(async res => {
-                setRenderSwitch(!renderSwitch);
-                navigate('../my_games')
+                toggleRenderAgain();
+                navigate('../my_games');
             })
-    }
+    };
 
     const deleteGame = async (matchId) => {
         await matchService
             .deleteGame(matchId, user)
             .then(async res => {
-                setRenderSwitch(!renderSwitch);
-                navigate('../my_games')
+                toggleRenderAgain();
+                navigate('../my_games');
             })
-    }
+    };
 
     return (
         <div className='match-page'>
@@ -134,4 +130,4 @@ function MatchesPage() {
     )
 }
 
-export default MatchesPage
+export default MatchesPage;

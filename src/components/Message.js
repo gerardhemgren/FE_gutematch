@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Message = ({ msg }) => {
   if (msg) {
@@ -13,6 +13,6 @@ const Message = ({ msg }) => {
   } else {
     return null
   }
-}
+};
 
-export default Message
+export default Message;

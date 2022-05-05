@@ -6,7 +6,7 @@ const dayjs = require('dayjs');
 
 function CreateGame() {
     const title = constants.CREATE_GAME.title;
-    const props = {
+    const gameObject = {
         actions: ['create', 'reset'],
         matchInfo: {
             date: dayjs().format('YYYY-MM-DD'),
@@ -23,10 +23,10 @@ function CreateGame() {
                 <div className='title-container'>
                     {title}
                 </div>
-                <GameForm props={props} />
+                <GameForm gameObject={gameObject} />
             </div>
         </>
     )
 }
 
-export default CreateGame
+export default CreateGame;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'
-import constants from '../constants/index'
+import { NavLink } from 'react-router-dom';
+import constants from '../constants/index';
 import icons from '../icons/icons';
 import '../css/Styles.css';
 
@@ -18,6 +18,6 @@ function Header() {
             </div>
         </div>
     )
-}
+};
 
 export default Header;

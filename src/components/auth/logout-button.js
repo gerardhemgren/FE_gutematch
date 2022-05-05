@@ -7,12 +7,12 @@ const LogoutButton = () => {
   const { logout } = useAuth0();
 
   const deleteLocalStorage = () => {
-    localStorage.removeItem('player_id')
-    localStorage.removeItem('player_name')
-    localStorage.removeItem('player_picture') 
-    localStorage.setItem('player', false)
-    logout({ returnTo: window.location.origin })
-  }
+    localStorage.removeItem('player_id');
+    localStorage.removeItem('player_name');
+    localStorage.removeItem('player_picture') ;
+    localStorage.setItem('player', false);
+    logout({ returnTo: window.location.origin });
+  };
 
   return (
     <button

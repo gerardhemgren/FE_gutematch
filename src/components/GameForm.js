@@ -10,8 +10,8 @@ import '../css/Styles.css';
 const dayjs = require('dayjs');
 const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ss') };
 
-function GameForm({ props, afterClick, toggleSwitch }) {
-    const { actions, matchInfo } = props
+function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
+    const { actions, matchInfo } = gameObject;
     const user = useContext(User);
     const [input, setInput] = useState({
         date: matchInfo.date,
@@ -23,7 +23,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
     const handleInputCreateForm = (event) => {
         setInput({ ...input, [event.target.name]: event.target.value });
         toggleAlert(false);
-    }
+    };
     const resetForm = () => {
         setInput({
             ...input,
@@ -33,26 +33,26 @@ function GameForm({ props, afterClick, toggleSwitch }) {
             players_field: matchInfo.players_field,
             name: matchInfo.name
         });
-    }
-    const navigate = useNavigate()
+    };
+    const navigate = useNavigate();
 
     const message = () => {
-        setModalIsOpenToTrue()
-    }
+        setModalIsOpenToTrue();
+    };
 
     const [alert, setAlert] = useState(false);
-    const toggleAlert = (condition) =>{
-        setAlert(condition)
-    }
+    const toggleAlert = (condition) => {
+        setAlert(condition);
+    };
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const setModalIsOpenToTrue = () => {
-        setModalIsOpen(true)
-    }
+        setModalIsOpen(true);
+    };
     const setModalIsOpenToFalse = () => {
-        setModalIsOpen(false)
-        navigate('../my_games')
-    }
+        setModalIsOpen(false);
+        navigate('../my_games');
+    };
     const customStyles = {
         overlay: {
             background: '#74FF99',
@@ -74,31 +74,34 @@ function GameForm({ props, afterClick, toggleSwitch }) {
         location: input.location,
         players_field: Number(input.players_field),
         name: input.name
-    }
+    };
+
     const callService = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (clientDate.clientDate < (input.date + ' ' + input.time)) {
             switch (actions[0]) {
                 case 'create':
                     await matchService.createGame(newMatchInfo, user).then(r => {
-                        r === 'Match created' ?
+                        r === 'Match created'
+                            ?
                             message()
-                            : console.log('error')
+                            :
+                            console.log('error');
                     })
                     break;
                 case 'edit':
                     await matchService.editGame(newMatchInfo).then(r => {
-                        navigate('../my_games')
-                        afterClick()
-                        toggleSwitch()
+                        navigate('../my_games');
+                        afterClick();
+                        toggleRenderAgain();
                     })
                     break;
                 default:
-                    console.log('fail to call')
+                    console.log('fail to call');
                     break;
             }
         } else {
-            toggleAlert(true)
+            toggleAlert(true);
         }
     }
 
@@ -119,7 +122,7 @@ function GameForm({ props, afterClick, toggleSwitch }) {
                         contentLabel="modal"
                         match={newMatchInfo}
                         user={null}
-                        toggleSwitch={null}
+                        toggleRenderAgain={null}
                         joinGame={null}
                         leaveGame={null}
                         deleteGame={null}
@@ -223,4 +226,4 @@ function GameForm({ props, afterClick, toggleSwitch }) {
     )
 }
 
-export default GameForm
+export default GameForm;

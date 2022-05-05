@@ -6,17 +6,17 @@ const LoginButton = () => {
   const { logout } = useAuth0();
 
   const login = () => {
-    localStorage.setItem('player', true)
-    loginWithRedirect()
+    localStorage.setItem('player', true);
+    loginWithRedirect();
   }
 
   // fake-login
   const addUserLocalStorage = () => {
-    localStorage.setItem('player', true)
-    localStorage.setItem('player_id', 0)
-    localStorage.setItem('player_name', 'Guest User')
-    localStorage.setItem('player_picture', '/guest.png')
-    logout({ returnTo: window.location.origin })
+    localStorage.setItem('player', true);
+    localStorage.setItem('player_id', 0);
+    localStorage.setItem('player_name', 'Guest User');
+    localStorage.setItem('player_picture', '/guest.png');
+    logout({ returnTo: window.location.origin });
   }
   return (
     <div>
@@ -33,7 +33,7 @@ const LoginButton = () => {
         Guest log in
       </button>
     </div>
-  );
+  )
 };
 
 export default LoginButton;
