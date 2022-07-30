@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { config } from './environment'
 
-const baseUrl = 'https://gutematch.herokuapp.com';
-// const baseUrl = 'http://localhost:5000';
+const baseUrl = config.url.API_URL;
 
 const logIn_signUp = async (userInfo) => {
     const request = axios.post(`${baseUrl}/api/config`, userInfo);
