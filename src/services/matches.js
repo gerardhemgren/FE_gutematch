@@ -2,8 +2,6 @@ import axios from 'axios';
 import { config } from './environment'
 
 const baseUrl = config.url.API_URL;
-// const baseUrl = 'https://gutematch.herokuapp.com';
-// const baseUrl = 'http://localhost:5000';
 
 async function getOpenGames(userId, clientDate) {
     return await axios.post(`${baseUrl}/api/open_matches/${userId}`, clientDate).then(response => response.data)
