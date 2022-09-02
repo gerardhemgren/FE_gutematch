@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { User } from '../auth/UserId';
 import matchService from '../services/matches';
-import constants from '../constants/index'
+import constants from '../constants/index';
 import Match from './Match';
+import Title from './layout/Title';
 import icons from '../icons/icons';
 
 const dayjs = require('dayjs');
@@ -121,9 +122,7 @@ function MatchesPage() {
 
     return (
         <div className='match-page'>
-            <div className='title-container'>
-                {title}
-            </div>
+            <Title title={title}/>
             <Games />
             <div className='bottom-space'></div>
         </div>

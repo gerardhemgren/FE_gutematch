@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthenticationButton from "./authentication-button";
 import constants from '../../constants/index';
+import Title from '../layout/Title';
 
 const Account = () => {
   const title = constants.ACCOUNT.title;
@@ -22,9 +23,7 @@ const Account = () => {
 
   return (
       <div className='account'>
-        <div className='title-container'>
-          {title}
-        </div>
+        <Title title={title}/>
         <div className='profile'>
           <Profile />
           <AuthenticationButton />

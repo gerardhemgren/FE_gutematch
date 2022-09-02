@@ -1,6 +1,7 @@
 import React from 'react';
 import constants from '../constants/index';
 import GameForm from './GameForm';
+import Title from './layout//Title';
 
 const dayjs = require('dayjs');
 
@@ -20,9 +21,7 @@ function CreateGame() {
     return (
         <>
             <div id='match-form'>
-                <div className='title-container'>
-                    {title}
-                </div>
+                <Title title={title} />
                 <GameForm gameObject={gameObject} />
             </div>
         </>

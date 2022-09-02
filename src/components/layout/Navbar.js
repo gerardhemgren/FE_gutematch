@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import constants from '../constants/index';
-import icons from '../icons/icons';
-import '../css/Styles.css';
+import constants from '../../constants/index';
+import icons from '../../icons/icons';
+import '../../css/Styles.css';
 
 function Navbar() {
-    const location = useLocation().pathname;
-    const [path, setPath] = useState(location);
-    useEffect(() => {
-      setPath(location);
-    }, [location]);
-    
+    const path = useLocation().pathname; 
 
     return (
         <nav className='navbar'>
