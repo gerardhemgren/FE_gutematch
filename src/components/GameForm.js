@@ -82,7 +82,7 @@ function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
             switch (actions[0]) {
                 case 'create':
                     await matchService.createGame(newMatchInfo, user).then(r => {
-                        r === 'Match created'
+                        r === 'Match created' || r === 'LOCAL: Match created'
                             ?
                             message()
                             :

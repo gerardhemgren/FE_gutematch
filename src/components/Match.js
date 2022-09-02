@@ -17,8 +17,8 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
     actions: ['edit', 'cancel'],
     matchInfo: {
       matchId: id_match,
-      date: dayjs(date).utc().format('YYYY-MM-DD'),
-      time: dayjs(date).utc().format('HH:mm'),
+      date: process.env === 'prod' ? dayjs(date).utc().format('YYYY-MM-DD') : dayjs(date).format('YYYY-MM-DD'),
+      time: process.env === 'prod' ? dayjs(date).utc().format('HH:mm') : dayjs(date).format('HH:mm'),
       location: location,
       players_field: players_field,
       name: name
@@ -121,7 +121,11 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
               path === constants.CREATE_GAME.path ?
                 dayjs(date).format('HH:mm')
                 :
-                dayjs(date).utc().format('HH:mm')}
+                process.env === 'prod' ?
+                  dayjs(date).utc().format('HH:mm')
+                  :
+                  dayjs(date).format('HH:mm')
+            }
           </div>
           <div className='location'>{location}</div>
         </div>

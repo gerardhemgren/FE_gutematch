@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import MatchPage from './components/MatchesPage'
 import CreateGame from './components/CreateGame'
-import Navbar from './components/Navbar';
-import Header from './components/Header';
+import Navbar from './components/layout/Navbar';
+import Header from './components/layout/Header';
 import Account from './components/auth/Account';
 import PageNotFound from './components/PageNotFound';
 

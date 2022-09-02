@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import constants from '../constants/index';
-import icons from '../icons/icons';
-import '../css/Styles.css';
+import constants from '../../constants/index';
+import icons from '../../icons/icons';
+import '../../css/Styles.css';
 
 function Header() {
     return (
