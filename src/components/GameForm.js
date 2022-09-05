@@ -147,7 +147,7 @@ function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
                                 required
                                 placeholder='Address'
                                 name='location'
-                                maxLength='20'
+                                maxLength='40'
                                 value={input.location}
                                 onChange={handleInputCreateForm}
                             />
