@@ -19,6 +19,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
       matchId: id_match,
       date: process.env === 'prod' ? dayjs(date).utc().format('YYYY-MM-DD') : dayjs(date).format('YYYY-MM-DD'),
       time: process.env === 'prod' ? dayjs(date).utc().format('HH:mm') : dayjs(date).format('HH:mm'),
+      zone: dayjs(date).format('Z'),
       location: location,
       players_field: players_field,
       name: name
