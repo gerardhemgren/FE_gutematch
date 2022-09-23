@@ -236,6 +236,7 @@ html {
             .login-button {
                 font-size: 12px;
                 padding: 8px 20px;
+                width: 100px;
                 @include action-button(black, #74ff99);
                 color: black;
             }
@@ -243,6 +244,7 @@ html {
             .guest-login-button {
                 font-size: 12px;
                 padding: 8px 20px;
+                width: 100px;
                 margin-top: 32px;
                 @include action-button(black, transparent);
                 color: black;

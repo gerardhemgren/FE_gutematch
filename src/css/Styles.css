@@ -221,6 +221,7 @@ html {
 .app .main .account .login-button {
   font-size: 12px;
   padding: 8px 20px;
+  width: 100px;
   background-color: #74ff99;
   color: rgb(255, 255, 255);
   font-size: 10px;
@@ -238,6 +239,7 @@ html {
 .app .main .account .guest-login-button {
   font-size: 12px;
   padding: 8px 20px;
+  width: 100px;
   margin-top: 32px;
   background-color: transparent;
   color: rgb(255, 255, 255);
