@@ -229,6 +229,7 @@ html {
             .logout-button {
                 font-size: 12px;
                 padding: 8px 20px;
+                width: 100px;
                 @include action-button(black, #e3ff72);
                 color: black;
             }
