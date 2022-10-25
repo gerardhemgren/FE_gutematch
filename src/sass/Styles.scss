@@ -48,7 +48,6 @@ html {
     display: flex;
     justify-content: center;
     font-family: "Segoe UI";
-    color: $text-color;
     background-color: $bg-color;
 
     // cover blank spaces at navigation
@@ -419,13 +418,11 @@ html {
         grid-column: 8 / 12;
 
         .field {
-            color: black;
             font-size: 16px;
             font-weight: 700;
         }
 
         .joined {
-            color: black;
             font-size: 10px;
         }
 
@@ -494,6 +491,15 @@ html {
             grid-row: 1;
         }
     }
+}
+
+.is-full {
+    color: rgb(0 121 30);
+    font-weight: bold;
+    background-color: #a8ffad;
+    padding: 0 6px;
+    border-radius: 4px;
+    margin-left: 8px;
 }
 
 .verified {
