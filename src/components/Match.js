@@ -30,7 +30,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
   const [path, setPath] = useState(routeLocation);
   useEffect(() => {
     setPath(routeLocation);
-    return() => {
+    return () => {
       setPath(null);
     }
   }, [routeLocation]);
@@ -113,10 +113,12 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
 
         <div className='players'>
           <div className='field'>F{players_field / 2}</div>
-          <div className='joined'>        
-              {players} joined 
+          {players ?
+            <div className='joined'>
+              {players} joined
               {is_full ? <span className='is-full'>full </span> : <span className='absents'> — {`${players_field - players} absents`}</span>}
-          </div>
+            </div>
+            : null}
         </div>
 
         <div className='match'>
