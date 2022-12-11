@@ -8,7 +8,7 @@ import Title from './layout/Title';
 import icons from '../icons/icons';
 
 const dayjs = require('dayjs');
-const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ss') };
+const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mmZ') };
 
 function MatchesPage() {
     const user = useContext(User);

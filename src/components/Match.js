@@ -11,7 +11,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRenderAgain }) => {
-  const { id_match, name, date, location, players, players_field, id_admin } = match;
+  const { id_match, name, date, location, players, players_field, id_admin, is_full } = match;
 
   const gameObject = {
     actions: ['edit', 'cancel'],
@@ -19,6 +19,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
       matchId: id_match,
       date: process.env === 'prod' ? dayjs(date).utc().format('YYYY-MM-DD') : dayjs(date).format('YYYY-MM-DD'),
       time: process.env === 'prod' ? dayjs(date).utc().format('HH:mm') : dayjs(date).format('HH:mm'),
+      zone: dayjs(date).format('Z'),
       location: location,
       players_field: players_field,
       name: name
@@ -29,6 +30,9 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
   const [path, setPath] = useState(routeLocation);
   useEffect(() => {
     setPath(routeLocation);
+    return () => {
+      setPath(null);
+    }
   }, [routeLocation]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -110,9 +114,11 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
         <div className='players'>
           <div className='field'>F{players_field / 2}</div>
           {players ?
-            <div className='joined'>{players} joined <span className='absents'>— {`${players_field - players} absents`}</span> </div>
-            : null
-          }
+            <div className='joined'>
+              {players} joined
+              {is_full ? <span className='is-full'>full </span> : <span className='absents'> — {`${players_field - players} absents`}</span>}
+            </div>
+            : null}
         </div>
 
         <div className='match'>

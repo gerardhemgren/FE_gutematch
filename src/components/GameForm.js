@@ -8,7 +8,7 @@ import icons from '../icons/icons';
 import '../css/Styles.css';
 
 const dayjs = require('dayjs');
-const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ss') };
+const clientDate = { clientDate: dayjs().format('YYYY-MM-DD HH:mm:ssZ') };
 
 function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
     const { actions, matchInfo } = gameObject;
@@ -16,10 +16,12 @@ function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
     const [input, setInput] = useState({
         date: matchInfo.date,
         time: matchInfo.time,
+        zone: matchInfo.zone || dayjs().format('Z'),
         location: matchInfo.location,
         players_field: matchInfo.players_field,
         name: matchInfo.name
     });
+
     const handleInputCreateForm = (event) => {
         setInput({ ...input, [event.target.name]: event.target.value });
         toggleAlert(false);
@@ -29,6 +31,7 @@ function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
             ...input,
             date: matchInfo.date,
             time: matchInfo.time,
+            zone: matchInfo.zone,
             location: matchInfo.location,
             players_field: matchInfo.players_field,
             name: matchInfo.name
@@ -70,7 +73,7 @@ function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
 
     const newMatchInfo = {
         matchId: matchInfo.matchId,
-        date: `${input.date} ${input.time}`,
+        date: `${input.date} ${input.time}${input.zone}`,
         location: input.location,
         players_field: Number(input.players_field),
         name: input.name
@@ -78,7 +81,7 @@ function GameForm({ gameObject, afterClick, toggleRenderAgain }) {
 
     const callService = async (e) => {
         e.preventDefault();
-        if (clientDate.clientDate < (input.date + ' ' + input.time)) {
+        if (clientDate.clientDate < (input.date + ' ' + input.time+input.zone)) {
             switch (actions[0]) {
                 case 'create':
                     await matchService.createGame(newMatchInfo, user).then(r => {

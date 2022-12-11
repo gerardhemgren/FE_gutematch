@@ -1,6 +1,6 @@
 const prod = {
     url: {
-        API_URL: 'https://gutematch.herokuapp.com'
+        API_URL: 'https://be-gutematch.onrender.com'
     }
 };
 
