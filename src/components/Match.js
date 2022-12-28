@@ -63,6 +63,8 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
     }
   };
 
+  let locationMapAddress = `http://maps.google.com/?q=${location}`;
+
   let actionMatchButton;
   switch (title) {
     case constants.OPEN_GAMES.title:
@@ -133,7 +135,7 @@ const Match = ({ user, title, match, joinGame, leaveGame, deleteGame, toggleRend
                   dayjs(date).format('HH:mm')
             }
           </div>
-          <div className='location'>{location}</div>
+          <div className='location'><a href={locationMapAddress} target='_blank'>{location}</a></div>
         </div>
 
         <div className='action-match'>
