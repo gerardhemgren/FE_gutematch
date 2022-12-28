@@ -311,7 +311,6 @@ html {
     }
 
     .date-invalid legend {
-        // border-bottom: solid red 1px;
         background-color: rgba(255, 166, 0, 0.452);
         width: 90%;
         border-radius: 4px;
@@ -386,9 +385,11 @@ html {
     display: grid;
     grid-template-columns: repeat(12, 28px);
     padding: 12px 0px 20px 0px;
+    filter: drop-shadow(0px 0px 8px rgba(0,0,0,0.05));
 
     .title {
         text-transform: capitalize;
+        letter-spacing: 1px;
         font-size: 10px;
         color: black;
         grid-column: 2 / 12;
@@ -435,7 +436,7 @@ html {
     .match {
         grid-row: 3;
         grid-column: 2 / 12;
-        padding-bottom: 24px;
+        padding-bottom: 32px;
 
         .time {
             font-size: 16px;
@@ -444,6 +445,7 @@ html {
         }
 
         .location {
+            letter-spacing: 1px;
             text-transform: capitalize;
             font-size: 10px;
             color: $text-color-secondary;
@@ -471,7 +473,7 @@ html {
         }
 
         .leave-btn {
-            @include action-button(black, #e3ff72);
+            @include action-button(black, #fdffa0);
             color: black;
             grid-column: 9 / 12;
             grid-row: 1;

@@ -395,9 +395,11 @@ html {
   display: grid;
   grid-template-columns: repeat(12, 28px);
   padding: 12px 0px 20px 0px;
+  filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.05));
 }
 .match-container .title {
   text-transform: capitalize;
+  letter-spacing: 1px;
   font-size: 10px;
   color: black;
   grid-column: 2/12;
@@ -436,7 +438,7 @@ html {
 .match-container .match {
   grid-row: 3;
   grid-column: 2/12;
-  padding-bottom: 24px;
+  padding-bottom: 32px;
 }
 .match-container .match .time {
   font-size: 16px;
@@ -444,6 +446,7 @@ html {
   color: black;
 }
 .match-container .match .location {
+  letter-spacing: 1px;
   text-transform: capitalize;
   font-size: 10px;
   color: #494949;
@@ -478,7 +481,7 @@ html {
   transform: scale(80%);
 }
 .match-container .action-match .leave-btn {
-  background-color: #e3ff72;
+  background-color: #fdffa0;
   color: rgb(255, 255, 255);
   font-size: 10px;
   font-weight: 600;
